@@ -4,7 +4,7 @@
   "description": "Froot Loops for daysssss",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server/server.js",
+    "start": "nodemon server/index.js",
     "dev": "webpack --mode development --watch ./client/index.js --output ./client/dist/bundle.js",
     "build": "webpack --mode production ./client/index.js --output ./client/dist/bundle.js"
   },
