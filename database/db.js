@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 
-
-mongoose.connect('mongodb://localhost/volunteer');
+mongoose.connect('mongodb://admin:password1@ds050189.mlab.com:50189/volunteer-rocks');
 
 var db = mongoose.connection;
 
@@ -19,4 +18,4 @@ var volunteerSchema = mongoose.Schema({
 
 var Volunteers = mongoose.model('Volunteers', volunteerSchema);
 
-var vol = new Volunteers({name: 'Linda'});
+module.exports.Volunteers = Volunteers;
