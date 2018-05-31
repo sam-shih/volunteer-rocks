@@ -4,8 +4,9 @@
   "description": "Froot Loops for daysssss",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode production ./client/index.js --output ./client/dist/bundle.js",
-    "dev": "webpack --mode development ./client/index.js --output ./client/dist/bundle.js"
+    "start": "nodemon server/server.js",
+    "dev": "webpack --mode development --watch ./client/index.js --output ./client/dist/bundle.js",
+    "build": "webpack --mode production ./client/index.js --output ./client/dist/bundle.js"
   },
   "dependencies": {
     "express": "^4.16.3",
