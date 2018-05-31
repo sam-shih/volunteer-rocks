@@ -4,8 +4,10 @@ mongoose.connect('mongodb://admin:password1@ds050189.mlab.com:50189/volunteer-ro
 
 var db = mongoose.connection;
 
-db.on('error', function() {
-  console.log('mongoose connection error');
+db.on('error', function(err) {
+  if (err) {
+    throw err;
+  }
 });
 
 db.once('open', function() {
