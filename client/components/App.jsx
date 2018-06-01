@@ -23,9 +23,8 @@ class App extends Component {
     axios.get('/opportunities')
       .then($.proxy(function(response) {
         this.setState({
-          opportunities: '????'
+          opportunities: response.data
         })
-        console.log(response);
       }, this))
       .catch(function(err) {
         throw err;
