@@ -9,10 +9,11 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      opportunities: []
     }
 
     this.getOpps = this.getOpps.bind(this);
+    this.createOpp = this.createOpp.bind(this);
   }
 
   componentDidMount() {
@@ -21,14 +22,26 @@ class App extends Component {
 
   getOpps() {
     axios.get('/opportunities')
-      .then(function(response) {
+      .then($.proxy(function(response) {
+        this.setState({
+          opportunities: '????'
+        })
+        console.log(response);
+      }, this))
+      .catch(function(err) {
+        throw err;
+      });
+  }
+
+  createOpp(orgInfo) {
+    axios.post('/signUpOrg', orgInfo)
+      .then(function (response) {
         console.log(response);
       })
       .catch(function(err) {
         throw err;
       });
   }
-
 
 
   render() {
