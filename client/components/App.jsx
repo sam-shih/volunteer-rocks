@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import $ from 'jquery';
+import axios from 'axios';
 import ReactDOM from 'react-dom';
 import Filter from './Filter.jsx';
 
@@ -9,7 +11,25 @@ class App extends Component {
     this.state = {
 
     }
+
+    this.getOpps = this.getOpps.bind(this);
   }
+
+  componentDidMount() {
+    this.getOpps();
+  }
+
+  getOpps() {
+    axios.get('/opportunities')
+      .then(function(response) {
+        console.log(response);
+      })
+      .catch(function(err) {
+        throw err;
+      });
+  }
+
+
 
   render() {
     return (
