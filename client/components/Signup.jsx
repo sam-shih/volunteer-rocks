@@ -6,12 +6,10 @@ class Form extends React.Component {
     this.state = {
       form: {
         name: '',
-        address: {
-          street:'',
-          city: '',
-          State: '',
-          zip_code: ''
-        },
+        street:'',
+        city: '',
+        state: '',
+        zipcode: '',
         phone: '',
         email: ''
       }
@@ -21,46 +19,79 @@ class Form extends React.Component {
   }
   
   updateInput(e) {
-    const form = this.state.form;
-    form[e.target.name] = e.target.value;
-    this.setState({ form: form });
+    console.log(e.target.value);
+    const form = this.state.form; // Copy current state to object 'form'
+    form[e.target.name] = e.target.value; // Set  key:value to form
+    this.setState({ form: form }); // Replace state.form to form from above
   }
 
-  submitForm () {
-    this.props.formSubmit(this.state.form);
+  submitForm (form) {
+    axios.post('/signup', form) // Send form to server
+    .then(response => console.log('Form posted to server', form)) 
+    .catch(err => console.log('Err', err));
   }
 
   render() {
     return (
-
       <form >
-        Username:
+        Organization Name:
           <br />
           <input
-            name="username"
+            name="name"
             type="text"
-            value={this.state.form.username}
+            value={this.state.form.name}
             onChange={this.updateInput} />
           <br />
-        Number:
+        Street:
           <br />
           <input
-            name="number1"
+            name="street"
             type="text"
-            value={this.state.form.number1}
+            value={this.state.form.street}
             onChange={this.updateInput} />
           <br />
-        Message:
+        City:
           <br />
           <input
-            name="message"
+            name="city"
             type="text"
-            value={this.state.form.message}
+            value={this.state.form.city}
             onChange={this.updateInput} />
           <br />
-        <button onClick={this.submitForm}>Submit</button>
+        State:
+          <br />
+          <input
+            name="state"
+            type="text"
+            value={this.state.form.state}
+            onChange={this.updateInput} />
+          <br />
+        Zip Code:
+          <br />
+          <input
+            name="zipcode"
+            type="text"
+            value={this.state.form.zipcode}
+            onChange={this.updateInput} />
+          <br />
+        Phone Number:
+          <br />
+          <input
+            name="phone"
+            type="text"
+            value={this.state.form.phone}
+            onChange={this.updateInput} />
+          <br />
+        E-mail:
+          <br />
+          <input
+            name="email"
+            type="text"
+            value={this.state.form.email}
+            onChange={this.updateInput} />
+          <br />
+        <button onClick={this.submitForm(this.state.form)}>Submit</button>
       </form>
     );
   }
-
 }
