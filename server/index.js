@@ -24,6 +24,6 @@ app.get('/opportunities', (req, res) => {
 
 
 
-app.listen(3000, function() {
+app.listen(port, function() {
   console.log(`Listening on 3000`);
 });
