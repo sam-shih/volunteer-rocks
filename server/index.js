@@ -11,27 +11,18 @@ app.use(express.static(__dirname + '/../client/dist'));
 app.use(session({secret: 'Is it really a secret'}));
 
 //SIGNUP POST REQUEST
-app.post('/signup', (req, res) => {
-  let rb = req.body;
-  let opportunitesData = {
-    title: rb.title,
-    description: rb.description,
-    cause: rb.cause,
-    street: rb.street,
-    city: rb.city,
-    state: rb.state,
-    zipCode: rb.zipCode,
-    phone: rb.phone,
-    email: rb.email
-  }
-
-  database.saveOpportunities(opportunitesData);
+app.post('/organisation', (req, res) => {
+  database.saveOrganisations(req.body);
 });
 
 //OPPORTUNITIES GET REQUEST
-app.get('/opportunites', (req, res) => {
-
+app.get('/opportunities', (req, res) => {
+  database.getOpportunities((data) => {
+    res.status(200).json(data);
+  });
 });
+
+
 
 app.listen(3000, function() {
   console.log(`Listening on 3000`);
