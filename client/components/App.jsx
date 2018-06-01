@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Filter from './Filter.jsx';
 
-const App = () => {
-  return (
-    <div>
-      <p>Bunch of Frooty Tooties</p>
-      <div className='filter'>
-        <Filter />
+class App extends Component {
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <p>Bunch of Frooty Tooties</p>
+        <div className='filter'>
+          <Filter />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default App;
