@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Filter from './Filter.jsx';
-import Landing from './Landing.jsx';
 
 const App = () => {
   return (
@@ -9,9 +8,6 @@ const App = () => {
       <p>Bunch of Frooty Tooties</p>
       <div className='filter'>
         <Filter />
-      </div>
-      <div className="landing">
-        <Landing />
       </div>
     </div>
   );
