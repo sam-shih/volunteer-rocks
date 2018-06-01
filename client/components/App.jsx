@@ -13,7 +13,6 @@ class App extends Component {
     }
 
     this.getOpps = this.getOpps.bind(this);
-    this.createOpp = this.createOpp.bind(this);
   }
 
   componentDidMount() {
@@ -32,17 +31,6 @@ class App extends Component {
         throw err;
       });
   }
-
-  createOpp(orgInfo) {
-    axios.post('/signUpOrg', orgInfo)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function(err) {
-        throw err;
-      });
-  }
-
 
   render() {
     return (
