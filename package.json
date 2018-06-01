@@ -10,6 +10,7 @@
     "build": "webpack --mode production --watch ./client/index.js --output ./client/dist/bundle.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "jquery": "^3.3.1",
