@@ -169,10 +169,7 @@ const saveVolunteers = () => {
 module.exports.saveVolunteers = saveVolunteers;
 module.exports.saveOpportunities = saveOpportunities;
 module.exports.saveOrganizations = saveOrganizations;
-// var volunteerSchema = mongoose.Schema({
-//   name: String
-// });
-
-// var Volunteers = mongoose.model('Volunteers', volunteerSchema);
-
-// module.exports.Volunteers = Volunteers;
+module.exports.Volunteers = Volunteers;
+module.exports.Organizations = Organizations;
+module.exports.Opportunities = Opportunities;
+module.exports.dbConnection = db;

@@ -7,7 +7,8 @@
     "start": "node server/index.js",
     "start-dev": "nodemon server/index.js",
     "dev": "webpack --mode development --watch ./client/index.js --output ./client/dist/bundle.js",
-    "build": "webpack --mode production --watch ./client/index.js --output ./client/dist/bundle.js"
+    "build": "webpack --mode production --watch ./client/index.js --output ./client/dist/bundle.js",
+    "test": "mocha"
   },
   "dependencies": {
     "axios": "^0.18.0",
