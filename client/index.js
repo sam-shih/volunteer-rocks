@@ -1,13 +1,14 @@
-
-import style from "./css/main.css";
-
 import React, { Component } from 'react';
+import style from "./css/main.css";
 import $ from 'jquery';
 import axios from 'axios';
 import ReactDOM from 'react-dom';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
 
 import Filter from './components/Filter.jsx';
 import OpsList from './components/OpsList.jsx';
+import Main from './components/Main.jsx';
 
 class App extends Component {
   
@@ -44,12 +45,24 @@ class App extends Component {
       });
   }
 
+  renderView() {
+    const {view} = this.state;
+    if (view === 'main') {
+      return <Main />
+    }
+  }
+
   render() {
     return (
       <div>
-        <p>Bunch of Frooty Tooties</p>
-        <div className='filter'>
-          <Filter />
+        <nav className="navbar navbar-light bg-light static-top">
+          <div className="container">
+            <a className="navbar-brand" href="#">Volunteer Rocks</a>
+            <a className="btn btn-primary" href="#">Sign In</a>
+          </div>
+        </nav>
+        <div className="main">
+          {this.renderView()}
         </div>
       </div>
     );
