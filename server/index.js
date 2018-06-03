@@ -1,7 +1,9 @@
 const express = require('express');
 const session = require('express-session');
 const port = process.env.PORT || 3000;
+const db = require('../database/openDB.js');
 const database = require('../database/db.js');
+
 
 
 const app = express();
