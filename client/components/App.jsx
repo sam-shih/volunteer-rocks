@@ -62,6 +62,8 @@ class App extends Component {
     const {view} = this.state;
     if (view === 'main') {
       return <Main />
+    } else if (view === 'opportunities') {
+      return <OpsList opportunities={this.state.opportunities} />
     }
   }
 
