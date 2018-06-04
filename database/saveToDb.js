@@ -4,27 +4,43 @@ let Organization = models.Organizations;
 let Opportunity = models.Opportunities;
 
 const newVolunteer = function(volunteer) {
-  return new Volunteer({
+  let aNewVolunteer = new Volunteer({
     name: volunteer.name,
     address: volunteer.address,
     phone: volunteer.phone,
     email: volunteer.email,
     TODO: 'Insert opList'
   });
+
+  aNewVolunteer.save(function(err, volunteer) {
+    if (err) {
+      throw err;
+    }
+
+    console.log(`A new volunteer, ${volunteer.name}, has been saved`);
+  });
 };
 
 const newOrganization = function(organization) {
-  return new Organization({
+  let aNewOrganization = new Organization({
     name: organization.name,
     address: organization.address,
     phone: organization.phone,
     email: organization.email,
     TODO: 'Insert opList'
   });
+
+  aNewOrganization.save(function(err, organization) {
+    if (err) {
+      throw err;
+    }
+
+    console.log(`A new organization, ${organization.name}, has been saved`);
+  });
 };
 
 const newOpportunity = function(opportunity) {
-  return new Opportunity({
+  let aNewOpportunity = new Opportunity({
     title: opportunity.title,
     description: opportunity.description,
     cause: opportunity.cause,
@@ -33,6 +49,14 @@ const newOpportunity = function(opportunity) {
     end_date: opportunity.end_date,
     phone: opportunity.phone,
     email: opportunity.email
+  });
+
+  aNewOpportunity.save(function(err, opportunity) {
+    if (err) {
+      throw err;
+    }
+
+    console.log(`A new opportunity, ${opportunity.title}, has been saved`);
   });
 };
 
