@@ -2,10 +2,11 @@ const expect = require('chai').expect;
 const request = require('request');
 const app = require('../server/index.js');
 const models = require('../database/models.js');
+const saveToDb = require('../database/saveToDb.js');
 const VolunteerSchema = models.Volunteers.schema.obj;
 const OrganizationSchema = models.Organizations.schema.obj;
 const OpportunitiesSchema = models.Opportunities.schema.obj;
-var server;
+let server;
 
 before(function() {
   server = app.listen(4568, function() {
@@ -37,6 +38,34 @@ describe ('Database', function() {
       });
 
     });   
+
+    describe('Create a new volunteer', function() {
+
+      before(function() {
+        let newVolunteer = saveToDb.newVolunteer({
+          name: 'Volunteer One',
+          address: {
+            street: '1234 Example St.',
+            city: 'Example City',
+            state: 'Example State',
+            zipCode: '12345'
+          },
+          phone: '(123)456-7890',
+          email: 'exampleEmail@example.com',
+        });
+      });
+
+      it('Should be able to save a new volunteer to the database', function() {
+        models.Volunteers.findOne({ name: 'Volunteer One' }, function(err, volunteer) {
+          if (err) {
+            throw err;
+          }
+
+          console.log(volunteer);
+        });
+      });
+
+    });
     
   });
 
