@@ -6,16 +6,24 @@ import { Card, CardImg, CardText, CardBody,
 
 
 const Ops = function(props) {
+  console.log(props);
   return (
-    <div>
-      <Card>
-        <CardBody>
-          <CardTitle>Card title</CardTitle>
-          <CardSubtitle>Card subtitle</CardSubtitle>
-          <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-          <Button>Button</Button>
-        </CardBody>
-      </Card>
-  </div>
+    <Card>
+      <CardBody>
+        <Row>
+          <Col xs="8">
+            <CardTitle>{props.opportunity.title}</CardTitle>
+            <CardSubtitle>{props.opportunity.cause}</CardSubtitle>
+            <CardText>{props.opportunity.description}</CardText>
+          </Col>
+          <Col xs="4">
+            <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+          </Col>
+        </Row>
+        <Button>Volunteer</Button>
+      </CardBody>
+    </Card>
   );
 };
+
+export default Ops;

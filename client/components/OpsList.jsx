@@ -11,3 +11,5 @@ const OpsList = function(props) {
     </Container>
   );
 };
+
+export default OpsList;

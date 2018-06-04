@@ -5,6 +5,7 @@ import $ from 'jquery';
 import Filter from './Filter.jsx';
 import OpsList from './OpsList.jsx';
 import Main from './Main.jsx';
+import Signup from './Signup.jsx';
 
 import {
   Collapse,
@@ -62,6 +63,8 @@ class App extends Component {
     const {view} = this.state;
     if (view === 'main') {
       return <Main />
+    } else if (view === 'opportunities') {
+      return <OpsList opportunities={this.state.opportunities} />
     }
   }
 
@@ -78,10 +81,13 @@ class App extends Component {
           <NavbarBrand href="/">VolunteerRocks</NavbarBrand>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                  <NavLink href="/signup">Sign Up</NavLink>
+                <NavLink href="/signup">Sign Up</NavLink>
               </NavItem>
               <NavItem>
-                  <NavLink href="/login">Login</NavLink>
+                <NavLink href="/login">Login</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink>Opportunities</NavLink>
               </NavItem>
             </Nav>
       </Navbar>
