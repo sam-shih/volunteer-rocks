@@ -89,11 +89,7 @@ describe ('Database', function() {
       it('Should have a email property', function() {
         expect(OpportunitiesSchema.email).to.exist;
       });
-
-
-
-
-
+      
     });
 
   });
