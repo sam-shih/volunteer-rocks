@@ -7,15 +7,18 @@ const VolunteerSchema = models.Volunteers.schema.obj;
 const OrganizationSchema = models.Organizations.schema.obj;
 const OpportunitiesSchema = models.Opportunities.schema.obj;
 let server;
+let db;
+
 
 before(function() {
-  server = app.listen(4568, function() {
-    console.log('The tests are listening on 4568');
-  });
+  server = app.listen(4568, function() { });
+
+  db = require('../database/connectDb.js');  
 });
 
 after(function() {
   server.close();
+  db.disconnect();
 });
 
 describe ('Database', function() {
@@ -42,17 +45,17 @@ describe ('Database', function() {
     describe('Create a new volunteer', function() {
 
       before(function() {
-        let newVolunteer = saveToDb.newVolunteer({
-          name: 'Volunteer One',
-          address: {
-            street: '1234 Example St.',
-            city: 'Example City',
-            state: 'Example State',
-            zipCode: '12345'
-          },
-          phone: '(123)456-7890',
-          email: 'exampleEmail@example.com',
-        });
+        // let newVolunteer = saveToDb.newVolunteer({
+        //   name: 'Volunteer One',
+        //   address: {
+        //     street: '1234 Example St.',
+        //     city: 'Example City',
+        //     state: 'Example State',
+        //     zipCode: '12345'
+        //   },
+        //   phone: '(123)456-7890',
+        //   email: 'exampleEmail@example.com',
+        // });
       });
 
       it('Should be able to save a new volunteer to the database', function() {
