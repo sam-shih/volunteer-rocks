@@ -35,3 +35,7 @@ const newOpportunity = function(opportunity) {
     email: opportunity.email
   });
 };
+
+module.exports.newOpportunity = newOpportunity;
+module.exports.newOrganization = newOrganization;
+module.exports.newVolunteer = newVolunteer;

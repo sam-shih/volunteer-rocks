@@ -1,10 +1,9 @@
 const express = require('express');
 const session = require('express-session');
 const port = process.env.PORT || 3000;
-const db = require('../database/openDB.js');
-const database = require('../database/db.js');
-
-
+const dbConnect = require('../database/connectDb.js');
+const saveToDb = require('../database/saveToDb.js');
+const retrieveFromDb = require('../database/retrieveFromDb.js');
 
 const app = express();
 
@@ -19,7 +18,7 @@ app.post('/organisation', (req, res) => {
 
 //OPPORTUNITIES GET REQUEST
 app.get('/opportunities', (req, res) => {
-  database.getOpportunities((data) => {
+  retrieveFromDb.getOpportunities((data) => {
     res.status(200).json(data);
   });
 });

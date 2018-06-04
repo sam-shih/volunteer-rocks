@@ -14,3 +14,5 @@ db.on('error', function(err) {
 db.once('open', function() {
   console.log('Volunteer Database is connected');
 });
+
+module.exports.dbConnect = db;
