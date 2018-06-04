@@ -6,7 +6,6 @@ import { Card, CardImg, CardText, CardBody,
 
 
 const Ops = function(props) {
-  console.log(props);
   return (
     <Card>
       <CardBody>
