@@ -35,6 +35,8 @@ class App extends Component {
     }
     this.getOpps = this.getOpps.bind(this);
     this.toggle = this.toggle.bind(this);
+    this.changeToOpportunity = this.changeToOpportunity.bind(this);
+    this.changeView = this.changeView.bind(this);
   }
 
   componentDidMount() {
@@ -42,9 +44,15 @@ class App extends Component {
   }
 
   changeView(option) {
-    this.setState({
-      view: option
-    });
+    if (this.state.view !== option) {
+      this.setState({
+        view: option
+      });
+    }
+  }
+
+  changeToOpportunity() {
+    this.changeView('opportunities');
   }
 
   getOpps() {
@@ -87,7 +95,7 @@ class App extends Component {
                 <NavLink href="/login">Login</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink>Opportunities</NavLink>
+                <NavLink onClick={this.changeToOpportunity}>Opportunities</NavLink>
               </NavItem>
             </Nav>
       </Navbar>
