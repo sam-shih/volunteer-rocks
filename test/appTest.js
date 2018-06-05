@@ -45,26 +45,33 @@ describe ('Database', function() {
     describe('Create a new volunteer', function() {
 
       before(function() {
-        // let newVolunteer = saveToDb.newVolunteer({
-        //   name: 'Volunteer One',
-        //   address: {
-        //     street: '1234 Example St.',
-        //     city: 'Example City',
-        //     state: 'Example State',
-        //     zipCode: '12345'
-        //   },
-        //   phone: '(123)456-7890',
-        //   email: 'exampleEmail@example.com',
-        // });
+        let newVolunteer = saveToDb.newVolunteer({
+          name: 'Volunteer One',
+          address: {
+            street: '1234 Example St.',
+            city: 'Example City',
+            state: 'Example State',
+            zipCode: '12345'
+          },
+          phone: '(123)456-7890',
+          email: 'exampleEmail@example.com',
+        });
       });
 
-      it('Should be able to save a new volunteer to the database', function() {
-        models.Volunteers.findOne({ name: 'Volunteer One' }, function(err, volunteer) {
+      after(function() {
+        models.Volunteers.findOneAndDelete({ name: 'Volunteer One' }, function(err, volunteer) {
           if (err) {
             throw err;
           }
+        });
+      })
 
-          console.log(volunteer);
+      it('Should be able to save a new volunteer to the database', function() {
+
+        let testSave = models.Volunteers.findOne({ name: 'Volunteer One' }, function(err, volunteer) { });
+        
+        return testSave.then(function(result) {
+          expect(result.name).to.equal('Volunteer One');
         });
       });
 
