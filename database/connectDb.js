@@ -15,4 +15,9 @@ db.once('open', function() {
   console.log('Volunteer Database is connected');
 });
 
+let disconnect = function() {
+  mongoose.connection.close();
+};
+
 module.exports.dbConnect = db;
+module.exports.disconnect = disconnect;

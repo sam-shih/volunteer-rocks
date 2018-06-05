@@ -7,15 +7,18 @@ const VolunteerSchema = models.Volunteers.schema.obj;
 const OrganizationSchema = models.Organizations.schema.obj;
 const OpportunitiesSchema = models.Opportunities.schema.obj;
 let server;
+let db;
+
 
 before(function() {
-  server = app.listen(4568, function() {
-    console.log('The tests are listening on 4568');
-  });
+  server = app.listen(4568, function() { });
+
+  db = require('../database/connectDb.js');  
 });
 
 after(function() {
   server.close();
+  db.disconnect();
 });
 
 describe ('Database', function() {
@@ -55,13 +58,20 @@ describe ('Database', function() {
         });
       });
 
-      it('Should be able to save a new volunteer to the database', function() {
-        models.Volunteers.findOne({ name: 'Volunteer One' }, function(err, volunteer) {
+      after(function() {
+        models.Volunteers.findOneAndDelete({ name: 'Volunteer One' }, function(err, volunteer) {
           if (err) {
             throw err;
           }
+        });
+      })
 
-          console.log(volunteer);
+      it('Should be able to save a new volunteer to the database', function() {
+
+        let testSave = models.Volunteers.findOne({ name: 'Volunteer One' }, function(err, volunteer) { });
+        
+        return testSave.then(function(result) {
+          expect(result.name).to.equal('Volunteer One');
         });
       });
 
