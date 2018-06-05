@@ -39,7 +39,7 @@ class OrgSignupModal extends React.Component {
     console.log(form, 'newOrg signup form')
     axios.post('/signup', {
       name: form.name,
-      adddress: {
+      address: {
         street: form.street,
         city: form.city,
         state: form.state,
@@ -51,6 +51,7 @@ class OrgSignupModal extends React.Component {
     .then(response => {
       console.log('Form posted to server')
       this.toggle
+
     })
     .catch(err => console.log('Err', err));
   }
