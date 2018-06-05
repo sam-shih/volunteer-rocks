@@ -39,9 +39,10 @@ class App extends Component {
   getOpps() {
     axios.get('/opportunities')
       .then((response) => {
-        this.setState({
-          opportunities: response.data
-        });
+          this.setState({
+            opportunities: response.data,
+            view: 'opportunities'
+          });
       })
       .catch((err) => {
         throw(err)
@@ -50,7 +51,7 @@ class App extends Component {
 
   postNewOrganizationForm(form) {
     axios.post('/organization', {
-      
+
     })
       .then((response) => {
         alert('New Organization Saved');
@@ -76,7 +77,7 @@ class App extends Component {
           <NavbarBrand href="/">VolunteerRocks</NavbarBrand>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <OrgSignupModal />
+                <OrgSignupModal changeView={this.changeView}/>
               </NavItem>
               <NavItem>
                 <SignupModal />
