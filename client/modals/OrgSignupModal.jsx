@@ -21,7 +21,7 @@ class OrgSignupModal extends React.Component {
     this.submitForm = this.submitForm.bind(this);
     this.toggle = this.toggle.bind(this);
   }
-  
+
   toggle() {
     this.setState({
       modal: !this.state.modal
@@ -51,7 +51,7 @@ class OrgSignupModal extends React.Component {
     .then(response => {
       console.log('Form posted to server')
       this.toggle
-    }) 
+    })
     .catch(err => console.log('Err', err));
   }
 
@@ -66,11 +66,11 @@ class OrgSignupModal extends React.Component {
               <FormGroup row>
                 <Label for="name" sm={2}>Organization</Label>
                 <Col sm={10}>
-                  <Input 
+                  <Input
                     type="text"
-                    name="name" 
-                    id="name" 
-                    value={this.state.form.name} 
+                    name="name"
+                    id="name"
+                    value={this.state.form.name}
                     onChange={this.updateInput} />
                 </Col>
               </FormGroup>

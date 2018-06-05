@@ -28,7 +28,6 @@ const getOpportunities = function(callback, limit) {
     if (err) {
       throw err;
     }
-
     callback(oppsData);
   }).limit(limit);
 };

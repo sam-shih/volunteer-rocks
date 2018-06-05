@@ -21,12 +21,13 @@ const newVolunteer = function(volunteer) {
   });
 };
 
-const newOrganization = function(organization) {
+const newOrganization = function(organization, sessionId) {
   let aNewOrganization = new Organization({
     name: organization.name,
     address: organization.address,
     phone: organization.phone,
     email: organization.email,
+    sessionId: sessionId,
     TODO: 'Insert opList'
   });
 
