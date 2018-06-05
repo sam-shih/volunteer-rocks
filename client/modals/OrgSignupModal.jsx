@@ -36,6 +36,7 @@ class OrgSignupModal extends React.Component {
   }
 
   submitForm (form) {
+    console.log(form, 'newOrg signup form')
     axios.post('/signup', {
       name: form.name,
       adddress: {
@@ -118,9 +119,9 @@ class OrgSignupModal extends React.Component {
                 <Label for="number" sm={2}>Phone</Label>
                 <Col sm={10}>
                 <Input
-                  name="number"
+                  name="phone"
                   type="text"
-                  value={this.state.form.number}
+                  value={this.state.form.phone}
                   onChange={this.updateInput} />
                 </Col>
               </FormGroup>

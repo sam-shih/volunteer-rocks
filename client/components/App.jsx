@@ -9,14 +9,7 @@ import OrgSignupModal from '../modals/OrgSignupModal.jsx';
 import SignupModal from '../modals/SignupModal.jsx';
 import LoginModal from '../modals/LoginModal.jsx';
 
-import {
-  NavbarToggler,
-  NavbarBrand,
-  NavItem,
-  Navbar,
-  NavLink,
-  Nav
-} from 'reactstrap';
+import { NavbarToggler,  NavbarBrand,  NavItem,  Navbar,  NavLink,  Nav } from 'reactstrap';
 
 class App extends Component {
   constructor(props) {
