@@ -5,30 +5,17 @@ import $ from 'jquery';
 import Filter from './Filter.jsx';
 import OpsList from './OpsList.jsx';
 import Main from './Main.jsx';
-import Signup from './Signup.jsx';
-
+import OrgSignupModal from '../modals/OrgSignupModal.jsx';
+import SignupModal from '../modals/SignupModal.jsx';
+import LoginModal from '../modals/LoginModal.jsx';
 
 import {
-  Collapse,
-  Navbar,
-  Form,
-  FormGroup,
   NavbarToggler,
   NavbarBrand,
-  Nav,
-  Input,
   NavItem,
+  Navbar,
   NavLink,
-  Label,
-  Container,
-  Row,
-  Col,
-  Jumbotron,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button
+  Nav
 } from 'reactstrap';
 
 class App extends Component {
@@ -38,13 +25,9 @@ class App extends Component {
       view: 'main',
       opportunities: [],
       opportunity: '',
-      newOrgModal: false,
-      signUpModal: false,
-      loginModal: false,
       isOpen: false
     }
     this.getOpps = this.getOpps.bind(this);
-    this.toggleModal = this.toggleModal.bind(this);
     this.changeView = this.changeView.bind(this);
   }
 
@@ -93,12 +76,6 @@ class App extends Component {
     }
   }
 
-  toggleModal(option) {
-    this.setState({
-      [option]: !this.state[option]
-    });
-  }
-
   render() {
     return (
       <div>
@@ -106,112 +83,18 @@ class App extends Component {
           <NavbarBrand href="/">VolunteerRocks</NavbarBrand>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink onClick={() => this.toggleModal('newOrgModal')}>Org Sign Up</NavLink>
+                <OrgSignupModal />
               </NavItem>
               <NavItem>
-                <NavLink onClick={() => this.toggleModal('signupModal')}>Sign Up</NavLink>
+                <SignupModal />
               </NavItem>
               <NavItem>
-                <NavLink onClick={() => this.toggleModal('loginModal')}>Login</NavLink>
+                <LoginModal />
               </NavItem>
               <NavItem>
                 <NavLink onClick={() => this.changeView('opportunities')}>Opportunities</NavLink>
               </NavItem>
             </Nav>
-
-            {/* NEW ORG SIGNUP MODAL */}
-
-            <Modal isOpen={this.state.newOrgModal} toggle={() => this.toggleModal('newOrgModal')} className={this.props.className}>
-              <ModalHeader toggle={() => this.toggleModal('newOrgModal')}>Organization Signup</ModalHeader>
-              <ModalBody>
-                <Signup />
-                  {/* <FormGroup row>
-                    <Label for="name" sm={2}>Organization</Label>
-                    <Col sm={10}>
-                      <Input type="name" name="name" />
-                    </Col>
-                  </FormGroup>
-
-                  <FormGroup row>
-                    <Label for="Street" sm={2}>Street</Label>
-                    <Col sm={10}>
-                      <Input type="street" name="street" />
-                    </Col>
-                  </FormGroup>
-
-                  <FormGroup row>
-                    <Label for="city" sm={2}>City</Label>
-                    <Col sm={10}>
-                      <Input type="city" name="city" />
-                    </Col>
-                  </FormGroup>
-
-                  <FormGroup row>
-                    <Label for="state" sm={2}>State</Label>
-                    <Col sm={10}>
-                      <Input type="state" name="state" />
-                    </Col>
-                  </FormGroup>
-
-                  <FormGroup row>
-                    <Label for="zipcode" sm={2}>Zip Code</Label>
-                    <Col sm={10}>
-                      <Input type="zipcode" name="zipcode" />
-                    </Col>
-                  </FormGroup>
-
-                  <FormGroup row>
-                    <Label for="number" sm={2}>Phone Number</Label>
-                    <Col sm={10}>
-                      <Input type="number" name="number" />
-                    </Col>
-                  </FormGroup>
-
-                  <FormGroup row>
-                    <Label for="email" sm={2}>Email</Label>
-                    <Col sm={10}>
-                    <Input type="email" name="email" id="email" />
-                    </Col>
-                  </FormGroup>
-
-                  <FormGroup row>
-                    <Label for="password" sm={2}>Password</Label>
-                    <Col sm={10}>
-                    <Input type="password" name="password" id="password" />
-                    </Col>
-                  </FormGroup>
-                  <Button 
-                    type="submit"
-                    color="primary" 
-                    onSubmit={(e) => this.handleNewOrgSubmit('newOrgModal')}>Sign Up</Button>{' '}
-                </Form> */}
-              </ModalBody>
-            </Modal>
-
-            {/* SIGNUP MODAL */}
-
-            <Modal isOpen={this.state.signupModal} toggle={() => this.toggleModal('signupModal')} className={this.props.className}>
-              <ModalHeader toggle={() => this.toggleModal('signupModal')}>Signup</ModalHeader>
-              <ModalBody>
-                <Input placeholder="User Name"/>
-                <Input placeholder="Password"/>
-                <Button color="primary" onClick={() => this.toggleModal('signupModal')}>Sign Up</Button>{' '}
-                <Button color="sucess" onClick={() => this.toggleModal('signupModal')}>Sign Up with Google+</Button>{' '}
-              </ModalBody>
-            </Modal>
-
-            {/* LOGIN MODAL */}
-
-            <Modal isOpen={this.state.loginModal} toggle={() => this.toggleModal('loginModal')} className={this.props.className}>
-              <ModalHeader toggle={() => this.toggleModal('loginModal')}>Login</ModalHeader>
-              <ModalBody>
-                <Input placeholder="User Name"/>
-                <Input placeholder="Password"/>
-                <Button color="primary" onClick={() => this.toggleModal('loginModal')}>Login</Button>{' '}
-                <Button color="sucess" onClick={() => this.toggleModal('loginModal')}>Login with Google+</Button>{' '}
-              </ModalBody>
-            </Modal>
-
       </Navbar>
       {this.renderView()}
       </div>
