@@ -33,6 +33,7 @@ var organizationSchema = mongoose.Schema({
   },
   phone: String,
   email: String,
+  sessionId: String,
   opList: [Schema.ObjectId]
 });
 
