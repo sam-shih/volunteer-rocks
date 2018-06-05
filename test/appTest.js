@@ -98,6 +98,40 @@ describe ('Database', function() {
 
     });
 
+    describe('Create a new organization', function() {
+
+      before(function() {
+        let newOrganization = saveToDb.newOrganization({
+          name: 'New Organization',
+          address: {
+            street: '1234 Example St.',
+            city: 'Example City',
+            state: 'Example State',
+            zip: '12345',
+          },
+          phone: '(123)456-7890',
+          email: 'exampleEmail@example.com',
+        });
+      });
+
+      after(function() {
+        models.Organizations.findOneAndDelete({ name: 'New Organization' }, function(err, organization) {
+          if (err) {
+            throw err;
+          }
+        });
+      });
+
+      it('Should save a new organization into the database', function() {
+        let testSave = models.Organizations.findOne({ name: 'New Organization' }, function(err, organizatioin) { });
+
+        return testSave.then(function(result) {
+          expect(result.name).to.equal('New Organization');
+        })
+      });
+
+    });
+
   });
 
   describe('Opportunitiess', function() {
@@ -127,6 +161,32 @@ describe ('Database', function() {
       });
       it('Should have a email property', function() {
         expect(OpportunitiesSchema.email).to.exist;
+      });
+      
+    });
+
+    describe('Create a new opportunity', function() {
+      
+      before(function() {
+        let newOpportunity = saveToDb.newOpportunity({
+          title: "New Opportunity"
+        });
+      });
+
+      after(function() {
+        models.Opportunities.findOneAndDelete({ title: 'New Opportunity' }, function(err, opportunity) {
+          if (err) {
+            throw err;
+          }
+        });
+      });
+
+      it('Should be able to save a new opportunity to database', function() {
+        let testSave = models.Opportunities.findOne({ title: 'New Opportunity' }, function(err, opportunity) { });
+
+        return testSave.then(function(result) {
+          expect(result.title).to.equal('New Opportunity');
+        });
       });
       
     });
