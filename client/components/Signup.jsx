@@ -27,7 +27,18 @@ class Form extends React.Component {
   }
 
   submitForm (form) {
-    axios.post('/signup', form) // Send form to server
+
+    axios.post('/signup', {
+      name: form.name,
+      adddress: {
+        street: form.street,
+        city: form.city,
+        state: form.state,
+        zipcode: form.zipcode
+      },
+      phone: form.phone,
+      email: form.email
+    }) // Send form to server
     .then(response => console.log('Form posted to server', form)) 
     .catch(err => console.log('Err', err));
   }
@@ -91,8 +102,10 @@ class Form extends React.Component {
             value={this.state.form.email}
             onChange={this.updateInput} />
           <br />
-        <button onClick={this.submitForm(this.state.form)}>Submit</button>
+        <button onClick={() => this.submitForm(this.state.form)}>Submit</button>
       </form>
     );
   }
 }
+
+export default Form;

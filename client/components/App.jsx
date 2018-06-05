@@ -7,6 +7,7 @@ import OpsList from './OpsList.jsx';
 import Main from './Main.jsx';
 import Signup from './Signup.jsx';
 
+
 import {
   Collapse,
   Navbar,
@@ -48,7 +49,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.getOpps();
+    this.getOpps()
   }
 
   changeView(option) {
@@ -61,13 +62,25 @@ class App extends Component {
 
   getOpps() {
     axios.get('/opportunities')
-      .then($.proxy(function(response) {
+      .then((response) => {
         this.setState({
           opportunities: response.data
-        })
-      }, this))
-      .catch(function(err) {
-        throw err;
+        });
+      })
+      .catch((err) => {
+        throw(err)
+      });
+  }
+
+  postNewOrganizationForm(form) {
+    axios.post('/organization', {
+      
+    })
+      .then((response) => {
+        alert('New Organization Saved');
+      })
+      .catch((err) => {
+        throw(err);
       });
   }
 
@@ -111,8 +124,8 @@ class App extends Component {
             <Modal isOpen={this.state.newOrgModal} toggle={() => this.toggleModal('newOrgModal')} className={this.props.className}>
               <ModalHeader toggle={() => this.toggleModal('newOrgModal')}>Organization Signup</ModalHeader>
               <ModalBody>
-                <Form>
-                  <FormGroup row>
+                <Signup />
+                  {/* <FormGroup row>
                     <Label for="name" sm={2}>Organization</Label>
                     <Col sm={10}>
                       <Input type="name" name="name" />
@@ -167,8 +180,11 @@ class App extends Component {
                     <Input type="password" name="password" id="password" />
                     </Col>
                   </FormGroup>
-                </Form>
-                <Button color="primary" onClick={() => this.toggleModal('newOrgModal')}>Sign Up</Button>{' '}
+                  <Button 
+                    type="submit"
+                    color="primary" 
+                    onSubmit={(e) => this.handleNewOrgSubmit('newOrgModal')}>Sign Up</Button>{' '}
+                </Form> */}
               </ModalBody>
             </Modal>
 
