@@ -41,7 +41,7 @@ class App extends Component {
       .then((response) => {
           this.setState({
             opportunities: response.data,
-            view: 'opportunities'
+            view: 'main'
           });
       })
       .catch((err) => {
