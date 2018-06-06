@@ -23,12 +23,12 @@ const getOrganizations = function(callback, limit) {
   }).limit(limit);
 };
 
-const getOpportunities = function(callback, limit) {
+const getOpportunities = function(limit, res) {
   Opportunities.find({}, function (err, oppsData) {
     if (err) {
       throw err;
     }
-    callback(oppsData);
+    res.status(200).json(oppsData);
   }).limit(limit);
 };
 

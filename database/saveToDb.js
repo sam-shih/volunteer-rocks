@@ -21,7 +21,7 @@ const newVolunteer = function(volunteer) {
   });
 };
 
-const newOrganization = function(organization, sessionId) {
+const newOrganization = function(organization, sessionId, res) {
   let aNewOrganization = new Organization({
     name: organization.name,
     address: organization.address,
@@ -37,6 +37,7 @@ const newOrganization = function(organization, sessionId) {
     }
 
     console.log(`A new organization, ${organization.name}, has been saved`);
+    res.status(201).end();
   });
 };
 
