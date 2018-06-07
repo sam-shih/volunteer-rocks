@@ -60,15 +60,9 @@ class OrgSignupModal extends React.Component {
   render() {
     return (
       <React.Fragment>
-<<<<<<< HEAD
         <NavLink onClick={this.toggle}>Recruit Volunteers</NavLink>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Create an Account for your Organization</ModalHeader>
-=======
-        <NavLink onClick={this.toggle}>Signup Organization</NavLink>
-        <Modal size='lg' isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.toggle}>Creat an Account for your Organization</ModalHeader>
->>>>>>> Enable geocoding api
           <ModalBody>
             <Form onSubmit={this.submitForm}>
               <FormGroup row>

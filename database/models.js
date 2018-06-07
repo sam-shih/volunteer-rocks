@@ -49,12 +49,7 @@ var opportunitiesSchema = mongoose.Schema({
   },
   description: String,
   cause:String,
-  address:{
-    street:String,
-    city: String,
-    state: String,
-    zipCode: String,
-  },
+  address:String,
   start_date: Date,
   end_date:Date,
   phone: String,
