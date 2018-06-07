@@ -12,10 +12,10 @@ const Main = (props) => (
             <form>
               <div className="form-row">
                 <div className="col-12 col-md-9 mb-2 mb-md-0">
-                  <input type="text" className="form-control form-control-sm" placeholder="Enter your zip code..." />
+                  <input type="text" className="form-control form-control-sm" placeholder="Enter your zip code..." onChange={props.zipcode.bind(this)}/>
                 </div>
                 <div className="col-12 col-md-3">
-                  <button type="submit" className="btn btn-block btn-sm btn-primary">Search</button>
+                  <button type="submit" className="btn btn-block btn-sm btn-primary" onClick={(e)=>props.getOpp(e)}>Search</button>
                 </div>
               </div>
             </form>

@@ -32,6 +32,18 @@ const getOpportunities = function(limit, res) {
   }).limit(limit);
 };
 
+const getZipCodeSearch = function(limit, res) {
+  Opportunities.find({}, function(err, opps) {
+    if(err){
+      throw err;
+    }
+    console.log(opps)
+    res.status(200).json(opps);
+    res.end();
+  }).limit(limit);
+}
+
 module.exports.getVolunteers = getVolunteers;
 module.exports.getOrganizations = getOrganizations;
 module.exports.getOpportunities = getOpportunities;
+module.exports.getZipCodeSearch = getZipCodeSearch;

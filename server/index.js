@@ -11,9 +11,9 @@ app.use(express.static(__dirname + '/../client/dist'));
 app.use(session({secret: 'Is it really a secret', cookie:{maxAge: 365*24*60*60}}));
 
 //MAIN PAGE GET REQUEST
-app.get('/main', (req, res) => {
-  checkdb.checkSessionId(req.session.id, res);
-});
+// app.get('/main', (req, res) => {
+//   checkdb.checkSessionId(req.session.id, res);
+// });
 
 //ORGANIZATION LOGIN REQUEST
 app.post('/login', (req, res) => {
@@ -27,7 +27,7 @@ app.post('/signup', (req, res) => {
 
 //OPPORTUNITIES GET REQUEST
 app.get('/opportunities', (req, res) => {
-  retrieveFromDb.getOpportunities(5, res);
+  retrieveFromDb.getZipCodeSearch(5, res);
 });
 
 app.post('/newOpp', (req, res) => {
