@@ -77,7 +77,6 @@ const newOpportunity = function(opportunity) {
         lng: gmapi.geometry.location.lng
       }
     });
-
       aNewOpportunity.save(function(err, opportunity) {
         if (err) {
           throw err;
