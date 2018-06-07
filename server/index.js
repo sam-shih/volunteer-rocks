@@ -15,7 +15,7 @@ app.get('/main', (req, res) => {
   checkdb.checkSessionId(req.session.id, res);
 });
 
-//ORGANISATION LOGIN REQUEST
+//ORGANIZATION LOGIN REQUEST
 app.post('/login', (req, res) => {
   checkdb.checkUserCredential(req.body, res);
 });

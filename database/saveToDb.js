@@ -1,4 +1,5 @@
 const models = require('./models.js');
+const bcrypt = require('bcrypt');
 let Volunteer = models.Volunteers;
 let Organization = models.Organizations;
 let Opportunity = models.Opportunities;
@@ -22,8 +23,15 @@ const newVolunteer = function(volunteer) {
 };
 
 const newOrganization = function(organization, sessionId, res) {
+  let hashPassword = '';
+
+  bcrypt.hash(organization.password, 10, function(err, hash) {
+    hashPassword = hash;
+  });
+
   let aNewOrganization = new Organization({
     name: organization.name,
+    password: hashPassword,
     address: organization.address,
     phone: organization.phone,
     email: organization.email,
