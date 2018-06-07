@@ -64,8 +64,13 @@ class CreateOpModal extends React.Component {
     return (
       <React.Fragment>
         <NavLink onClick={this.toggle}>Create New Opportunity</NavLink>
+<<<<<<< HEAD
         <Modal size="lg" isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Create a New Opportunity</ModalHeader>
+=======
+        <Modal size='lg' isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+          <ModalHeader toggle={this.toggle}>Create a New Opporunity for Volunteers</ModalHeader>
+>>>>>>> Enable geocoding api
           <ModalBody>
             <Form onSubmit={this.submitForm}>
             {/* <StandaloneSearchBox

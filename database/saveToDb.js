@@ -56,7 +56,11 @@ const newOrganization = function(organization, sessionId, res) {
 const newOpportunity = function(opportunity) {
 
   googleMapsClient.geocode({
+<<<<<<< HEAD
     address: opportunity.address
+=======
+    address: opportunity.adddress
+>>>>>>> Enable geocoding api
   }, function(err, response) {
     if (!err) {
       console.log(response.json.results);
@@ -76,6 +80,7 @@ const newOpportunity = function(opportunity) {
           lng: gmapi.geometry.location.lng
         }
       });
+<<<<<<< HEAD
 
       aNewOpportunity.save(function(err, opportunity) {
         if (err) {
@@ -86,6 +91,18 @@ const newOpportunity = function(opportunity) {
       });
     }
   });
+=======
+    
+      aNewOpportunity.save(function(err, opportunity) {
+        if (err) {
+          throw err;
+        }
+        console.log(`A new opportunity, ${opportunity.title}, has been saved`);
+      });
+    }
+  });
+
+>>>>>>> Enable geocoding api
 };
 
 module.exports.newOpportunity = newOpportunity;
