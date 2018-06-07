@@ -30,4 +30,9 @@ app.get('/opportunities', (req, res) => {
   retrieveFromDb.getOpportunities(5, res);
 });
 
+app.post('/newOpp', (req, res) => {
+  console.log(req.body);
+  saveToDb.newOpportunity(req.body);
+  res.sendStatus(200);
+});
 module.exports = app;

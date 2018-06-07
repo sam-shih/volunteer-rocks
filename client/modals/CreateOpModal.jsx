@@ -21,6 +21,7 @@ class CreateOpModal extends React.Component {
         email: ''
       }
     }
+
     this.updateInput = this.updateInput.bind(this);
     this.submitForm = this.submitForm.bind(this);
     this.toggle = this.toggle.bind(this);
@@ -41,7 +42,7 @@ class CreateOpModal extends React.Component {
 
   submitForm (form) {
     console.log(form, 'newOp creation form')
-    axios.post('/signup', {
+    axios.post('/newOpp', {
       title: form.title,
       description: form.description,
       cause: form.cause,
@@ -53,7 +54,7 @@ class CreateOpModal extends React.Component {
     }) // Send form to server
     .then(response => {
       console.log('Form posted to server')
-      this.toggle
+      this.toggle;
 
     })
     .catch(err => console.log('Err', err));
@@ -63,11 +64,11 @@ class CreateOpModal extends React.Component {
     return (
       <React.Fragment>
         <NavLink onClick={this.toggle}>Create New Opportunity</NavLink>
-        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.toggle}>Creat an Account for your Organization</ModalHeader>
+        <Modal size="lg" isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+          <ModalHeader toggle={this.toggle}>Create a New Opportunity</ModalHeader>
           <ModalBody>
             <Form onSubmit={this.submitForm}>
-            <StandaloneSearchBox
+            {/* <StandaloneSearchBox
             >
             <input
         type="text"
@@ -85,56 +86,67 @@ class CreateOpModal extends React.Component {
           textOverflow: `ellipses`,
         }}
       />
-            </StandaloneSearchBox>
+            </StandaloneSearchBox> */}
               <FormGroup row>
-                <Label for="name" sm={2}>Organization</Label>
+                <Label for="title" sm={2}>Title</Label>
                 <Col sm={10}>
                   <Input
                     type="text"
-                    name="name"
-                    id="name"
-                    value={this.state.form.name}
+                    name="title"
+                    id="title"
+                    value={this.state.form.title}
                     onChange={this.updateInput} />
                 </Col>
               </FormGroup>
               <FormGroup row>
-                <Label for="street" sm={2}>Street Address</Label>
+                <Label for="description" sm={2}>Description</Label>
                 <Col sm={10}>
                 <Input
                   type="text"
-                  name="street"
-                  id="street"
-                  value={this.state.form.street}
+                  name="description"
+                  id="description"
+                  value={this.state.form.description}
                   onChange={this.updateInput} />
                 </Col>
               </FormGroup>
               <FormGroup row>
-                <Label for="city" sm={2}>City</Label>
+                <Label for="cause" sm={2}>Cause</Label>
                 <Col sm={10}>
                 <Input
-                  name="city"
                   type="text"
-                  value={this.state.form.city}
+                  name="cause"
+                  id="cause"
+                  value={this.state.form.cause}
                   onChange={this.updateInput} />
                 </Col>
               </FormGroup>
               <FormGroup row>
-                <Label for="state" sm={2}>State</Label>
+                <Label for="address" sm={2}>Address</Label>
                 <Col sm={10}>
                 <Input
-                  name="state"
+                  name="address"
                   type="text"
-                  value={this.state.form.state}
+                  value={this.state.form.address}
                   onChange={this.updateInput} />
                 </Col>
               </FormGroup>
               <FormGroup row>
-                <Label for="zipcode" sm={2}>Zip Code</Label>
+                <Label for="start_date" sm={2}>Start Date</Label>
                 <Col sm={10}>
                 <Input
-                  name="zipcode"
-                  type="text"
-                  value={this.state.form.zipcode}
+                  name="start_date"
+                  type="date"
+                  value={this.state.form.start_date}
+                  onChange={this.updateInput} />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label for="end_date" sm={2}>End Date</Label>
+                <Col sm={10}>
+                <Input
+                  name="end_date"
+                  type="date"
+                  value={this.state.form.end_date}
                   onChange={this.updateInput} />
                 </Col>
               </FormGroup>
@@ -143,7 +155,7 @@ class CreateOpModal extends React.Component {
                 <Col sm={10}>
                 <Input
                   name="phone"
-                  type="text"
+                  type="tel"
                   value={this.state.form.phone}
                   onChange={this.updateInput} />
                 </Col>
@@ -153,7 +165,7 @@ class CreateOpModal extends React.Component {
                 <Col sm={10}>
                 <Input
                   name="email"
-                  type="text"
+                  type="email"
                   value={this.state.form.email}
                   onChange={this.updateInput} />
                 </Col>

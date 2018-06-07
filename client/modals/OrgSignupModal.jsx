@@ -62,7 +62,7 @@ class OrgSignupModal extends React.Component {
       <React.Fragment>
         <NavLink onClick={this.toggle}>Recruit Volunteers</NavLink>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.toggle}>Creat an Account for your Organization</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Create an Account for your Organization</ModalHeader>
           <ModalBody>
             <Form onSubmit={this.submitForm}>
               <FormGroup row>
