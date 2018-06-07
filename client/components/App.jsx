@@ -8,6 +8,7 @@ import Main from './Main.jsx';
 import OrgSignupModal from '../modals/OrgSignupModal.jsx';
 import SignupModal from '../modals/SignupModal.jsx';
 import LoginModal from '../modals/LoginModal.jsx';
+import CreateOpModal from '../modals/CreateOpModal.jsx';
 
 import { NavbarToggler,  NavbarBrand,  NavItem,  Navbar,  NavLink,  Nav } from 'reactstrap';
 
@@ -76,6 +77,9 @@ class App extends Component {
       <Navbar color="inverse" light expand="md">
           <NavbarBrand href="/">VolunteerRocks</NavbarBrand>
             <Nav className="ml-auto" navbar>
+            <NavItem>
+                <CreateOpModal />
+              </NavItem>
               <NavItem>
                 <OrgSignupModal changeView={this.changeView}/>
               </NavItem>
