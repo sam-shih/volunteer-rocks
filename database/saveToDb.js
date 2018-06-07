@@ -56,35 +56,35 @@ const newOrganization = function(organization, sessionId, res) {
 const newOpportunity = function(opportunity) {
 
   googleMapsClient.geocode({
-    address: '1600 Amphitheatre Parkway, Mountain View, CA'
+    address: opportunity.address
   }, function(err, response) {
     if (!err) {
       console.log(response.json.results);
       let gmapi = response.json.results;
-    }
-  });
 
-  let aNewOpportunity = new Opportunity({
-    title: opportunity.title,
-    description: opportunity.description,
-    cause: opportunity.cause,
-    address: gmapi.formatted_address,
-    start_date: opportunity.start_date,
-    end_date: opportunity.end_date,
-    phone: opportunity.phone,
-    email: opportunity.email,
-    location: {
-      lat: gmapi.geometry.location.lat,
-      lng:gmapi.geometry.location.lng
-    }
-  });
+      let aNewOpportunity = new Opportunity({
+        title: opportunity.title,
+        description: opportunity.description,
+        cause: opportunity.cause,
+        address: gmapi.formatted_address,
+        start_date: opportunity.start_date,
+        end_date: opportunity.end_date,
+        phone: opportunity.phone,
+        email: opportunity.email,
+        location: {
+          lat: gmapi.geometry.location.lat,
+          lng: gmapi.geometry.location.lng
+        }
+      });
 
-  aNewOpportunity.save(function(err, opportunity) {
-    if (err) {
-      throw err;
-    }
+      aNewOpportunity.save(function(err, opportunity) {
+        if (err) {
+          throw err;
+        }
 
-    console.log(`A new opportunity, ${opportunity.title}, has been saved`);
+        console.log(`A new opportunity, ${opportunity.title}, has been saved`);
+      });
+    }
   });
 };
 
