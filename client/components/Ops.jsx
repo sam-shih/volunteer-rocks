@@ -15,6 +15,8 @@ const Ops = function(props) {
             <CardTitle>{props.opportunity.title}</CardTitle>
             <CardSubtitle>{props.opportunity.cause}</CardSubtitle>
             <CardText>{props.opportunity.description}</CardText>
+            <CardText>{props.opportunity.street}</CardText>
+            <CardText>{props.opportunity.city}, {props.opportunity.state} {props.opportunity.zipCode}</CardText>
           </Col>
           <Col xs="4">
           <Map op={props.opportunity} />
