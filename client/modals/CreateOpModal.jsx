@@ -2,20 +2,23 @@ import React from 'react';
 import axios from 'axios';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, NavLink, Input, Form, FormGroup, Label, Col } from 'reactstrap';
 
-class OrgSignupModal extends React.Component {
+// import { withScriptjs, StandaloneSearchBox } from 'react-google-maps';
+import { StandaloneSearchBox } from 'react-google-maps/lib/components/places/StandaloneSearchBox'
+
+class CreateOpModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       modal: false,
       form: {
-        name: '',
-        street:'',
-        city: '',
-        state: '',
-        zipcode: '',
+        title: '',
+        description:'',
+        cause: '',
+        address: '',
+        start_date: '',
+        end_date: '',
         phone: '',
-        email: '',
-        password: ''
+        email: ''
       }
     }
     this.updateInput = this.updateInput.bind(this);
@@ -37,15 +40,14 @@ class OrgSignupModal extends React.Component {
   }
 
   submitForm (form) {
-    console.log(form, 'newOrg signup form')
+    console.log(form, 'newOp creation form')
     axios.post('/signup', {
-      name: form.name,
-      address: {
-        street: form.street,
-        city: form.city,
-        state: form.state,
-        zipcode: form.zipcode
-        },
+      title: form.title,
+      description: form.description,
+      cause: form.cause,
+      address: form.address,
+      start_date: form.start_date,
+      end_date: form.end_date,
       phone: form.phone,
       email: form.email
     }) // Send form to server
@@ -60,11 +62,30 @@ class OrgSignupModal extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <NavLink onClick={this.toggle}>Recruit Volunteers</NavLink>
+        <NavLink onClick={this.toggle}>Create New Opportunity</NavLink>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Creat an Account for your Organization</ModalHeader>
           <ModalBody>
             <Form onSubmit={this.submitForm}>
+            <StandaloneSearchBox
+            >
+            <input
+        type="text"
+        placeholder="Customized your placeholder"
+        style={{
+          boxSizing: `border-box`,
+          border: `1px solid transparent`,
+          width: `240px`,
+          height: `32px`,
+          padding: `0 12px`,
+          borderRadius: `3px`,
+          boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
+          fontSize: `14px`,
+          outline: `none`,
+          textOverflow: `ellipses`,
+        }}
+      />
+            </StandaloneSearchBox>
               <FormGroup row>
                 <Label for="name" sm={2}>Organization</Label>
                 <Col sm={10}>
@@ -137,16 +158,6 @@ class OrgSignupModal extends React.Component {
                   onChange={this.updateInput} />
                 </Col>
               </FormGroup>
-              <FormGroup row>
-                <Label for="password" sm={2}>Password</Label>
-                <Col sm={10}>
-                <Input
-                  name="password"
-                  type="text"
-                  value={this.state.form.password}
-                  onChange={this.updateInput} />
-                </Col>
-              </FormGroup>
               <Button onClick={() => this.submitForm(this.state.form)}>Submit</Button>
             </Form>
           </ModalBody>
@@ -156,4 +167,4 @@ class OrgSignupModal extends React.Component {
   }
 }
 
-export default OrgSignupModal;
+export default CreateOpModal;

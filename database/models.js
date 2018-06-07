@@ -58,7 +58,11 @@ var opportunitiesSchema = mongoose.Schema({
   start_date: Date,
   end_date:Date,
   phone: String,
-  email: String
+  email: String,
+  location: {
+    lat: Number,
+    lng: Number
+  }
 });
 
 

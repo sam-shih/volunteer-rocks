@@ -1,5 +1,9 @@
 const models = require('./models.js');
 const bcrypt = require('bcrypt');
+var googleMapsClient = require('@google/maps').createClient({
+  key: 'AIzaSyBPLIcGtNnLOb7bqR7wq9s-y2hcsWzU5i4'
+});
+
 let Volunteer = models.Volunteers;
 let Organization = models.Organizations;
 let Opportunity = models.Opportunities;
@@ -50,15 +54,29 @@ const newOrganization = function(organization, sessionId, res) {
 };
 
 const newOpportunity = function(opportunity) {
+
+  googleMapsClient.geocode({
+    address: '1600 Amphitheatre Parkway, Mountain View, CA'
+  }, function(err, response) {
+    if (!err) {
+      console.log(response.json.results);
+      let gmapi = response.json.results;
+    }
+  });
+
   let aNewOpportunity = new Opportunity({
     title: opportunity.title,
     description: opportunity.description,
     cause: opportunity.cause,
-    address: opportunity.address,
+    address: gmapi.formatted_address,
     start_date: opportunity.start_date,
     end_date: opportunity.end_date,
     phone: opportunity.phone,
-    email: opportunity.email
+    email: opportunity.email,
+    location: {
+      lat: gmapi.geometry.location.lat,
+      lng:gmapi.geometry.location.lng
+    }
   });
 
   aNewOpportunity.save(function(err, opportunity) {
