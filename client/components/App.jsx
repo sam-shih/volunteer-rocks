@@ -20,15 +20,11 @@ class App extends Component {
     this.state = {
       view: 'main',
       opportunities: [],
-      opportunity: '',
-      isOpen: false
+      isOpen: false,
+      zipcode: ''
     }
     this.getOpps = this.getOpps.bind(this);
     this.changeView = this.changeView.bind(this);
-  }
-
-  componentDidMount() {
-    this.getOpps();
   }
 
   changeView(option) {
@@ -39,12 +35,20 @@ class App extends Component {
     }
   }
 
-  getOpps() {
+  zip(e) {
+    this.setState({
+      zipcode: e.target.value
+    });
+  }
+
+  getOpps(e) {
+    console.log("HIHIHI");
+    e.preventDefault();
     axios.get('/opportunities')
       .then((response) => {
           this.setState({
+            view: 'opportunities',
             opportunities: response.data,
-            view: 'main'
           });
       })
       .catch((err) => {
@@ -67,7 +71,8 @@ class App extends Component {
   renderView() {
     const {view} = this.state;
     if (view === 'main') {
-      return <Main />
+      console.log("u how many times")
+      return <Main getOpp={this.getOpps} zipcodeState={this.state.zipcode} zipcode={this.zip.bind(this)} />
     } else if (view === 'opportunities') {
       return <OpsList opportunities={this.state.opportunities} />
     }
