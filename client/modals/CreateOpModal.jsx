@@ -55,7 +55,7 @@ class CreateOpModal extends React.Component {
     }) // Send form to server
     .then(response => {
       console.log('Form posted to server')
-      this.toggle;
+      this.toggle();
 
     })
     .catch(err => console.log('Err', err));
