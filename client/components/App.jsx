@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import store from '../store.js';
 import axios from 'axios';
 import $ from 'jquery';
 
@@ -26,7 +28,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.getOpps()
+    this.getOpps();
   }
 
   changeView(option) {
@@ -73,29 +75,31 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-      <Navbar color="inverse" light expand="md">
-          <NavbarBrand href="/">VolunteerRocks</NavbarBrand>
-            <Nav className="ml-auto" navbar>
-            <NavItem>
+      <Provider store={store}>
+        <div>
+        <Navbar color="inverse" light expand="md">
+            <NavbarBrand href="/">VolunteerRocks</NavbarBrand>
+              <Nav className="ml-auto" navbar>
+              <NavItem>
                 <CreateOpModal />
               </NavItem>
-              <NavItem>
-                <OrgSignupModal changeView={this.changeView}/>
-              </NavItem>
-              <NavItem>
-                <SignupModal />
-              </NavItem>
-              <NavItem>
-                <LoginModal />
-              </NavItem>
-              <NavItem>
-                <NavLink onClick={() => this.changeView('opportunities')}>Opportunities</NavLink>
-              </NavItem>
-            </Nav>
-      </Navbar>
-      {this.renderView()}
-      </div>
+                <NavItem>
+                  <OrgSignupModal changeView={this.changeView}/>
+                </NavItem>
+                <NavItem>
+                  <SignupModal />
+                </NavItem>
+                <NavItem>
+                  <LoginModal />
+                </NavItem>
+                <NavItem>
+                  <NavLink onClick={() => this.changeView('opportunities')}>Opportunities</NavLink>
+                </NavItem>
+              </Nav>
+        </Navbar>
+        {this.renderView()}
+        </div>
+      </ Provider>
     );
   }
 };
