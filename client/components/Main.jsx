@@ -15,7 +15,7 @@ const Main = (props) => (
                   <input type="text" className="form-control form-control-sm" placeholder="Enter your zip code..." onChange={props.zipcode.bind(this)}/>
                 </div>
                 <div className="col-12 col-md-3">
-                  <button type="submit" className="btn btn-block btn-sm btn-primary" onClick={(e)=>props.getOpp(e)}>Search</button>
+                  <button type="submit" className="btn btn-block btn-sm btn-primary" onClick={(e)=>props.getOpp(e, props.zipcodeState)}>Search</button>
                 </div>
               </div>
             </form>

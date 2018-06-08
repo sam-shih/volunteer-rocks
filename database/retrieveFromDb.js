@@ -2,6 +2,7 @@ const models = require('./models.js');
 let Volunteers = models.Volunteers;
 let Organizations = models.Organizations;
 let Opportunities = models.Opportunities;
+let zipCodesArray = [];
 
 const getVolunteers = function(callback, limit) {
   Volunteers.find({}, function (err, volData) {
@@ -32,16 +33,19 @@ const getOpportunities = function(limit, res) {
   }).limit(limit);
 };
 
-const getZipCodeSearch = function(limit, res) {
-  Opportunities.find({}, function(err, opps) {
-    if(err){
-      throw err;
-    }
-    console.log(opps)
+const getZipCodeSearch = function(zipCodes, limit, res) {
+
+  zipCodes.forEach((zip) => {
+    zipCodesArray.push(zip.zip_code);
+  });
+
+  Opportunities.find().where('address.zipcode').in(zipCodesArray).exec((err, opps) => {
     res.status(200).json(opps);
     res.end();
-  }).limit(limit);
+  });
+
 }
+
 
 module.exports.getVolunteers = getVolunteers;
 module.exports.getOrganizations = getOrganizations;

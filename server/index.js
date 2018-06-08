@@ -3,6 +3,7 @@ const session = require('express-session');
 const saveToDb = require('../database/saveToDb.js');
 const retrieveFromDb = require('../database/retrieveFromDb.js');
 const checkdb = require('../database/checkdbs.js');
+const axios = require('axios');
 
 const app = express();
 
@@ -31,8 +32,18 @@ app.get('/opportunities', (req, res) => {
 });
 
 app.post('/newOpp', (req, res) => {
-  console.log(req.body);
   saveToDb.newOpportunity(req.body);
   res.sendStatus(200);
 });
+
+app.post('/opportunities', (req, res) => {
+  let zipApiUrl = 'https://www.zipcodeapi.com/rest/TMQkh3bB6MHNtwd82NiUZmvp5sQ3vePfDRcJ2YDnQJW4RIB2LWDWuEMAaqmkOU5G/radius.json/' + req.body.zipcode+'/'+'20'+'/'+'mile'
+  let nearbyZipCodes = [];
+
+  axios.post(zipApiUrl)
+    .then(response => {
+      console.log('From zipapi ' + response.data.zip_codes[0].zip_code);
+      retrieveFromDb.getZipCodeSearch(response.data.zip_codes, 5, res);
+    }).catch(err => console.log('Err', err));
+})
 module.exports = app;

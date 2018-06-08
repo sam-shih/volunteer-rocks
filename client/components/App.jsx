@@ -41,11 +41,11 @@ class App extends Component {
     });
   }
 
-  getOpps(e) {
-    console.log("HIHIHI");
+  getOpps(e, zipcode) {
     e.preventDefault();
-    axios.get('/opportunities')
+    axios.post('/opportunities', {zipcode:zipcode})
       .then((response) => {
+          console.log(response.data);
           this.setState({
             view: 'opportunities',
             opportunities: response.data,
