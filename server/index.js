@@ -4,6 +4,7 @@ const saveToDb = require('../database/saveToDb.js');
 const retrieveFromDb = require('../database/retrieveFromDb.js');
 const checkdb = require('../database/checkdbs.js');
 const axios = require('axios');
+const getDataAndStore = require('../database/exampleOpGenarator.js');
 
 const app = express();
 
@@ -17,6 +18,9 @@ app.use(session({secret: 'Is it really a secret', cookie:{maxAge: 365*24*60*60}}
 // });
 
 //ORGANIZATION LOGIN REQUEST
+
+//getDataAndStore.getDataAndStore();
+
 app.post('/login', (req, res) => {
   checkdb.checkUserCredential(req.body, res);
 });
@@ -37,13 +41,13 @@ app.post('/newOpp', (req, res) => {
 });
 
 app.post('/opportunities', (req, res) => {
-  let zipApiUrl = 'https://www.zipcodeapi.com/rest/TMQkh3bB6MHNtwd82NiUZmvp5sQ3vePfDRcJ2YDnQJW4RIB2LWDWuEMAaqmkOU5G/radius.json/' + req.body.zipcode+'/'+'20'+'/'+'mile'
-  let nearbyZipCodes = [];
+  let zipApiUrl = `https://www.zipcodeapi.com/rest/EhVSb31JIErNesYXGW0KyU2MU5IabAJxRzPce736wBLNc1h3Z1VmlqdtsZePCRev/radius.json/${req.body.zipcode}/1/mile`;
 
-  axios.post(zipApiUrl)
+  axios.get(zipApiUrl)
     .then(response => {
-      console.log('From zipapi ' + response.data.zip_codes[0].zip_code);
+      //console.log('From zipapi ' + response.data.zip_codes[0].zip_code);
       retrieveFromDb.getZipCodeSearch(response.data.zip_codes, 5, res);
     }).catch(err => console.log('Err', err));
+
 })
 module.exports = app;
