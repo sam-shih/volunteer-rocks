@@ -56,7 +56,6 @@ const newOrganization = function(organization, sessionId, res) {
 
 const newOpportunity = function(opportunity) {
 
-  console.log('Is running this');
   googleMapsClient.geocode({
     address: opportunity.address
   }).asPromise()

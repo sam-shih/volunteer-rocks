@@ -26,7 +26,7 @@ class LoginModal extends React.Component {
             <Input placeholder="User Name"/>
             <Input placeholder="Password"/>
             <Button color="primary" onClick={() => this.toggle}>Sign In</Button>{' '}
-            <Button color="sucess" onClick={() => this.toggle}>Login with Google+</Button>{' '}
+            <Button color="sucess" onClick={() => this.toggle}><a href="/auth/google">Login with Google+</a></Button>{' '}
           </ModalBody>
         </Modal>
       </React.Fragment>
