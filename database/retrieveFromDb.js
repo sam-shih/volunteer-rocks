@@ -38,10 +38,13 @@ const getZipCodeSearch = function(zipCodes, limit, res) {
   zipCodes.forEach((zip) => {
     zipCodesArray.push(zip.zip_code);
   });
+  console.log(zipCodesArray);
 
-  Opportunities.find().where('address.zipcode').in(zipCodesArray).exec((err, opps) => {
-    res.status(200).json(opps);
-    res.end();
+  Opportunities.find()
+    .where('address.zipcode')
+    .in(zipCodesArray).exec((err, opps) => {
+      res.status(200).json(opps);
+      res.end();
   });
 
 }
