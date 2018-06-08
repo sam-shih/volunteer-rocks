@@ -100,6 +100,9 @@ class App extends Component {
                 <NavItem>
                   <NavLink onClick={() => this.changeView('opportunities')}>Opportunities</NavLink>
                 </NavItem>
+                <NavItem>
+                  <NavLink onClick={() => axios.get('/logout') }>Logout</NavLink>
+                </NavItem>
               </Nav>
         </Navbar>
         {this.renderView()}
