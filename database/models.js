@@ -49,12 +49,7 @@ var opportunitiesSchema = mongoose.Schema({
   },
   description: String,
   cause:String,
-  address:{
-    street:String,
-    city: String,
-    state: String,
-    zipcode: String,
-  },
+  zipcode: String,
   formatted_address: String,
   start_date: Date,
   end_date:Date,
@@ -66,21 +61,14 @@ var opportunitiesSchema = mongoose.Schema({
   }
 });
 
-var oppsSchema = mongoose.Schema({
-  title: String,
-  zipcode: String,
-});
-
 
 var Volunteers = mongoose.model('Volunteers', volunteerSchema);
 var Organizations = mongoose.model('Organizations', organizationSchema);
 var Opportunities = mongoose.model('Opportunities', opportunitiesSchema);
-var Opps = mongoose.model('Opps', oppsSchema);
 
 module.exports.Volunteers = Volunteers;
 module.exports.Organizations = Organizations;
 module.exports.Opportunities = Opportunities;
-module.exports.Opps = Opps;
 
 
 
