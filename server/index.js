@@ -9,7 +9,7 @@ const saveExampleOpportunity = require('../database/exampleOpGenarator.js');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const cookieParser = require('cookie-parser');
-const addVolunteerToOpp = require('../database/addVolunteerToOpp');
+const addVolunteerToOpp = require('../database/addVolunteerToOpp').checkIfEnrolled;
 
 const app = express();
 
@@ -20,16 +20,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(cookieParser());
 
-
-//saveExampleOpportunity.saveExampleOpportunity();
+// saveExampleOpportunity.saveExampleOpportunity();
 
 passport.serializeUser(function(volunteer, done) {
-  done(null, volunteer[0].googleId);
+  done(null, volunteer[0]);
 });
 
-passport.deserializeUser(function(id, done) {
-  console.log('Inside deserialize user', id);
-  VolunteerModel.findOne( { googleId: id }, function(err, volunteer) {
+passport.deserializeUser(function(serializedObj, done) {
+  console.log('Inside deserialize user', serializedObj.googleId);
+  VolunteerModel.findOne( { googleId: serializedObj.googleId }, function(err, volunteer) {
     done(err, volunteer);
   });
 });
@@ -121,13 +120,13 @@ app.post('/newOpp', (req, res) => {
 app.post('/opportunities', (req, res) => {
   let zipApiUrl = `https://www.zipcodeapi.com/rest/jXEHhizBNOo3C2RRQSk7Yz7rnOBXayXcDpD0KuAhI1yofRUd7POm4rcDN0tUtTS8/radius.json/${req.body.zipcode}/1/mile`;
 
-  axios.get(zipApiUrl)
-    .then(response => {
-      //console.log('From zipapi ' + response.data.zip_codes[0].zip_code);
-      retrieveFromDb.getZipCodeSearch(response.data.zip_codes, 5, res);
-    }).catch(err => console.log('Err', err));
+  // axios.get(zipApiUrl)
+  //   .then(response => {
+  //     //console.log('From zipapi ' + response.data.zip_codes[0].zip_code);
+  //     retrieveFromDb.getZipCodeSearch(response.data.zip_codes, 5, res);
+  //   }).catch(err => console.log('Err', err));
 
-  // retrieveFromDb.getOpportunities(5, res);
+  retrieveFromDb.getOpportunities(5, res);
 });
 
 app.post('/enroll', (req, res) => {
@@ -135,7 +134,7 @@ app.post('/enroll', (req, res) => {
   // console.log(req.user._id)
 
   if (req.user) {
-    addVolunteerToOpp.checkIfEnrolled(oppId, req.user._id, res);
+    addVolunteerToOpp(oppId, req.user._id, res);
   } else {
     res.send('login')
   }
