@@ -25,7 +25,7 @@ const getOrganizations = function(callback, limit) {
 };
 
 const getOpportunities = function(limit, res) {
-  Opportunities.find({}, function (err, oppsData) {
+  Opportunities.find({ title: 'A Cool New Opp'}, function (err, oppsData) {
     if (err) {
       throw err;
     }

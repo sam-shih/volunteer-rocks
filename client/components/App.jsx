@@ -44,6 +44,20 @@ class App extends Component {
 
   volunteerForOpp(oppId) {
     axios.post('/enroll', { oppId: oppId })
+      .then((response) => {
+        let responseData = response.data;
+        console.log('This is resposen from enroll', response);
+        if (responseData === 'login') {
+          alert('Please login before enrolling');
+        } else if (responseData === 'success') {
+          alert('Successfully enrolled in opportunity');
+        } else if (responseData === 'already') {
+          alert('You have already enrolled in this opportunity');
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
   }
 
   getOpps(e, zipcode) {

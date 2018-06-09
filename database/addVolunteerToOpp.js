@@ -3,14 +3,31 @@ let Volunteers = models.Volunteers;
 let Organizations = models.Organizations;
 let Opportunities = models.Opportunities;
 
-const addVolunteerToOpp = function(oppId, volId) {
-  Opportunities.findByIdAndUpdate(oppId, { volunteerers: volunteerers.push(volId) }, function(err, opportunity) {
+const checkIfEnrolled = function(oppId, volId, res) {
+  Opportunities.findById(oppId, function(err, opportunity) {
     if (err) {
       throw err;
     }
 
-    
+    let volunteerers = opportunity.volunteerers;
+
+    if (volunteerers.indexOf(volId) > -1) {
+      res.send('already');
+    } else {
+      addVolunteerToOpp(oppId, volId, res);
+    }
+  });
+}
+
+const addVolunteerToOpp = function(oppId, volId, res) {
+  Opportunities.findByIdAndUpdate(oppId, {$push: { volunteerers: volId }}, function(err, opportunity) {
+    if (err) {
+      throw err;
+    }
+
+    res.send('enrolled');
   });
 };
 
-module.exports.addVolunteerToOpp;
+module.exports.addVolunteerToOpp = addVolunteerToOpp;
+module.exports.checkIfEnrolled = checkIfEnrolled;

@@ -9,6 +9,7 @@ const getDataAndStore = require('../database/exampleOpGenarator.js');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const cookieParser = require('cookie-parser');
+const addVolunteerToOpp = require('../database/addVolunteerToOpp');
 
 const app = express();
 
@@ -117,8 +118,16 @@ app.post('/opportunities', (req, res) => {
 });
 
 app.post('/enroll', (req, res) => {
-  let oppId = req.body;
-  console.log('This is enroll', req.user);
+  let oppId = req.body.oppId;
+  // console.log(req.user._id)
+
+  if (req.user) {
+    addVolunteerToOpp.checkIfEnrolled(oppId, req.user._id, res);
+  } else {
+    res.send('login')
+  }
+
+
 });
 
 module.exports = app;
