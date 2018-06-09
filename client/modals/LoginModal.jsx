@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, NavLink, Input } from 'reactstrap';
+import { GoogleLogin } from 'react-google-login';
 
 class LoginModal extends React.Component {
   constructor(props) {
@@ -16,6 +17,11 @@ class LoginModal extends React.Component {
     });
   }
 
+  responseGoogle(response) {
+    console.log(response);
+  }
+
+
   render() {
     return (
       <React.Fragment>
@@ -26,7 +32,16 @@ class LoginModal extends React.Component {
             <Input placeholder="User Name"/>
             <Input placeholder="Password"/>
             <Button color="primary" onClick={() => this.toggle}>Sign In</Button>{' '}
+
             <Button color="sucess" onClick={() => this.toggle}><a href="/auth/google">Login with Google+</a></Button>{' '}
+
+            <GoogleLogin
+              clientId="252132713642-hqchnamqrf05053vtkgd6i5fqftq529g.apps.googleusercontent.com"
+              buttonText="Login"
+              onSuccess={this.responseGoogle}
+              onFailure={this.responseGoogle}
+             />
+
           </ModalBody>
         </Modal>
       </React.Fragment>
