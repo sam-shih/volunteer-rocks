@@ -20,7 +20,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(cookieParser());
 
-saveExampleOpportunity.saveExampleOpportunity();
+
+//saveExampleOpportunity.saveExampleOpportunity();
 
 passport.serializeUser(function(volunteer, done) {
   done(null, volunteer[0].googleId);
@@ -32,6 +33,18 @@ passport.deserializeUser(function(id, done) {
     done(err, volunteer);
   });
 });
+
+// passport.serializeUser(function(volunteer, done) {
+//   done(null, volunteer[0].googleId);
+// });
+//saveExampleOpportunity.saveExampleOpportunity();
+// passport.deserializeUser(function(id, done) {
+//   console.log('Inside deserialize user', id);
+//   VolunteerModel.findOne( { googleId: id }, function(err, volunteer) {
+//     done(err, volunteer);
+//   });
+// });
+
 
 
 passport.use(new GoogleStrategy({
