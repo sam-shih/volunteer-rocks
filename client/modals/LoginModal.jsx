@@ -32,7 +32,7 @@ class LoginModal extends React.Component {
             <Input placeholder="Password"/>
             <Button color="primary" onClick={() => this.toggle}>Sign In</Button>{' '}
 
-            <Button color="sucess" onClick={() => this.toggle}><a href="/auth/google">Login with Google+</a></Button>{' '}
+            <Button color="success" onClick={() => this.toggle}><a href="/auth/google">Login with Google+</a></Button>{' '}
 
             <GoogleLogin
               clientId="252132713642-9thjel7ap9jveumb6htduqhv9kbjinjl.apps.googleusercontent.com"
