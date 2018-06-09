@@ -105,7 +105,11 @@ app.post('/newOpp', (req, res) => {
 });
 
 app.post('/opportunities', (req, res) => {
+<<<<<<< b75ff37cf28104ee036a46149684e926405116d6
   let zipApiUrl = `https://www.zipcodeapi.com/rest/KMRxXQCWHbNZeYAmLCCPoppFkq15nSRQvvSSSiElYr857q0DRjKkjcAZarVimaIa/radius.json/${req.body.zipcode}/1/mile`;
+=======
+  let zipApiUrl = `https://www.zipcodeapi.com/rest/jXEHhizBNOo3C2RRQSk7Yz7rnOBXayXcDpD0KuAhI1yofRUd7POm4rcDN0tUtTS8/radius.json/${req.body.zipcode}/1/mile`;
+>>>>>>> Changed zipAPI key
 
   axios.get(zipApiUrl)
     .then(response => {
