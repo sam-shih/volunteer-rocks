@@ -60,18 +60,19 @@ const newOpportunity = function(opportunity) {
     address: opportunity.address
   }).asPromise()
   .then((response) => {
+    let zipcode = '';
     let gmapi = response.json.results[0];
+    for(var i = 0; i<gmapi.address_components.length; i++) {
+      if(gmapi.address_components[i].types[0] === 'postal_code'){
+        zipcode = gmapi.address_components[i].short_name;
+      }
+    }
 
     let aNewOpportunity = new Opportunity({
       title: opportunity.title,
       description: opportunity.description,
       cause: opportunity.cause,
-      address:{
-        street: `${gmapi.address_components[0].short_name} ${gmapi.address_components[1].short_name}`,
-        city: gmapi.address_components[2].short_name,
-        state: gmapi.address_components[4].short_name,
-        zipcode: gmapi.address_components[6].short_name,
-      },
+      zipcode: zipcode,
       formatted_address: gmapi.formatted_address,
       start_date: opportunity.start_date,
       end_date: opportunity.end_date,
@@ -84,9 +85,9 @@ const newOpportunity = function(opportunity) {
     });
       aNewOpportunity.save(function(err, opportunity) {
         if (err) {
-          console.log('Error '+ err);
+          console.log('Error is here '+ err);
         }
-        console.log(`A new opportunity, ${opportunity.title}, has been saved`);
+        console.log("Success in saving newOpportunity")
       });
   })
   .catch((err) => {
