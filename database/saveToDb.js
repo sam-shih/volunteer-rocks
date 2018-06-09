@@ -1,7 +1,7 @@
 const models = require('./models.js');
 const bcrypt = require('bcrypt');
 var googleMapsClient = require('@google/maps').createClient({
-  key: 'AIzaSyBPLIcGtNnLOb7bqR7wq9s-y2hcsWzU5i4',
+  key: 'AIzaSyCRAApdBppT4hFHnGCq5hFczdWLkAKoeqU',
   Promise: Promise
 });
 
@@ -60,6 +60,7 @@ const newOpportunity = function(opportunity) {
     address: opportunity.address
   }).asPromise()
   .then((response) => {
+    console.log("DID THIS invoke")
     let zipcode = '';
     let gmapi = response.json.results[0];
     for(var i = 0; i<gmapi.address_components.length; i++) {
@@ -91,7 +92,7 @@ const newOpportunity = function(opportunity) {
       });
   })
   .catch((err) => {
-    throw(err);
+    console.log("HEYEYEY", err);
   });
 };
 

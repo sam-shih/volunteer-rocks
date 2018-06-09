@@ -7,7 +7,7 @@ const saveToDb = require('./saveToDb.js');
 
 function saveExampleOpportunity() {
   const opportunities = {};
-  for(var i = 0; i < 3; i++) {
+  for(var i = 0; i < rrad.addresses.length ; i++) {
     const randomAddress = rrad.addresses[Math.floor(Math.random() * rrad.addresses.length)];
     opportunities['title'] = "Community Service";
     opportunities['description']="Help make the world a better place";
@@ -19,7 +19,7 @@ function saveExampleOpportunity() {
     opportunities['email']= 'help@helpwanted.com';
 
     console.log(opportunities);
-    saveToDb.newOpportunity(opportunities);
+    //saveToDb.newOpportunity(opportunities);
   }
 }
 
