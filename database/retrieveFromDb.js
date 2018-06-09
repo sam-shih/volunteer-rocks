@@ -34,7 +34,7 @@ const getOpportunities = function(limit, res) {
 };
 
 const getZipCodeSearch = function(zipCodes, limit, res) {
-
+  console.log(limit);
   zipCodes.forEach((zip) => {
     zipCodesArray.push(zip.zip_code);
   });
@@ -42,12 +42,18 @@ const getZipCodeSearch = function(zipCodes, limit, res) {
 
   Opportunities.find()
     .where('address.zipcode')
-    .in(zipCodesArray).exec((err, opps) => {
+    .in(zipCodesArray)
+    .limit(limit)
+    .exec((err, opps) => {
+      if(err) {
+        console.log("Error " + err)
+        res.send(err);
+      }
       res.status(200).json(opps);
       res.end();
   });
 
-}
+};
 
 
 module.exports.getVolunteers = getVolunteers;
