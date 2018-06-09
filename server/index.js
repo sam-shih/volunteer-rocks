@@ -23,7 +23,8 @@ app.use(cookieParser());
 // saveExampleOpportunity.saveExampleOpportunity();
 
 passport.serializeUser(function(volunteer, done) {
-  done(null, volunteer[0]);
+  console.log(volunteer, 'volunteer inside serializeUser')
+  done(null, volunteer);
 });
 
 passport.deserializeUser(function(serializedObj, done) {
@@ -127,6 +128,10 @@ app.post('/opportunities', (req, res) => {
   //   }).catch(err => console.log('Err', err));
 
   retrieveFromDb.getOpportunities(5, res);
+});
+
+app.get('/opportunities/all', (req, res) => {
+  retrieveFromDb.getOpportunities(1000, res);
 });
 
 app.post('/enroll', (req, res) => {
