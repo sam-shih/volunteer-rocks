@@ -19,7 +19,7 @@ function saveExampleOpportunity() {
     opportunities['email']= 'help@helpwanted.com';
 
     console.log(opportunities);
-    saveToDb.newOpportunity(opportunities);
+    //saveToDb.newOpportunity(opportunities);
   }
 }
 

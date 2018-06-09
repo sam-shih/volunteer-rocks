@@ -111,9 +111,7 @@ app.post('/signup', (req, res) => {
 });
 
 //OPPORTUNITIES GET REQUEST
-app.get('/opportunities', (req, res) => {
-  retrieveFromDb.getZipCodeSearch(5, res);
-});
+
 
 app.post('/newOpp', (req, res) => {
   saveToDb.newOpportunity(req.body);
