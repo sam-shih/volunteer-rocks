@@ -6,7 +6,7 @@ const OpsList = function(props) {
   return (
     <Container>
       {props.opportunities.map(function(opportunity, idx) {
-        return <Ops opportunity={opportunity} key={idx} />
+        return <Ops enroll={props.enroll} opportunity={opportunity} key={idx} />
       })}
     </Container>
   );

@@ -20,12 +20,12 @@ app.use(passport.session());
 app.use(cookieParser());
 
 passport.serializeUser(function(volunteer, done) {
-  done(null, volunteer[0].googleId);
+  done(null, volunteer[0]);
 });
 
-passport.deserializeUser(function(id, done) {
-  console.log('Inside deserialize user', id);
-  VolunteerModel.findOne( { googleId: id }, function(err, volunteer) {
+passport.deserializeUser(function(serializedObj, done) {
+  console.log('Inside deserialize user', serializedObj.googleId);
+  VolunteerModel.findOne( { googleId: serializedObj.googleId }, function(err, volunteer) {
     done(err, volunteer);
   });
 });
@@ -105,14 +105,19 @@ app.post('/newOpp', (req, res) => {
 });
 
 app.post('/opportunities', (req, res) => {
-  let zipApiUrl = `https://www.zipcodeapi.com/rest/jXEHhizBNOo3C2RRQSk7Yz7rnOBXayXcDpD0KuAhI1yofRUd7POm4rcDN0tUtTS8/radius.json/${req.body.zipcode}/1/mile`;
+  // let zipApiUrl = `https://www.zipcodeapi.com/rest/jXEHhizBNOo3C2RRQSk7Yz7rnOBXayXcDpD0KuAhI1yofRUd7POm4rcDN0tUtTS8/radius.json/${req.body.zipcode}/1/mile`;
 
-  axios.get(zipApiUrl)
-    .then(response => {
-      //console.log('From zipapi ' + response.data.zip_codes[0].zip_code);
-      retrieveFromDb.getZipCodeSearch(response.data.zip_codes, 5, res);
-    }).catch(err => console.log('Err', err));
+  // axios.get(zipApiUrl)
+  //   .then(response => {
+  //     //console.log('From zipapi ' + response.data.zip_codes[0].zip_code);
+  //     retrieveFromDb.getZipCodeSearch(response.data.zip_codes, 5, res);
+  //   }).catch(err => console.log('Err', err));
 
-})
+  retrieveFromDb.getOpportunities(5, res);
+});
+
+app.post('/enroll', (req, res) => {
+  console.log('This is enroll', req.user);
+});
 
 module.exports = app;

@@ -25,6 +25,7 @@ class App extends Component {
     }
     this.getOpps = this.getOpps.bind(this);
     this.changeView = this.changeView.bind(this);
+    this.volunteerForOpp = this.volunteerForOpp.bind(this);
   }
 
   changeView(option) {
@@ -39,6 +40,10 @@ class App extends Component {
     this.setState({
       zipcode: e.target.value
     });
+  }
+
+  volunteerForOpp(e) {
+    axios.post('/enroll')
   }
 
   getOpps(e, zipcode) {
@@ -74,7 +79,7 @@ class App extends Component {
       console.log("u how many times")
       return <Main getOpp={this.getOpps} zipcodeState={this.state.zipcode} zipcode={this.zip.bind(this)} />
     } else if (view === 'opportunities') {
-      return <OpsList opportunities={this.state.opportunities} />
+      return <OpsList enroll={this.volunteerForOpp} opportunities={this.state.opportunities} />
     }
   }
 
