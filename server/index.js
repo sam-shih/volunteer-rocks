@@ -117,6 +117,7 @@ app.post('/opportunities', (req, res) => {
 });
 
 app.post('/enroll', (req, res) => {
+  let oppId = req.body;
   console.log('This is enroll', req.user);
 });
 

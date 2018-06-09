@@ -42,8 +42,8 @@ class App extends Component {
     });
   }
 
-  volunteerForOpp(e) {
-    axios.post('/enroll')
+  volunteerForOpp(oppId) {
+    axios.post('/enroll', { oppId: oppId })
   }
 
   getOpps(e, zipcode) {
