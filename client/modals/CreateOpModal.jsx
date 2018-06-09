@@ -1,10 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, NavLink, Input, Form, FormGroup, Label, Col } from 'reactstrap';
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 import { initAutoComplete, fillInAddress, geolocate } from './mapFuncs';
-
-// import { withScriptjs, StandaloneSearchBox } from 'react-google-maps';
-import { StandaloneSearchBox } from 'react-google-maps/lib/components/places/StandaloneSearchBox'
+import AddressAutoComplete from './AddressAutoComplete.jsx'
 
 class CreateOpModal extends React.Component {
   constructor(props) {
@@ -25,6 +24,7 @@ class CreateOpModal extends React.Component {
 
     this.updateInput = this.updateInput.bind(this);
     this.submitForm = this.submitForm.bind(this);
+    this.updateAddress = this.updateAddress.bind(this);
     this.toggle = this.toggle.bind(this);
   }
 
@@ -35,10 +35,15 @@ class CreateOpModal extends React.Component {
   }
 
   updateInput(e) {
-    console.log(e.target.value);
     const form = this.state.form; // Copy current state to object 'form'
     form[e.target.name] = e.target.value; // Set  key:value to form
     this.setState({ form: form }); // Replace state.form to form from above
+  }
+
+  updateAddress(address) {
+    const form = this.state.form;
+    form.address = address;
+    this.setState({ form: form })
   }
 
   submitForm (form) {
@@ -69,25 +74,6 @@ class CreateOpModal extends React.Component {
           <ModalHeader toggle={this.toggle}>Create a New Opportunity</ModalHeader>
           <ModalBody>
             <Form onSubmit={this.submitForm}>
-            {/* <StandaloneSearchBox
-            >
-            <input
-        type="text"
-        placeholder="Customized your placeholder"
-        style={{
-          boxSizing: `border-box`,
-          border: `1px solid transparent`,
-          width: `240px`,
-          height: `32px`,
-          padding: `0 12px`,
-          borderRadius: `3px`,
-          boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-          fontSize: `14px`,
-          outline: `none`,
-          textOverflow: `ellipses`,
-        }}
-      />
-            </StandaloneSearchBox> */}
               <FormGroup row>
                 <Label for="title" sm={2}>Title</Label>
                 <Col sm={10}>
@@ -124,11 +110,9 @@ class CreateOpModal extends React.Component {
               <FormGroup row>
                 <Label for="address" sm={2}>Address</Label>
                 <Col sm={10}>
-                <Input
-                  name="address"
-                  type="text"
-                  value={this.state.form.address}
-                  onChange={this.updateInput} />
+                  <AddressAutoComplete
+                    updateAddress={this.updateAddress}
+                  ></AddressAutoComplete>
                 </Col>
               </FormGroup>
               <FormGroup row>
