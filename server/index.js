@@ -9,6 +9,7 @@ const saveExampleOpportunity = require('../database/exampleOpGenarator.js');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const cookieParser = require('cookie-parser');
+const addVolunteerToOpp = require('../database/addVolunteerToOpp');
 
 const app = express();
 
@@ -19,46 +20,48 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(cookieParser());
 
-// passport.serializeUser(function(volunteer, done) {
-//   done(null, volunteer[0].googleId);
-// });
 saveExampleOpportunity.saveExampleOpportunity();
-// passport.deserializeUser(function(id, done) {
-//   console.log('Inside deserialize user', id);
-//   VolunteerModel.findOne( { googleId: id }, function(err, volunteer) {
-//     done(err, volunteer);
-//   });
-// });
+
+passport.serializeUser(function(volunteer, done) {
+  done(null, volunteer[0].googleId);
+});
+
+passport.deserializeUser(function(id, done) {
+  console.log('Inside deserialize user', id);
+  VolunteerModel.findOne( { googleId: id }, function(err, volunteer) {
+    done(err, volunteer);
+  });
+});
 
 
-// passport.use(new GoogleStrategy({
-//   clientID: '177608482290-e9id899c90egnaq61bu5acppkrnenm12.apps.googleusercontent.com',
-//   clientSecret: 'RfKLyzUdC7PMcr-_G_hxkVg0',
-//   callbackURL: 'http://localhost:3000/auth/google/callback',
-// },
-//   function(accessToken, refreshToken, profile, done) {
+passport.use(new GoogleStrategy({
+  clientID: '177608482290-e9id899c90egnaq61bu5acppkrnenm12.apps.googleusercontent.com',
+  clientSecret: 'RfKLyzUdC7PMcr-_G_hxkVg0',
+  callbackURL: 'http://localhost:3000/auth/google/callback',
+},
+  function(accessToken, refreshToken, profile, done) {
 
-//     let name = profile.displayName;
-//     let profileId = profile.id;
+    let name = profile.displayName;
+    let profileId = profile.id;
 
-//     VolunteerModel.find({ googleId: profileId }, function(err, volunteer) {
-//       if (err) {
-//         throw err;
-//       }
+    VolunteerModel.find({ googleId: profileId }, function(err, volunteer) {
+      if (err) {
+        throw err;
+      }
 
-//       if (volunteer.length === 0) {
-//         saveToDb.newVolunteer({
-//           googleId: profile.id,
-//           name: name,
-//         });
+      if (volunteer.length === 0) {
+        saveToDb.newVolunteer({
+          googleId: profile.id,
+          name: name,
+        });
 
-//         return done(err, profile);
-//       }
+        return done(err, profile);
+      }
 
-//       return done(err, volunteer);
-//     });
-//   }
-// ));
+      return done(err, volunteer);
+    });
+  }
+));
 
 
 //MAIN PAGE GET REQUEST
@@ -105,7 +108,7 @@ app.post('/newOpp', (req, res) => {
 });
 
 app.post('/opportunities', (req, res) => {
-  let zipApiUrl = `https://www.zipcodeapi.com/rest/KMRxXQCWHbNZeYAmLCCPoppFkq15nSRQvvSSSiElYr857q0DRjKkjcAZarVimaIa/radius.json/${req.body.zipcode}/1/mile`;
+  let zipApiUrl = `https://www.zipcodeapi.com/rest/jXEHhizBNOo3C2RRQSk7Yz7rnOBXayXcDpD0KuAhI1yofRUd7POm4rcDN0tUtTS8/radius.json/${req.body.zipcode}/1/mile`;
 
   axios.get(zipApiUrl)
     .then(response => {
@@ -113,6 +116,20 @@ app.post('/opportunities', (req, res) => {
       retrieveFromDb.getZipCodeSearch(response.data.zip_codes, 5, res);
     }).catch(err => console.log('Err', err));
 
-})
+  // retrieveFromDb.getOpportunities(5, res);
+});
+
+app.post('/enroll', (req, res) => {
+  let oppId = req.body.oppId;
+  // console.log(req.user._id)
+
+  if (req.user) {
+    addVolunteerToOpp.checkIfEnrolled(oppId, req.user._id, res);
+  } else {
+    res.send('login')
+  }
+
+
+});
 
 module.exports = app;

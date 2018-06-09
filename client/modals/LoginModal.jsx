@@ -38,7 +38,7 @@ class LoginModal extends React.Component {
             <Button color="sucess" onClick={() => this.toggle}><a href="/auth/google">Login with Google+</a></Button>{' '}
 
             <GoogleLogin
-              clientId="252132713642-9thjel7ap9jveumb6htduqhv9kbjinjl.apps.googleusercontent.com"
+              clientId="252132713642-9thjel7ap9jveumb6htduqhv9kbjinjl.apps.googleusercontent.com "
               buttonText="Login"
               onSuccess={this.responseGoogle}
               onFailure={this.responseGoogle}

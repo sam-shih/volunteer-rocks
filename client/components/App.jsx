@@ -25,6 +25,7 @@ class App extends Component {
     }
     this.getOpps = this.getOpps.bind(this);
     this.changeView = this.changeView.bind(this);
+    this.volunteerForOpp = this.volunteerForOpp.bind(this);
   }
 
   changeView(option) {
@@ -39,6 +40,24 @@ class App extends Component {
     this.setState({
       zipcode: e.target.value
     });
+  }
+
+  volunteerForOpp(oppId) {
+    axios.post('/enroll', { oppId: oppId })
+      .then((response) => {
+        let responseData = response.data;
+        console.log('This is resposen from enroll', response);
+        if (responseData === 'login') {
+          alert('Please login before enrolling');
+        } else if (responseData === 'success') {
+          alert('Successfully enrolled in opportunity');
+        } else if (responseData === 'already') {
+          alert('You have already enrolled in this opportunity');
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
   }
 
   getOpps(e, zipcode) {
@@ -74,7 +93,7 @@ class App extends Component {
       console.log("u how many times")
       return <Main getOpp={this.getOpps} zipcodeState={this.state.zipcode} zipcode={this.zip.bind(this)} />
     } else if (view === 'opportunities') {
-      return <OpsList opportunities={this.state.opportunities} />
+      return <OpsList enroll={this.volunteerForOpp} opportunities={this.state.opportunities} />
     }
   }
 

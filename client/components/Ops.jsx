@@ -22,7 +22,7 @@ const Ops = function(props) {
             {/* <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" /> */}
           </Col>
         </Row>
-        <Button>Volunteer</Button>
+        <Button onClick={() => props.enroll(props.opportunity._id)}>Volunteer</Button>
       </CardBody>
     </Card>
   );

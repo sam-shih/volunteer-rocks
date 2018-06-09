@@ -58,7 +58,8 @@ var opportunitiesSchema = mongoose.Schema({
   location: {
     lat: Number,
     lng: Number
-  }
+  },
+  volunteerers: []
 });
 
 
