@@ -105,7 +105,7 @@ app.post('/newOpp', (req, res) => {
 });
 
 app.post('/opportunities', (req, res) => {
-  let zipApiUrl = `https://www.zipcodeapi.com/rest/O4i5XLUvKKDgHEb3Sw8QNYxNG6NW8Sk7KqQ3kVKI0sodef9qD1THnwOHrd4u4KvD/radius.json/${req.body.zipcode}/1/mile`;
+  let zipApiUrl = `https://www.zipcodeapi.com/rest/jXEHhizBNOo3C2RRQSk7Yz7rnOBXayXcDpD0KuAhI1yofRUd7POm4rcDN0tUtTS8/radius.json/${req.body.zipcode}/1/mile`;
 
   axios.get(zipApiUrl)
     .then(response => {
