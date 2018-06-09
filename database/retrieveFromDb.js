@@ -55,19 +55,7 @@ const getZipCodeSearch = function(zipCodes, limit, res) {
 
 };
 
-const getSingleOpportunity = function(oppId, res) {
-  Opportunities.find({ _id: oppId }, function(err, opportunity) {
-    if (err) {
-      throw err;
-    }
-
-    res.status(200).json(opportunity);
-  });
-};
-
-
 module.exports.getVolunteers = getVolunteers;
 module.exports.getOrganizations = getOrganizations;
 module.exports.getOpportunities = getOpportunities;
 module.exports.getZipCodeSearch = getZipCodeSearch;
-module.exports.getSingleOpportunity = getSingleOpportunity;
