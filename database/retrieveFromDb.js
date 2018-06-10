@@ -41,16 +41,17 @@ const getZipCodeSearch = function(zipCodes, limit, res) {
   console.log(zipCodesArray);
 
   Opportunities.find()
-    .where('address.zipcode')
+    .where('zipcode')
     .in(zipCodesArray)
     .limit(limit)
     .exec((err, opps) => {
       if(err) {
         console.log("Error " + err)
         res.send(err);
+      } else {
+        res.status(200).json(opps);
+        res.end();
       }
-      res.status(200).json(opps);
-      res.end();
   });
 
 };

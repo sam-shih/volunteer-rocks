@@ -100,15 +100,13 @@ app.post('/newOpp', (req, res) => {
 });
 
 app.post('/opportunities', (req, res) => {
-  let zipApiUrl = `https://www.zipcodeapi.com/rest/jXEHhizBNOo3C2RRQSk7Yz7rnOBXayXcDpD0KuAhI1yofRUd7POm4rcDN0tUtTS8/radius.json/${req.body.zipcode}/1/mile`;
+  let zipApiUrl = `https://www.zipcodeapi.com/rest/O4i5XLUvKKDgHEb3Sw8QNYxNG6NW8Sk7KqQ3kVKI0sodef9qD1THnwOHrd4u4KvD/radius.json/${req.body.zipcode}/20/mile`;
 
-  // axios.get(zipApiUrl)
-  //   .then(response => {
-  //     //console.log('From zipapi ' + response.data.zip_codes[0].zip_code);
-  //     retrieveFromDb.getZipCodeSearch(response.data.zip_codes, 5, res);
-  //   }).catch(err => console.log('Err', err));
-
-  retrieveFromDb.getOpportunities(5, res);
+  axios.get(zipApiUrl)
+    .then(response => {
+      //console.log('From zipapi ' + response.data.zip_codes[0].zip_code);
+      retrieveFromDb.getZipCodeSearch(response.data.zip_codes, 5, res);
+    }).catch(err => console.log('Err', err));
 });
 
 app.get('/opportunities/all', (req, res) => {
