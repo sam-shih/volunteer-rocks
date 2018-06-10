@@ -61,7 +61,7 @@ class OrgSignupModal extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <NavLink onClick={this.toggle}>SignUp Organization</NavLink>
+        <NavLink href="#" onClick={this.toggle}>Recruit Volunteers</NavLink>
         <Modal size="lg" isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Create an Account for your Organization</ModalHeader>
           <ModalBody>

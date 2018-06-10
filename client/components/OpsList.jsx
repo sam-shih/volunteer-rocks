@@ -12,6 +12,7 @@ const OpsList = function(props) {
           })}
         </Col>
         <Col xs="4">
+        hello
         </Col>
         </Row>
     </Container>
