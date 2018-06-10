@@ -1,5 +1,6 @@
 const models = require('./models.js');
 const bcrypt = require('bcrypt');
+const session = require('express-session');
 var googleMapsClient = require('@google/maps').createClient({
   key: 'AIzaSyCRAApdBppT4hFHnGCq5hFczdWLkAKoeqU',
   Promise: Promise
@@ -28,30 +29,33 @@ const newVolunteer = function(volunteer) {
   });
 };
 
-const newOrganization = function(organization, sessionId, res) {
+const newOrganization = function(organization, res, req, session) {
   let hashPassword = '';
 
   bcrypt.hash(organization.password, 10, function(err, hash) {
     hashPassword = hash;
-  });
 
-  let aNewOrganization = new Organization({
-    name: organization.name,
-    password: hashPassword,
-    address: organization.address,
-    phone: organization.phone,
-    email: organization.email,
-    sessionId: sessionId,
-    TODO: 'Insert opList'
-  });
+    let aNewOrganization = new Organization({
+      name: organization.name,
+      password: hashPassword,
+      address: organization.address,
+      phone: organization.phone,
+      email: organization.email,
+      password: hashPassword
+      //TODO: 'Insert opList'
+    });
 
-  aNewOrganization.save(function(err, organization) {
-    if (err) {
-      throw err;
-    }
+    aNewOrganization.save(function(err, organization) {
+      if (err) {
+        throw err;
+      }
 
-    console.log(`A new organization, ${organization.name}, has been saved`);
-    res.status(201).end();
+      console.log(`A new organization, ${organization.name}, has been saved`);
+      req.session.userId = organization._id;
+      console.log(req.session.user);
+      res.status(201).end();
+    });
+
   });
 };
 
@@ -61,7 +65,6 @@ const newOpportunity = function(opportunity) {
     address: opportunity.address
   }).asPromise()
   .then((response) => {
-    console.log("DID THIS invoke")
     let zipcode = '';
     let gmapi = response.json.results[0];
     for(var i = 0; i<gmapi.address_components.length; i++) {
@@ -87,13 +90,13 @@ const newOpportunity = function(opportunity) {
     });
       aNewOpportunity.save(function(err, opportunity) {
         if (err) {
-          console.log('Error is here '+ err);
+          console.log(err);
         }
         console.log("Success in saving newOpportunity")
       });
   })
   .catch((err) => {
-    console.log("HEYEYEY", err);
+    console.log(err);
   });
 };
 

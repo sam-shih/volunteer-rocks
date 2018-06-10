@@ -47,7 +47,8 @@ class OrgSignupModal extends React.Component {
         zipcode: form.zipcode
         },
       phone: form.phone,
-      email: form.email
+      email: form.email,
+      password: form.password
     }) // Send form to server
     .then(response => {
       console.log('Form posted to server')

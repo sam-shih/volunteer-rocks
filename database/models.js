@@ -24,7 +24,8 @@ var volunteerSchema = mongoose.Schema({
 var organizationSchema = mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   password: {
     type: String,
@@ -39,8 +40,7 @@ var organizationSchema = mongoose.Schema({
   },
   phone: String,
   email: String,
-  sessionId: String,
-  opList: [Schema.ObjectId]
+  //opList: [Schema.ObjectId]
 });
 
 var opportunitiesSchema = mongoose.Schema({
