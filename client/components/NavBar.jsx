@@ -34,7 +34,7 @@ class NavBar extends React.Component {
         </NavItem>
         <UncontrolledDropdown nav inNavbar>
           <DropdownToggle nav caret>
-          <img src={this.props.user.picture} alt={this.props.user.name} />
+          <img src={this.props.user.photos[0].value.slice(0, -2) + '30'} alt={this.props.user.displayName} />
           </DropdownToggle>
           <DropdownMenu right>
             <DropdownItem>
