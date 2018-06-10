@@ -52,11 +52,15 @@ passport.use(new GoogleStrategy({
 ));
 
 passport.serializeUser(function(volunteer, done) {
+  console.log('serialize')
+  console.log(volunteer)
   done(null, volunteer);
 });
 
 passport.deserializeUser(function(serializedObj, done) {
-  VolunteerModel.findOne({ googleId: serializedObj.googleId }, function(err, volunteer) {
+  console.log('serializedobj', serializedObj)
+  VolunteerModel.findOne({ googleId: serializedObj.id }, function(err, volunteer) {
+    console.log('deserialize', volunteer)
     done(err, volunteer);
   });
 });
@@ -70,11 +74,8 @@ passport.deserializeUser(function(serializedObj, done) {
 
 app.get('/auth/google', passport.authenticate('google', { scope : ['https://www.googleapis.com/auth/plus.login'] }));
 
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }),
-  passport.authenticate('local')(req, res, function() {
-    res.redirect('/')
-  })
-);
+app.get('/auth/google/callback', passport.authenticate('google', { successRedirect: '/',
+                                                                   failureRedirect: '/' }));
 
 // // GET /auth/google
 // //   Use passport.authenticate() as route middleware to authenticate the
