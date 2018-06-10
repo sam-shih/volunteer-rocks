@@ -36,7 +36,7 @@ passport.use(new GoogleStrategy({
         throw err;
       }
 
-      if (volunteer.length === 0) {
+      if (!volunteer) {
         saveToDb.newVolunteer({
           googleId: profile.id,
           name: name,
@@ -71,14 +71,36 @@ passport.deserializeUser(function(serializedObj, done) {
 app.get('/auth/google', passport.authenticate('google', { scope : ['https://www.googleapis.com/auth/plus.login'] }));
 
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }),
-  function(req, res) {
-    res.redirect('/');
-  }
+  passport.authenticate('local')(req, res, function() {
+    res.redirect('/')
+  })
 );
 
+// // GET /auth/google
+// //   Use passport.authenticate() as route middleware to authenticate the
+// //   request.  The first step in Google authentication will involve redirecting
+// //   the user to google.com.  After authorization, Google will redirect the user
+// //   back to this application at /auth/google/callback
+// app.get('/auth/google',
+//   passport.authenticate('google', { scope: 'https://www.google.com/m8/feeds' });
+
+// // GET /auth/google/callback
+// //   Use passport.authenticate() as route middleware to authenticate the
+// //   request.  If authentication fails, the user will be redirected back to the
+// //   login page.  Otherwise, the primary route function function will be called,
+// //   which, in this example, will redirect the user to the home page.
+// app.get('/auth/google/callback', 
+//   passport.authenticate('google', { failureRedirect: '/login' }),
+//   function(req, res) {
+//     res.redirect('/');
+//   });
+
+
 app.get('/main', (req, res) => {
+  console.log('This is user', req.user);
+  console.log('This is session', req.session)
   console.log("session exist check:- ",req.session.passport.user);
-  req.session.passport.user ? res.status(200).end('true') : res.status(401).end('false');
+  req.session.passport.user ? res.status(200).send(req.session.passport.user).end('true') : res.status(401).end('false');
 });
 
 app.post('/login', (req, res) => {

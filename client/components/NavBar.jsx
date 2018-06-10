@@ -34,7 +34,7 @@ class NavBar extends React.Component {
         </NavItem>
         <UncontrolledDropdown nav inNavbar>
           <DropdownToggle nav caret>
-            {this.props.state.user.displayName}
+          <img src={this.props.user.picture} alt={this.props.user.name} />
           </DropdownToggle>
           <DropdownMenu right>
             <DropdownItem>
@@ -67,7 +67,7 @@ class NavBar extends React.Component {
       </React.Fragment>
     );
     return (
-        <Navbar color="light" light expand="md">
+        <Navbar color="white" light expand="md">
           <NavbarBrand href="/">VolunteerRocks</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
