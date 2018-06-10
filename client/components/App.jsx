@@ -11,6 +11,7 @@ import OrgSignupModal from '../modals/OrgSignupModal.jsx';
 import SignupModal from '../modals/SignupModal.jsx';
 import LoginModal from '../modals/LoginModal.jsx';
 import CreateOpModal from '../modals/CreateOpModal.jsx';
+import LoadAllMarkers from './LoadAllMarkers.jsx';
 
 import { NavbarToggler,  NavbarBrand,  NavItem,  Navbar,  NavLink,  Nav } from 'reactstrap';
 
@@ -94,6 +95,8 @@ class App extends Component {
       return <Main getOpp={this.getOpps} zipcodeState={this.state.zipcode} zipcode={this.zip.bind(this)} />
     } else if (view === 'opportunities') {
       return <OpsList enroll={this.volunteerForOpp} opportunities={this.state.opportunities} />
+    } else if (view === 'loadAllMarkers') {
+      return <LoadAllMarkers opportunities={this.state.opportunities} />
     }
   }
 
@@ -104,6 +107,9 @@ class App extends Component {
         <Navbar color="inverse" light expand="md">
             <NavbarBrand href="/">VolunteerRocks</NavbarBrand>
               <Nav className="ml-auto" navbar>
+              <NavItem>
+                <NavLink onClick={() => this.changeView('loadAllMarkers')}>LoadAll</NavLink>
+              </NavItem>
               <NavItem>
                 <CreateOpModal />
               </NavItem>
