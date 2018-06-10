@@ -24,7 +24,7 @@ app.use(cookieParser());
 //saveExampleOpportunity.saveExampleOpportunity();
 
 passport.serializeUser(function(volunteer, done) {
-  done(null, volunteer[0].googleId);
+  done(null, volunteer.googleId);
 });
 
 passport.deserializeUser(function(id, done) {
@@ -66,6 +66,7 @@ passport.use(new GoogleStrategy({
         saveToDb.newVolunteer({
           googleId: profile.id,
           name: name,
+          picture: profile.photos[0].value
         });
 
         return done(err, profile);

@@ -57,7 +57,7 @@ module.exports.saveExampleOpportunity = saveExampleOpportunity;
 // const mongoose = require('mongoose');
 // const saveToDb = require('./saveToDb.js');
 
-// var iterateThisBitch = Array.from(Array(5).keys(), n => n + 1)
+// var list = _.range(1, 20)
 // var allZips = [];
 // var results = {};
 
@@ -80,7 +80,7 @@ module.exports.saveExampleOpportunity = saveExampleOpportunity;
 
 
 // function getDataAndStore() {
-//   iterateThisBitch.forEach(number => {
+//   list.forEach(number => {
 //     axios.get(`https://www.zipcodeapi.com/rest/CGD29JR5AjFk8ohMiSIiYSiWKtAIuKzOv01fkWwrAKLBIUPaVpgPBr9HhAkPww7G/radius.json/94102/${number}/mile`)
 //       .then(response => {
 //         response.data.zip_codes.forEach(function(zip) {
