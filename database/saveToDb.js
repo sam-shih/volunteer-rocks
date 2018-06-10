@@ -17,7 +17,8 @@ const newVolunteer = function(volunteer) {
     address: volunteer.address,
     phone: volunteer.phone,
     email: volunteer.email,
-    TODO: 'Insert opList'
+    TODO: 'Insert opList',
+    picture: volunteer.picture
   });
 
   aNewVolunteer.save(function(err, volunteer) {

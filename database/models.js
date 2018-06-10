@@ -18,7 +18,8 @@ var volunteerSchema = mongoose.Schema({
   phone: String,
   email: String,
   opList: [Schema.ObjectId],
-  created_at: {type: Date, default: Date.now}
+  created_at: {type: Date, default: Date.now},
+  picture: String
 });
 
 var organizationSchema = mongoose.Schema({
