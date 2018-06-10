@@ -17,6 +17,7 @@ class App extends Component {
       view: 'main',
       opportunities: [],
       isLoggedIn: false,
+      user: {},
       zipcode: ''
     }
     this.getOpps = this.getOpps.bind(this);
@@ -29,6 +30,10 @@ class App extends Component {
     axios.get('/main')
     .then((response) => {
       console.log("this is a GET response from 'main page' ",response.data)
+      this.setState({
+        user: response.data,
+        isLoggedIn: true
+      })
     })
     .catch((err) => {
       console.log("Error in main page GET request ", err);
@@ -118,6 +123,7 @@ class App extends Component {
           <NavBar 
             changeView={this.changeView} 
             isLoggedIn={this.state.isLoggedIn}
+            user={this.state.user}
             isLoggedInToggleForTesting={this.isLoggedInToggleForTesting}
           />
           {this.renderView()}

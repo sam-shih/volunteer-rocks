@@ -40,6 +40,7 @@ passport.use(new GoogleStrategy({
         saveToDb.newVolunteer({
           googleId: profile.id,
           name: name,
+          picture: profile.photos[0].value
         });
 
         return done(err, profile);
