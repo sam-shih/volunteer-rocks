@@ -19,7 +19,7 @@ class SignupModal extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <NavLink onClick={this.toggle}>Sign Up</NavLink>
+        <NavLink href="#" onClick={this.toggle}>Sign Up</NavLink>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Sign Up</ModalHeader>
           <ModalBody>

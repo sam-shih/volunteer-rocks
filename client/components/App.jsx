@@ -7,13 +7,8 @@ import $ from 'jquery';
 import Filter from './Filter.jsx';
 import OpsList from './OpsList.jsx';
 import Main from './Main.jsx';
-import OrgSignupModal from '../modals/OrgSignupModal.jsx';
-import SignupModal from '../modals/SignupModal.jsx';
-import LoginModal from '../modals/LoginModal.jsx';
-import CreateOpModal from '../modals/CreateOpModal.jsx';
+import NavBar from './NavBar.jsx';
 import LoadAllMarkers from './LoadAllMarkers.jsx';
-
-import { NavbarToggler,  NavbarBrand,  NavItem,  Navbar,  NavLink,  Nav } from 'reactstrap';
 
 class App extends Component {
   constructor(props) {
@@ -21,12 +16,13 @@ class App extends Component {
     this.state = {
       view: 'main',
       opportunities: [],
-      isOpen: false,
+      isLoggedIn: false,
       zipcode: ''
     }
     this.getOpps = this.getOpps.bind(this);
     this.changeView = this.changeView.bind(this);
     this.volunteerForOpp = this.volunteerForOpp.bind(this);
+    this.isLoggedInToggleForTesting = this.isLoggedInToggleForTesting.bind(this);
   }
 
   componentDidMount() {
@@ -37,6 +33,12 @@ class App extends Component {
     .catch((err) => {
       console.log("Error in main page GET request ", err);
     })
+  }
+
+  isLoggedInToggleForTesting() {
+    this.setState({
+      isLoggedIn: !this.state.isLoggedIn
+    });
   }
 
   changeView(option) {
@@ -113,33 +115,12 @@ class App extends Component {
     return (
       <Provider store={store}>
         <div>
-        <Navbar color="inverse" light expand="md">
-            <NavbarBrand href="/">VolunteerRocks</NavbarBrand>
-              <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink onClick={() => this.changeView('loadAllMarkers')}>LoadAll</NavLink>
-              </NavItem>
-              <NavItem>
-                <CreateOpModal />
-              </NavItem>
-                <NavItem>
-                  <OrgSignupModal changeView={this.changeView}/>
-                </NavItem>
-                <NavItem>
-                  <SignupModal />
-                </NavItem>
-                <NavItem>
-                  <LoginModal />
-                </NavItem>
-                <NavItem>
-                  <NavLink onClick={() => this.changeView('opportunities')}>Opportunities</NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink onClick={() => axios.get('/logout') }>Logout</NavLink>
-                </NavItem>
-              </Nav>
-        </Navbar>
-        {this.renderView()}
+          <NavBar 
+            changeView={this.changeView} 
+            isLoggedIn={this.state.isLoggedIn}
+            isLoggedInToggleForTesting={this.isLoggedInToggleForTesting}
+          />
+          {this.renderView()}
         </div>
       </ Provider>
     );
