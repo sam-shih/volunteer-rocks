@@ -29,6 +29,16 @@ class App extends Component {
     this.volunteerForOpp = this.volunteerForOpp.bind(this);
   }
 
+  componentDidMount() {
+    axios.get('/main')
+    .then((response) => {
+      console.log("this is a GET response from 'main page' ",response.data)
+    })
+    .catch((err) => {
+      console.log("Error in main page GET request ", err);
+    })
+  }
+
   changeView(option) {
     if (this.state.view !== option) {
       this.setState({
@@ -91,7 +101,6 @@ class App extends Component {
   renderView() {
     const {view} = this.state;
     if (view === 'main') {
-      console.log("u how many times")
       return <Main getOpp={this.getOpps} zipcodeState={this.state.zipcode} zipcode={this.zip.bind(this)} />
     } else if (view === 'opportunities') {
       return <OpsList enroll={this.volunteerForOpp} opportunities={this.state.opportunities} />
