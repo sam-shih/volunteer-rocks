@@ -29,7 +29,7 @@ class App extends Component {
   componentDidMount() {
     axios.get('/main')
     .then((response) => {
-      console.log("this is a GET response from 'main page' ",response.data)
+      console.log("this is a GET response from 'main page' ", response.data)
       this.setState({
         user: response.data,
         isLoggedIn: true

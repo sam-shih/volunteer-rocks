@@ -18,7 +18,7 @@ const newVolunteer = function(volunteer) {
     phone: volunteer.phone,
     email: volunteer.email,
     TODO: 'Insert opList',
-    picture: volunteer.picture
+    picture: volunteer.picture.slice(0, -2) + '30'
   });
 
   aNewVolunteer.save(function(err, volunteer) {
