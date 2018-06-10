@@ -1,13 +1,19 @@
 import React from 'react';
 import Ops from './Ops.jsx';
-import { Container } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 
 const OpsList = function(props) {
   return (
     <Container>
-      {props.opportunities.map(function(opportunity, idx) {
-        return <Ops enroll={props.enroll} opportunity={opportunity} key={idx} />
-      })}
+      <Row> 
+        <Col xs="8">
+          {props.opportunities.map(function(opportunity, idx) {
+            return <Ops enroll={props.enroll} opportunity={opportunity} key={idx} />
+          })}
+        </Col>
+        <Col xs="4">
+        </Col>
+        </Row>
     </Container>
   );
 };
