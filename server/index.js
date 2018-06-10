@@ -22,42 +22,16 @@ app.use(cookieParser());
 
 // saveExampleOpportunity.saveExampleOpportunity();
 
-passport.serializeUser(function(volunteer, done) {
-  console.log(volunteer, 'volunteer inside serializeUser')
-  done(null, volunteer);
-});
-
-passport.deserializeUser(function(serializedObj, done) {
-  console.log('Inside deserialize user', serializedObj.googleId);
-  VolunteerModel.findOne( { googleId: serializedObj.googleId }, function(err, volunteer) {
-    done(err, volunteer);
-  });
-});
-
-// passport.serializeUser(function(volunteer, done) {
-//   done(null, volunteer[0].googleId);
-// });
-//saveExampleOpportunity.saveExampleOpportunity();
-// passport.deserializeUser(function(id, done) {
-//   console.log('Inside deserialize user', id);
-//   VolunteerModel.findOne( { googleId: id }, function(err, volunteer) {
-//     done(err, volunteer);
-//   });
-// });
-
-
-
 passport.use(new GoogleStrategy({
   clientID: '177608482290-e9id899c90egnaq61bu5acppkrnenm12.apps.googleusercontent.com',
   clientSecret: 'RfKLyzUdC7PMcr-_G_hxkVg0',
   callbackURL: 'http://localhost:3000/auth/google/callback',
 },
   function(accessToken, refreshToken, profile, done) {
-
     let name = profile.displayName;
     let profileId = profile.id;
 
-    VolunteerModel.find({ googleId: profileId }, function(err, volunteer) {
+    VolunteerModel.findOne({ googleId: profileId }, function(err, volunteer) {
       if (err) {
         throw err;
       }
@@ -76,6 +50,16 @@ passport.use(new GoogleStrategy({
   }
 ));
 
+passport.serializeUser(function(volunteer, done) {
+  done(null, volunteer);
+});
+
+passport.deserializeUser(function(serializedObj, done) {
+  VolunteerModel.findOne({ googleId: serializedObj.googleId }, function(err, volunteer) {
+    done(err, volunteer);
+  });
+});
+
 
 //MAIN PAGE GET REQUEST
 // app.get('/main', (req, res) => {
@@ -93,14 +77,11 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
 
 //ORGANIZATION LOGIN REQUEST
 
-
-
 app.post('/login', (req, res) => {
   checkdb.checkUserCredential(req.body, res);
 });
 
 app.get('/logout', function(req, res) {
-  console.log(req.user);
   req.logout();
   res.redirect('/');
 })
@@ -136,14 +117,12 @@ app.get('/opportunities/all', (req, res) => {
 
 app.post('/enroll', (req, res) => {
   let oppId = req.body.oppId;
-  // console.log(req.user._id)
 
   if (req.user) {
     addVolunteerToOpp(oppId, req.user._id, res);
   } else {
     res.send('login')
   }
-
 
 });
 

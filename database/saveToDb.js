@@ -11,6 +11,7 @@ let Opportunity = models.Opportunities;
 
 const newVolunteer = function(volunteer) {
   let aNewVolunteer = new Volunteer({
+    googleId: volunteer.googleId,
     name: volunteer.name,
     address: volunteer.address,
     phone: volunteer.phone,

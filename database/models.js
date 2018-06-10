@@ -4,6 +4,7 @@ var Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
 
 var volunteerSchema = mongoose.Schema({
+  googleId: String,
   name: {
     type: String,
     required: true
