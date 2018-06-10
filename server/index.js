@@ -125,6 +125,10 @@ app.post('/opportunities', (req, res) => {
   // retrieveFromDb.getOpportunities(5, res);
 });
 
+app.get('/opportunities/all', (req, res) => {
+  retrieveFromDb.getOpportunities(1000, res);
+});
+
 app.post('/enroll', (req, res) => {
   let oppId = req.body.oppId;
   // console.log(req.user._id)

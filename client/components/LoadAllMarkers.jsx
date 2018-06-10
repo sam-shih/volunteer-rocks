@@ -14,7 +14,6 @@ class LoadAllMarkers extends Component {
   componentDidMount() {
     axios.get('/opportunities/all')
       .then(response => {
-        console.log(response.data)
         this.setState({
           ops: response.data
         });
