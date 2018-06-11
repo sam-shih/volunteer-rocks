@@ -16,6 +16,7 @@ class App extends Component {
     this.state = {
       view: 'main',
       opportunities: [],
+      filtedOpps: [],
       isLoggedIn: false,
       isOrganization: false,
       user: {},
@@ -141,7 +142,7 @@ class App extends Component {
     if (view === 'main') {
       return <Main getOpp={this.getOpps} zipcodeState={this.state.zipcode} zipcode={this.zip.bind(this)} />
     } else if (view === 'opportunities') {
-      return <OpsList enroll={this.volunteerForOpp} opportunities={this.state.opportunities} />
+      return <OpsList enroll={this.volunteerForOpp} opportunities={this.state.opportunities} filtedOpps={this.state.filtedOpps}/>
     } else if (view === 'loadAllMarkers') {
       return <LoadAllMarkers opportunities={this.state.opportunities} />
     }
@@ -151,8 +152,8 @@ class App extends Component {
     return (
       <Provider store={store}>
         <div>
-          <NavBar 
-            changeView={this.changeView} 
+          <NavBar
+            changeView={this.changeView}
             isLoggedIn={this.state.isLoggedIn}
             user={this.state.user}
             isLoggedInToggleForTesting={this.isLoggedInToggleForTesting}
