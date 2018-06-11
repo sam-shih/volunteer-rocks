@@ -53,6 +53,7 @@ const newOrganization = function(organization, res, req, session) {
 
       console.log(`A new organization, ${organization.name}, has been saved`);
       req.session.userId = organization._id;
+      req.session.name = organization.name;
       console.log(req.session.user);
       res.status(201).end();
     });
@@ -103,4 +104,4 @@ const newOpportunity = function(opportunity) {
 
 module.exports.newOpportunity = newOpportunity;
 module.exports.newOrganization = newOrganization;
-module.exports.newVolunteer = newVolunteer;
+module.exports.newVolunteer = newVolunteer;``
