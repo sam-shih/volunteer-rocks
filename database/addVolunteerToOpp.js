@@ -3,8 +3,8 @@ let Volunteers = models.Volunteers;
 let Organizations = models.Organizations;
 let Opportunities = models.Opportunities;
 
-const checkIfEnrolled = function(oppId, volId, res) {
-  Opportunities.findById(oppId, function(err, opportunity) {
+const checkIfEnrolled = function(opportunity, volId, res) {
+  Opportunities.findById(opportunity._id, function(err, opportunity) {
     if (err) {
       throw err;
     }
@@ -14,18 +14,24 @@ const checkIfEnrolled = function(oppId, volId, res) {
     if (volunteerers.indexOf(volId) > -1) {
       res.send('already');
     } else {
-      addVolunteerToOpp(oppId, volId, res);
+      addVolunteerToOpp(opportunity, volId, res);
     }
   });
 }
 
-const addVolunteerToOpp = function(oppId, volId, res) {
-  Opportunities.findByIdAndUpdate(oppId, {$push: { volunteerers: volId }}, function(err, opportunity) {
+const addVolunteerToOpp = function(opportunity, volId, res) {
+  Opportunities.findByIdAndUpdate(opportunity._id, {$push: { volunteerers: volId }}, function(err, foundOpp) {
     if (err) {
       throw err;
     }
 
-    res.send('enrolled');
+    Volunteers.findByIdAndUpdate(volId, { $push: { opList: opportunity }}, function(err, volunteer) {
+      if (err) {
+        throw err;
+      }
+
+      res.send('enrolled');
+    });
   });
 };
 

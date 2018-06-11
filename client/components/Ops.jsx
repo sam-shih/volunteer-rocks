@@ -5,7 +5,6 @@ import { Card, CardImg, CardText, CardBody,
 
 import Map from './Map.jsx';
 
-
 const Ops = function(props) {
   return (
     <Card>
@@ -22,7 +21,7 @@ const Ops = function(props) {
             {/* <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" /> */}
           </Col>
         </Row>
-        <Button onClick={() => props.enroll(props.opportunity._id)}>Volunteer</Button>
+        <Button outline color="primary" onClick={() => props.volunteerForOpp(props.opportunity)}>Volunteer</Button>
       </CardBody>
     </Card>
   );

@@ -33,8 +33,19 @@ const getOpportunities = function(limit, res) {
   }).limit(limit);
 };
 
-const getZipCodeSearch = function(zipCodes, limit, res) {
-  console.log(limit);
+const myOpportunities = function(id, res) {
+  Volunteers.findById(id, function (err, oppsData) {
+    if (err) {
+      throw err;
+    }
+    console.log('OPPPPPPS DATAAAAAAA HELLO', oppsData)    
+    Opportunities.find({'_id': {$in:oppsData.opList}}, function(err, result) {
+      res.status(200).json(result);
+    });
+  })
+};
+
+const getZipCodeSearch = function(zipCodes, res) {
   zipCodes.forEach((zip) => {
     zipCodesArray.push(zip.zip_code);
   });
@@ -43,7 +54,6 @@ const getZipCodeSearch = function(zipCodes, limit, res) {
   Opportunities.find()
     .where('zipcode')
     .in(zipCodesArray)
-    .limit(limit)
     .exec((err, opps) => {
       if(err) {
         console.log("Error " + err)
@@ -56,6 +66,7 @@ const getZipCodeSearch = function(zipCodes, limit, res) {
 
 };
 
+module.exports.myOpportunities = myOpportunities;
 module.exports.getVolunteers = getVolunteers;
 module.exports.getOrganizations = getOrganizations;
 module.exports.getOpportunities = getOpportunities;

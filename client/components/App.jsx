@@ -26,6 +26,7 @@ class App extends Component {
     this.getOpps = this.getOpps.bind(this);
     this.changeView = this.changeView.bind(this);
     this.setOpsListView = this.setOpsListView.bind(this);
+    this.myOppotunities = this.myOppotunities.bind(this);
     this.volunteerForOpp = this.volunteerForOpp.bind(this);
     this.isLoggedInToggleForTesting = this.isLoggedInToggleForTesting.bind(this);
     this.orginizationLoggedIn = this.orginizationLoggedIn.bind(this);
@@ -81,8 +82,8 @@ class App extends Component {
     });
   }
 
-  volunteerForOpp(oppId) {
-    axios.post('/enroll', { oppId: oppId })
+  volunteerForOpp(opportunity) {
+    axios.post('/enroll', { opportunity: opportunity })
       .then((response) => {
         let responseData = response.data;
         if (responseData === 'login') {
@@ -91,6 +92,8 @@ class App extends Component {
           alert('Successfully enrolled in opportunity');
         } else if (responseData === 'already') {
           alert('You have already enrolled in this opportunity');
+        } else if (view === 'loadAllMarkers') {
+          return <LoadAllMarkers opportunities={this.state.opportunities} />
         }
       })
       .catch((err) => {
@@ -146,16 +149,28 @@ class App extends Component {
     })
   }
 
+  myOppotunities() {
+    axios.get('/myOps')
+      .then(response => {
+        this.setState({
+          view: 'myOpportunities',
+          filtedOpps: response.data
+        });
+      });
+  }
+
   renderView() {
     const {view} = this.state;
     if (view === 'main') {
       return <Main getOpp={this.getOpps} zipcodeState={this.state.zipcode} zipcode={this.zip.bind(this)} />
     } else if (view === 'opportunities') {
-      return <OpsList enroll={this.volunteerForOpp} opportunities={this.state.opportunities} setOpsListView={this.setOpsListView} />
+      return <OpsList volunteerForOpp={this.volunteerForOpp} opportunities={this.state.opportunities} setOpsListView={this.setOpsListView} />
     } else if (view === 'loadAllMarkers') {
       return <LoadAllMarkers opportunities={this.state.opportunities} />
     } else if (view === 'filtedOpps') {
-      return <OpsList enroll={this.volunteerForOpp} opportunities={this.state.filtedOpps} setOpsListView={this.setOpsListView}  />
+      return <OpsList volunteerForOpp={this.volunteerForOpp} opportunities={this.state.filtedOpps} setOpsListView={this.setOpsListView}  />
+    } else if (view === 'myOpportunities') {
+      return <OpsList opportunities={this.state.filtedOpps} setOpsListView={this.setOpsListView}  />
     }
   }
 
@@ -171,6 +186,7 @@ class App extends Component {
             isOrganization={this.state.isOrganization}
             logOut={this.logOut}
             orginizationLoggedIn={this.orginizationLoggedIn}
+            myOppotunities={this.myOppotunities}
           />
           {this.renderView()}
         </div>

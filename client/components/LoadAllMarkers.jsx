@@ -46,7 +46,7 @@ class LoadAllMarkers extends Component {
     <div>
       <OpportunityMap
         // markers={this.state.ops}
-        containerElement={ <div style={{ height: `800px`, width: '800px' }} /> }
+        containerElement={ <div style={{ height: `900px`, width: '1700px' }} /> }
         mapElement={ <div style={{ height: `100%` }} /> }
       />
     </div>
