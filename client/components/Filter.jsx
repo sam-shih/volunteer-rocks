@@ -70,7 +70,7 @@ class Filter extends React.Component {
                         type="date"
                         value={this.state.end_date}
                         onChange={this.updateInput} />
-                  <Button onClick={() => this.searchOpps(this.state.form)}>Submit</Button>
+                  <Button onClick={() => this.searchOpps(this.state.)}>Submit</Button>
             </div>
           );
        }
