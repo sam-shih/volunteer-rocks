@@ -28,7 +28,7 @@ class NavBar extends React.Component {
     const navView = isLoggedIn ? (
       <React.Fragment>
         <NavItem>
-          <NavLink href="#" onClick={this.props.isLoggedInToggleForTesting}>Click Me</NavLink>
+          <OrgSignupModal />
         </NavItem>
         <UncontrolledDropdown nav inNavbar>
           <DropdownToggle nav caret>
@@ -39,10 +39,10 @@ class NavBar extends React.Component {
           </DropdownToggle>
           <DropdownMenu right>
             <DropdownItem>
-              My Opportunities
+              <div onClick={() => this.props.myOppotunities()}>My Opportunities</div>
             </DropdownItem>
             <DropdownItem>
-              More Stuff?
+              <div onClick={() => this.props.changeView('loadAllMarkers')}>Map All</div>
             </DropdownItem>
             <DropdownItem divider />
             <DropdownItem href="#" onClick={() => this.props.logOut() }>
@@ -53,9 +53,6 @@ class NavBar extends React.Component {
       </React.Fragment>
     ) : isOrganization ? (
       <React.Fragment>
-        <NavItem>
-          <NavLink href="#" onClick={this.props.isLoggedInToggleForTesting}>Click Me</NavLink>
-        </NavItem>
         <NavItem>
           <CreateOpModal />
         </NavItem>
@@ -68,7 +65,7 @@ class NavBar extends React.Component {
               My Opportunities
             </DropdownItem>
             <DropdownItem>
-              More Stuff?
+              <div onClick={() => this.props.changeView('loadAllMarkers')}>Map All</div>
             </DropdownItem>
             <DropdownItem divider />
             <DropdownItem href="#" onClick={() => this.props.logOut() }>
@@ -80,22 +77,19 @@ class NavBar extends React.Component {
     ) : (
       <React.Fragment>
         <NavItem>
-          <NavLink href="#" onClick={this.props.isLoggedInToggleForTesting}>Click Me</NavLink>
-        </NavItem>
-        <NavItem>
           <OrgSignupModal />
         </NavItem>
         <NavItem>
           <LoginModal orginizationLoggedIn={this.props.orginizationLoggedIn}/>
         </NavItem>
         <NavItem>
-          <Button outline color="secondary">Sign Up</Button>{' '}
+          <Button outline color="primary">Sign Up</Button>{' '}
         </NavItem>
       </React.Fragment>
     );
     return (
         <Navbar color="white" light expand="md">
-          <NavbarBrand href="/">VolunteerRocks</NavbarBrand>
+          <NavbarBrand href="/">The Volunteer Opportunity Seaching Place</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>

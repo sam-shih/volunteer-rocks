@@ -40,7 +40,7 @@ class Filter extends React.Component {
   render () {
 
       var causes = [];
-      this.props.opp.forEach(op => {
+      this.props.opps.forEach(op => {
         causes.push(op.cause);
       });
 

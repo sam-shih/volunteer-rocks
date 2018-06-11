@@ -56,7 +56,7 @@ class LoginModal extends React.Component {
           <ModalBody>
             <Input name="username" placeholder="User Name" type="text" value={this.state.form.username} onChange={this.updateInput}/>
             <Input name="password" placeholder="Password" type="text" value={this.state.form.password} onChange={this.updateInput}/>
-            <Button color="primary" onClick={() => this.submitForm(this.state.form)}>Sign In</Button>{' '}
+            <Button outline color="primary" onClick={() => this.submitForm(this.state.form)}>Sign In</Button>{' '}
             <Button color="sucess" onClick={() => this.toggle}><a href="/auth/google">Login with Google+</a></Button>{' '}
           </ModalBody>
         </Modal>

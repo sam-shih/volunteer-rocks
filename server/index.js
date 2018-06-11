@@ -11,6 +11,7 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const cookieParser = require('cookie-parser');
 const addVolunteerToOpp = require('../database/addVolunteerToOpp').checkIfEnrolled;
 
+
 const app = express();
 
 app.use(express.json());
@@ -108,6 +109,9 @@ app.post('/signup', (req, res) => {
 
 //OPPORTUNITIES GET REQUEST
 
+app.get('/myOps', (req, res) => {
+  retrieveFromDb.myOpportunities(req.session.passport.user._id, res);
+})
 
 app.post('/newOpp', (req, res) => {
   saveToDb.newOpportunity(req.body);
@@ -115,15 +119,15 @@ app.post('/newOpp', (req, res) => {
 });
 
 app.post('/opportunities', (req, res) => {
-  let zipApiUrl = `https://www.zipcodeapi.com/rest/jXEHhizBNOo3C2RRQSk7Yz7rnOBXayXcDpD0KuAhI1yofRUd7POm4rcDN0tUtTS8/radius.json/${req.body.zipcode}/1/mile`;
+  let zipApiUrl = `https://www.zipcodeapi.com/rest/O4i5XLUvKKDgHEb3Sw8QNYxNG6NW8Sk7KqQ3kVKI0sodef9qD1THnwOHrd4u4KvD/radius.json/${req.body.zipcode}/50/mile`;
 
-  // axios.get(zipApiUrl)
-  //   .then(response => {
-  //     //console.log('From zipapi ' + response.data.zip_codes[0].zip_code);
-  //     retrieveFromDb.getZipCodeSearch(response.data.zip_codes, 5, res);
-  //   }).catch(err => console.log('Err', err));
+  axios.get(zipApiUrl)
+    .then(response => {
+      //console.log('From zipapi ' + response.data.zip_codes[0].zip_code);
+      retrieveFromDb.getZipCodeSearch(response.data.zip_codes, res);
+    }).catch(err => console.log('Err', err));
 
-  retrieveFromDb.getOpportunities(5, res);
+  // retrieveFromDb.getOpportunities(5, res);
 });
 
 app.get('/opportunities/all', (req, res) => {
@@ -131,10 +135,11 @@ app.get('/opportunities/all', (req, res) => {
 });
 
 app.post('/enroll', (req, res) => {
-  let oppId = req.body.oppId;
+  let opportunity = req.body.opportunity;
+  console.log('This is the opportunity in ENROLL', opportunity)
 
   if (req.user) {
-    addVolunteerToOpp(oppId, req.user._id, res);
+    addVolunteerToOpp(opportunity, req.user._id, res);
   } else {
     res.send('login')
   }
