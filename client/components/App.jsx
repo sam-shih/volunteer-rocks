@@ -61,7 +61,8 @@ class App extends Component {
 
   isLoggedInToggleForTesting() {
     this.setState({
-      isLoggedIn: !this.state.isLoggedIn
+      isLoggedIn: !this.state.isLoggedIn,
+      isOrganization: !this.state.isOrganization
     });
   }
 
