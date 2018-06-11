@@ -79,10 +79,10 @@ app.get('/auth/google/callback', passport.authenticate('google', { successRedire
 app.get('/main', (req, res) => {
   console.log('This is user', req.user);
   console.log('This is session', req.session)
-  var sessionTest = ('passport' in req.session) ? `*** SESSION EXISTS for ${req.session.passport.user.name}` : "*** NO SESSION ***";
+  var sessionTest = ('user' in req) ? `*** SESSION EXISTS for ${req.session.passport.user.name}` : "*** NO SESSION ***";
   console.log(sessionTest);
 
-  ('passport' in req.session) ? res.status(200).send(req.session.passport.user).end('true') : res.status(401).end('false');
+  ('user' in req) ? res.status(200).send(req.session.passport.user).end('true') : res.status(401).end('false');
 });
 
 app.post('/login', (req, res) => {
