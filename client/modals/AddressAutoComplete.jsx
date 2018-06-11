@@ -3,7 +3,7 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-au
 
 class AddressAutoComplete extends React.Component {
   constructor(props) {
-    super(props);  
+    super(props);
     this.state = { address: '' }
     this.handleChange = this.handleChange.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
@@ -25,35 +25,35 @@ class AddressAutoComplete extends React.Component {
   render() {
     return (
       <React.Fragment>
-      <PlacesAutocomplete
-        value={this.state.address}
-        onChange={this.handleChange}
-        onSelect={this.handleSelect}
-      >
-        {({ getInputProps, suggestions, getSuggestionItemProps }) => (
-          <div>
-            <input
-              {...getInputProps({
-                className: 'location-search-input'
-              })}
-            />
-            <div className="autocomplete-dropdown-container">
-              {suggestions.map(suggestion => {
-                const className = suggestion.active ? 'suggestion-item--active' : 'suggestion-item';
-                // inline style for demonstration purpose
-                const style = suggestion.active
-                            ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                            : { backgroundColor: '#fafafa', cursor: 'pointer' };
-                return (
-                  <div {...getSuggestionItemProps(suggestion, { className, style })}>
-                    <span>{suggestion.description}</span>
-                  </div>
-                )
-              })}
+        <PlacesAutocomplete
+          value={this.state.address}
+          onChange={this.handleChange}
+          onSelect={this.handleSelect}
+        >
+          {({ getInputProps, suggestions, getSuggestionItemProps }) => (
+            <div>
+              <input
+                {...getInputProps({
+                  className: 'location-search-input'
+                })}
+              />
+              <div className="autocomplete-dropdown-container">
+                {suggestions.map(suggestion => {
+                  const className = suggestion.active ? 'suggestion-item--active' : 'suggestion-item';
+                  // inline style for demonstration purpose
+                  const style = suggestion.active
+                    ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                    : { backgroundColor: '#fafafa', cursor: 'pointer' };
+                  return (
+                    <div {...getSuggestionItemProps(suggestion, { className, style })}>
+                      <span>{suggestion.description}</span>
+                    </div>
+                  )
+                })}
+              </div>
             </div>
-          </div>
-        )}
-      </PlacesAutocomplete>
+          )}
+        </PlacesAutocomplete>
       </React.Fragment>
     );
   }

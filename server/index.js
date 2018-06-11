@@ -16,7 +16,12 @@ const app = express();
 
 app.use(express.json());
 app.use(express.static(__dirname + '/../client/dist'));
-app.use(session({secret: 'Is it really a secret', cookie:{maxAge: 365*24*60*60}}));
+app.use(session({
+  secret: 'Is it really a secret',
+  cookie: {
+    maxAge: 365 * 24 * 60 * 60
+  }
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cookieParser());
@@ -24,15 +29,17 @@ app.use(cookieParser());
 // saveExampleOpportunity.saveExampleOpportunity();
 
 passport.use(new GoogleStrategy({
-  clientID: '177608482290-e9id899c90egnaq61bu5acppkrnenm12.apps.googleusercontent.com',
-  clientSecret: 'RfKLyzUdC7PMcr-_G_hxkVg0',
-  callbackURL: 'http://localhost:3000/auth/google/callback',
-},
-  function(accessToken, refreshToken, profile, done) {
+    clientID: '177608482290-e9id899c90egnaq61bu5acppkrnenm12.apps.googleusercontent.com',
+    clientSecret: 'RfKLyzUdC7PMcr-_G_hxkVg0',
+    callbackURL: 'http://localhost:3000/auth/google/callback',
+  },
+  function (accessToken, refreshToken, profile, done) {
     let name = profile.displayName;
     let profileId = profile.id;
 
-    VolunteerModel.findOne({ googleId: profileId }, function(err, volunteer) {
+    VolunteerModel.findOne({
+      googleId: profileId
+    }, function (err, volunteer) {
       if (err) {
         throw err;
       }
@@ -51,15 +58,17 @@ passport.use(new GoogleStrategy({
   }
 ));
 
-passport.serializeUser(function(volunteer, done) {
+passport.serializeUser(function (volunteer, done) {
   console.log('serialize')
   console.log(volunteer)
   done(null, volunteer);
 });
 
-passport.deserializeUser(function(serializedObj, done) {
+passport.deserializeUser(function (serializedObj, done) {
   console.log('serializedobj', serializedObj)
-  VolunteerModel.findOne({ googleId: serializedObj.googleId }, function(err, volunteer) {
+  VolunteerModel.findOne({
+    googleId: serializedObj.googleId
+  }, function (err, volunteer) {
     console.log('deserialize', volunteer)
     done(err, volunteer);
   });
@@ -72,10 +81,14 @@ passport.deserializeUser(function(serializedObj, done) {
 // });
 
 
-app.get('/auth/google', passport.authenticate('google', { scope : ['https://www.googleapis.com/auth/plus.login'] }));
+app.get('/auth/google', passport.authenticate('google', {
+  scope: ['https://www.googleapis.com/auth/plus.login']
+}));
 
-app.get('/auth/google/callback', passport.authenticate('google', { successRedirect: '/',
-                                                                   failureRedirect: '/' }));
+app.get('/auth/google/callback', passport.authenticate('google', {
+  successRedirect: '/',
+  failureRedirect: '/'
+}));
 
 app.get('/main', (req, res) => {
   console.log('This is user', req.user);
@@ -90,14 +103,14 @@ app.get('/main', (req, res) => {
     console.log('userId org', req.session.name)
     res.status(200).send(req.session)
   }
-    
+
 });
 
 app.post('/login', (req, res) => {
   checkdb.checkUserCredential(req.body, res, session, req);
 });
 
-app.get('/logout', function(req, res) {
+app.get('/logout', function (req, res) {
   req.logout();
   res.redirect('/');
 })

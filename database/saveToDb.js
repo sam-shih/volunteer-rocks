@@ -10,7 +10,7 @@ let Volunteer = models.Volunteers;
 let Organization = models.Organizations;
 let Opportunity = models.Opportunities;
 
-const newVolunteer = function(volunteer, done) {
+const newVolunteer = function (volunteer, done) {
   let aNewVolunteer = new Volunteer({
     googleId: volunteer.googleId,
     name: volunteer.name,
@@ -21,7 +21,7 @@ const newVolunteer = function(volunteer, done) {
     picture: volunteer.picture.slice(0, -2) + '30'
   });
 
-  aNewVolunteer.save(function(err, volunteer) {
+  aNewVolunteer.save(function (err, volunteer) {
     if (err) {
       throw err;
     }
@@ -30,10 +30,10 @@ const newVolunteer = function(volunteer, done) {
   });
 };
 
-const newOrganization = function(organization, res, req, session) {
+const newOrganization = function (organization, res, req, session) {
   let hashPassword = '';
 
-  bcrypt.hash(organization.password, 10, function(err, hash) {
+  bcrypt.hash(organization.password, 10, function (err, hash) {
     hashPassword = hash;
 
     let aNewOrganization = new Organization({
@@ -46,7 +46,7 @@ const newOrganization = function(organization, res, req, session) {
       //TODO: 'Insert opList'
     });
 
-    aNewOrganization.save(function(err, organization) {
+    aNewOrganization.save(function (err, organization) {
       if (err) {
         throw err;
       }
@@ -61,47 +61,48 @@ const newOrganization = function(organization, res, req, session) {
   });
 };
 
-const newOpportunity = function(opportunity) {
+const newOpportunity = function (opportunity) {
 
   googleMapsClient.geocode({
-    address: opportunity.address
-  }).asPromise()
-  .then((response) => {
-    let zipcode = '';
-    let gmapi = response.json.results[0];
-    for(var i = 0; i<gmapi.address_components.length; i++) {
-      if(gmapi.address_components[i].types[0] === 'postal_code'){
-        zipcode = gmapi.address_components[i].short_name;
+      address: opportunity.address
+    }).asPromise()
+    .then((response) => {
+      let zipcode = '';
+      let gmapi = response.json.results[0];
+      for (var i = 0; i < gmapi.address_components.length; i++) {
+        if (gmapi.address_components[i].types[0] === 'postal_code') {
+          zipcode = gmapi.address_components[i].short_name;
+        }
       }
-    }
 
-    let aNewOpportunity = new Opportunity({
-      title: opportunity.title,
-      description: opportunity.description,
-      cause: opportunity.cause,
-      zipcode: zipcode,
-      formatted_address: gmapi.formatted_address,
-      start_date: opportunity.start_date,
-      end_date: opportunity.end_date,
-      phone: opportunity.phone,
-      email: opportunity.email,
-      location: {
-        lat: gmapi.geometry.location.lat,
-        lng: gmapi.geometry.location.lng
-      }
-    });
-      aNewOpportunity.save(function(err, opportunity) {
+      let aNewOpportunity = new Opportunity({
+        title: opportunity.title,
+        description: opportunity.description,
+        cause: opportunity.cause,
+        zipcode: zipcode,
+        formatted_address: gmapi.formatted_address,
+        start_date: opportunity.start_date,
+        end_date: opportunity.end_date,
+        phone: opportunity.phone,
+        email: opportunity.email,
+        location: {
+          lat: gmapi.geometry.location.lat,
+          lng: gmapi.geometry.location.lng
+        }
+      });
+      aNewOpportunity.save(function (err, opportunity) {
         if (err) {
           console.log(err);
         }
         console.log("Success in saving newOpportunity")
       });
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 module.exports.newOpportunity = newOpportunity;
 module.exports.newOrganization = newOrganization;
-module.exports.newVolunteer = newVolunteer;``
+module.exports.newVolunteer = newVolunteer;
+``

@@ -5,9 +5,12 @@ import SignupModal from '../modals/SignupModal.jsx';
 import LoginModal from '../modals/LoginModal.jsx';
 import CreateOpModal from '../modals/CreateOpModal.jsx';
 
-
-import { NavbarToggler,  NavbarBrand,  NavItem,  Navbar, Collapse, UncontrolledDropdown, DropdownToggle,
-  DropdownMenu,  DropdownItem, Nav, NavLink, Button } from 'reactstrap';
+import {
+  NavbarToggler, NavbarBrand, NavItem,
+  Navbar, Collapse, UncontrolledDropdown,
+  DropdownToggle, DropdownMenu, DropdownItem,
+  Nav, Button
+} from 'reactstrap';
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -32,10 +35,10 @@ class NavBar extends React.Component {
         </NavItem>
         <UncontrolledDropdown nav inNavbar>
           <DropdownToggle nav caret>
-          <img 
-            src={this.props.user.picture} 
-            alt={this.props.user.name} 
-            className={'img-circle'}/>
+            <img
+              src={this.props.user.picture}
+              alt={this.props.user.name}
+              className={'img-circle'} />
           </DropdownToggle>
           <DropdownMenu right>
             <DropdownItem>
@@ -45,11 +48,11 @@ class NavBar extends React.Component {
               <div onClick={() => this.props.changeView('loadAllMarkers')}>Map All</div>
             </DropdownItem>
             <DropdownItem divider />
-            <DropdownItem href="#" onClick={() => this.props.logOut() }>
+            <DropdownItem href="#" onClick={() => this.props.logOut()}>
               Log Out
             </DropdownItem>
           </DropdownMenu>
-        </UncontrolledDropdown> 
+        </UncontrolledDropdown>
       </React.Fragment>
     ) : isOrganization ? (
       <React.Fragment>
@@ -68,35 +71,35 @@ class NavBar extends React.Component {
               <div onClick={() => this.props.changeView('loadAllMarkers')}>Map All</div>
             </DropdownItem>
             <DropdownItem divider />
-            <DropdownItem href="#" onClick={() => this.props.logOut() }>
+            <DropdownItem href="#" onClick={() => this.props.logOut()}>
               Log Out
             </DropdownItem>
           </DropdownMenu>
-        </UncontrolledDropdown> 
+        </UncontrolledDropdown>
       </React.Fragment>
     ) : (
-      <React.Fragment>
-        <NavItem>
-          <OrgSignupModal />
-        </NavItem>
-        <NavItem>
-          <LoginModal orginizationLoggedIn={this.props.orginizationLoggedIn}/>
-        </NavItem>
-        <NavItem>
-          <Button outline color="primary">Sign Up</Button>{' '}
-        </NavItem>
-      </React.Fragment>
-    );
+          <React.Fragment>
+            <NavItem>
+              <OrgSignupModal />
+            </NavItem>
+            <NavItem>
+              <LoginModal orginizationLoggedIn={this.props.orginizationLoggedIn} />
+            </NavItem>
+            <NavItem>
+              <Button outline color="primary">Sign Up</Button>{' '}
+            </NavItem>
+          </React.Fragment>
+        );
     return (
-        <Navbar color="white" light expand="md">
-          <NavbarBrand href="/">The Volunteer Opportunity Seaching Place</NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              {navView}
-            </Nav>
-          </Collapse>
-        </Navbar>
+      <Navbar color="white" light expand="md">
+        <NavbarBrand href="/">The Volunteer Opportunity Seaching Place</NavbarBrand>
+        <NavbarToggler onClick={this.toggle} />
+        <Collapse isOpen={this.state.isOpen} navbar>
+          <Nav className="ml-auto" navbar>
+            {navView}
+          </Nav>
+        </Collapse>
+      </Navbar>
     );
   }
 }

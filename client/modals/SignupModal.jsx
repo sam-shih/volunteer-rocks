@@ -23,8 +23,8 @@ class SignupModal extends React.Component {
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Sign Up</ModalHeader>
           <ModalBody>
-            <Input placeholder="User Name"/>
-            <Input placeholder="Password"/>
+            <Input placeholder="User Name" />
+            <Input placeholder="Password" />
             <Button color="primary" onClick={() => this.toggle}>Sign Up</Button>{' '}
             <Button color="sucess" onClick={() => this.toggle}>Sign Up with Google+</Button>{' '}
           </ModalBody>

@@ -4,17 +4,17 @@ mongoose.connect(mongoURI);
 
 var db = mongoose.connection;
 
-db.on('error', function(err) {
+db.on('error', function (err) {
   if (err) {
     throw err;
   }
 });
 
-db.once('open', function() {
+db.once('open', function () {
   console.log('Volunteer Database is connected');
 });
 
-let disconnect = function() {
+let disconnect = function () {
   mongoose.connection.close();
 };
 
