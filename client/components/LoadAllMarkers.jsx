@@ -10,7 +10,7 @@ class LoadAllMarkers extends Component {
       ops: []
     }
   }
-  
+
   componentDidMount() {
     axios.get('/opportunities/all')
       .then(response => {
@@ -19,38 +19,38 @@ class LoadAllMarkers extends Component {
         });
       });
   }
-  
+
   render() {
-  const OpportunityMap = withGoogleMap(props => (
-    <GoogleMap
-      defaultCenter = { { lat: 39.828300, lng: -98.579500} }
-      defaultZoom = { 4 }
-    >
-      <MarkerClusterer
-        onClick={props.onMarkerClustererClick}
-        averageCenter
-        enableRetinaIcons
-        gridSize={60}
+    const OpportunityMap = withGoogleMap(props => (
+      <GoogleMap
+        defaultCenter={{ lat: 39.828300, lng: -98.579500 }}
+        defaultZoom={4}
       >
-        {this.state.ops.map(marker => (  
+        <MarkerClusterer
+          onClick={props.onMarkerClustererClick}
+          averageCenter
+          enableRetinaIcons
+          gridSize={60}
+        >
+          {this.state.ops.map(marker => (
             // console.log(op.location.lat, op.location.lng)
             <Marker
               key={marker._id}
               position={{ lat: marker.location.lat, lng: marker.location.lng }}
             />
-        ))}
-      </MarkerClusterer>
-    </GoogleMap>
+          ))}
+        </MarkerClusterer>
+      </GoogleMap>
     ))
-  return(
-    <div>
-      <OpportunityMap
-        // markers={this.state.ops}
-        containerElement={ <div style={{ height: `900px`, width: '1700px' }} /> }
-        mapElement={ <div style={{ height: `100%` }} /> }
-      />
-    </div>
-  );
+    return (
+      <div>
+        <OpportunityMap
+          // markers={this.state.ops}
+          containerElement={<div style={{ height: `900px`, width: '1700px' }} />}
+          mapElement={<div style={{ height: `100%` }} />}
+        />
+      </div>
+    );
   }
 };
 export default LoadAllMarkers;

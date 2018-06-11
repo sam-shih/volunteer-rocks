@@ -34,24 +34,24 @@ class App extends Component {
 
   componentDidMount() {
     axios.get('/main')
-    .then((response) => {
-      if ('googleId' in response.data) {
-        console.log("volunteer logged in", response.data)
-        this.setState({
-          user: response.data,
-          isLoggedIn: true
-        });
-      } else {
-        console.log("organization logged in", response.data)
-        this.setState({
-          user: response.data.name,
-          isOrganization: true
-        });
-      }
-    })
-    .catch((err) => {
-      console.log("Error in main page GET request ", err);
-    })
+      .then((response) => {
+        if ('googleId' in response.data) {
+          console.log("volunteer logged in", response.data)
+          this.setState({
+            user: response.data,
+            isLoggedIn: true
+          });
+        } else {
+          console.log("organization logged in", response.data)
+          this.setState({
+            user: response.data.name,
+            isOrganization: true
+          });
+        }
+      })
+      .catch((err) => {
+        console.log("Error in main page GET request ", err);
+      })
   }
 
   orginizationLoggedIn(org) {
@@ -103,16 +103,16 @@ class App extends Component {
 
   getOpps(e, zipcode) {
     e.preventDefault();
-    axios.post('/opportunities', {zipcode:zipcode})
+    axios.post('/opportunities', { zipcode: zipcode })
       .then((response) => {
-          console.log(response.data);
-          this.setState({
-            view: 'opportunities',
-            opportunities: response.data,
-          });
+        console.log(response.data);
+        this.setState({
+          view: 'opportunities',
+          opportunities: response.data,
+        });
       })
       .catch((err) => {
-        throw(err)
+        throw (err)
       });
   }
 
@@ -124,7 +124,7 @@ class App extends Component {
         alert('New Organization Saved');
       })
       .catch((err) => {
-        throw(err);
+        throw (err);
       });
   }
 
@@ -160,7 +160,7 @@ class App extends Component {
   }
 
   renderView() {
-    const {view} = this.state;
+    const { view } = this.state;
     if (view === 'main') {
       return <Main getOpp={this.getOpps} zipcodeState={this.state.zipcode} zipcode={this.zip.bind(this)} />
     } else if (view === 'opportunities') {
@@ -168,9 +168,9 @@ class App extends Component {
     } else if (view === 'loadAllMarkers') {
       return <LoadAllMarkers opportunities={this.state.opportunities} />
     } else if (view === 'filtedOpps') {
-      return <OpsList volunteerForOpp={this.volunteerForOpp} opportunities={this.state.filtedOpps} setOpsListView={this.setOpsListView}  />
+      return <OpsList volunteerForOpp={this.volunteerForOpp} opportunities={this.state.filtedOpps} setOpsListView={this.setOpsListView} />
     } else if (view === 'myOpportunities') {
-      return <OpsList opportunities={this.state.filtedOpps} setOpsListView={this.setOpsListView}  />
+      return <OpsList opportunities={this.state.filtedOpps} setOpsListView={this.setOpsListView} />
     }
   }
 

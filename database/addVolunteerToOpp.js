@@ -3,8 +3,8 @@ let Volunteers = models.Volunteers;
 let Organizations = models.Organizations;
 let Opportunities = models.Opportunities;
 
-const checkIfEnrolled = function(opportunity, volId, res) {
-  Opportunities.findById(opportunity._id, function(err, opportunity) {
+const checkIfEnrolled = function (opportunity, volId, res) {
+  Opportunities.findById(opportunity._id, function (err, opportunity) {
     if (err) {
       throw err;
     }
@@ -19,13 +19,21 @@ const checkIfEnrolled = function(opportunity, volId, res) {
   });
 }
 
-const addVolunteerToOpp = function(opportunity, volId, res) {
-  Opportunities.findByIdAndUpdate(opportunity._id, {$push: { volunteerers: volId }}, function(err, foundOpp) {
+const addVolunteerToOpp = function (opportunity, volId, res) {
+  Opportunities.findByIdAndUpdate(opportunity._id, {
+    $push: {
+      volunteerers: volId
+    }
+  }, function (err, foundOpp) {
     if (err) {
       throw err;
     }
 
-    Volunteers.findByIdAndUpdate(volId, { $push: { opList: opportunity }}, function(err, volunteer) {
+    Volunteers.findByIdAndUpdate(volId, {
+      $push: {
+        opList: opportunity
+      }
+    }, function (err, volunteer) {
       if (err) {
         throw err;
       }

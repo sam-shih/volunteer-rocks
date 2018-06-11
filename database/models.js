@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 var Schema = mongoose.Schema,
-    ObjectId = Schema.ObjectId;
+  ObjectId = Schema.ObjectId;
 
 var volunteerSchema = mongoose.Schema({
   googleId: String,
@@ -9,8 +9,8 @@ var volunteerSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  address:{
-    street:String,
+  address: {
+    street: String,
     City: String,
     State: String,
     zipCode: String,
@@ -18,7 +18,10 @@ var volunteerSchema = mongoose.Schema({
   phone: String,
   email: String,
   opList: [Schema.ObjectId],
-  created_at: {type: Date, default: Date.now},
+  created_at: {
+    type: Date,
+    default: Date.now
+  },
   picture: String
 });
 
@@ -33,8 +36,8 @@ var organizationSchema = mongoose.Schema({
     required: true,
     select: false
   },
-  address:{
-    street:String,
+  address: {
+    street: String,
     city: String,
     state: String,
     zipcode: String,
@@ -50,11 +53,11 @@ var opportunitiesSchema = mongoose.Schema({
     required: true
   },
   description: String,
-  cause:String,
+  cause: String,
   zipcode: String,
   formatted_address: String,
   start_date: Date,
-  end_date:Date,
+  end_date: Date,
   phone: String,
   email: String,
   location: {
@@ -166,5 +169,3 @@ module.exports.Opportunities = Opportunities;
 //     }
 //   })
 // }
-
-

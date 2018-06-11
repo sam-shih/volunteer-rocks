@@ -16,7 +16,7 @@ class OpsList extends React.Component {
     }
   }
 
-   changeView(option) {
+  changeView(option) {
     if (this.state.view !== option) {
       this.setState({
         view: option
@@ -26,18 +26,18 @@ class OpsList extends React.Component {
 
   render() {
     return (
-        <Container>
-          <Row>
-            <Col xs="8">
-              {this.props.opportunities.map(op => { return <Ops volunteerForOpp={this.props.volunteerForOpp} key={op._id} opportunity={op} /> } )}
-            </Col>
-            <Col xs="4">
-              {/* <Filter opps={this.props.opportunities} filtedOpps={this.props.filtedOpps}/> */}
-            </Col>
-            </Row>
-        </Container>
-      );
-    }
+      <Container>
+        <Row>
+          <Col xs="8">
+            {this.props.opportunities.map(op => { return <Ops volunteerForOpp={this.props.volunteerForOpp} key={op._id} opportunity={op} /> })}
+          </Col>
+          <Col xs="4">
+            {/* <Filter opps={this.props.opportunities} filtedOpps={this.props.filtedOpps}/> */}
+          </Col>
+        </Row>
+      </Container>
+    );
+  }
 
 };
 

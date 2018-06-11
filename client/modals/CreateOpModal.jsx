@@ -12,7 +12,7 @@ class CreateOpModal extends React.Component {
       modal: false,
       form: {
         title: '',
-        description:'',
+        description: '',
         cause: '',
         address: '',
         start_date: '',
@@ -46,7 +46,7 @@ class CreateOpModal extends React.Component {
     this.setState({ form: form })
   }
 
-  submitForm (form) {
+  submitForm(form) {
     console.log(form, 'newOp creation form')
     axios.post('/newOpp', {
       title: form.title,
@@ -58,12 +58,12 @@ class CreateOpModal extends React.Component {
       phone: form.phone,
       email: form.email
     }) // Send form to server
-    .then(response => {
-      console.log('Form posted to server')
-      this.toggle();
+      .then(response => {
+        console.log('Form posted to server')
+        this.toggle();
 
-    })
-    .catch(err => console.log('Err', err));
+      })
+      .catch(err => console.log('Err', err));
   }
 
   render() {
@@ -88,23 +88,23 @@ class CreateOpModal extends React.Component {
               <FormGroup row>
                 <Label for="description" sm={2}>Description</Label>
                 <Col sm={10}>
-                <Input
-                  type="text"
-                  name="description"
-                  id="description"
-                  value={this.state.form.description}
-                  onChange={this.updateInput} />
+                  <Input
+                    type="text"
+                    name="description"
+                    id="description"
+                    value={this.state.form.description}
+                    onChange={this.updateInput} />
                 </Col>
               </FormGroup>
               <FormGroup row>
                 <Label for="cause" sm={2}>Cause</Label>
                 <Col sm={10}>
-                <Input
-                  type="text"
-                  name="cause"
-                  id="cause"
-                  value={this.state.form.cause}
-                  onChange={this.updateInput} />
+                  <Input
+                    type="text"
+                    name="cause"
+                    id="cause"
+                    value={this.state.form.cause}
+                    onChange={this.updateInput} />
                 </Col>
               </FormGroup>
               <FormGroup row>
@@ -118,41 +118,41 @@ class CreateOpModal extends React.Component {
               <FormGroup row>
                 <Label for="start_date" sm={2}>Start Date</Label>
                 <Col sm={10}>
-                <Input
-                  name="start_date"
-                  type="date"
-                  value={this.state.form.start_date}
-                  onChange={this.updateInput} />
+                  <Input
+                    name="start_date"
+                    type="date"
+                    value={this.state.form.start_date}
+                    onChange={this.updateInput} />
                 </Col>
               </FormGroup>
               <FormGroup row>
                 <Label for="end_date" sm={2}>End Date</Label>
                 <Col sm={10}>
-                <Input
-                  name="end_date"
-                  type="date"
-                  value={this.state.form.end_date}
-                  onChange={this.updateInput} />
+                  <Input
+                    name="end_date"
+                    type="date"
+                    value={this.state.form.end_date}
+                    onChange={this.updateInput} />
                 </Col>
               </FormGroup>
               <FormGroup row>
                 <Label for="number" sm={2}>Phone</Label>
                 <Col sm={10}>
-                <Input
-                  name="phone"
-                  type="tel"
-                  value={this.state.form.phone}
-                  onChange={this.updateInput} />
+                  <Input
+                    name="phone"
+                    type="tel"
+                    value={this.state.form.phone}
+                    onChange={this.updateInput} />
                 </Col>
               </FormGroup>
               <FormGroup row>
                 <Label for="email" sm={2}>E-mail</Label>
                 <Col sm={10}>
-                <Input
-                  name="email"
-                  type="email"
-                  value={this.state.form.email}
-                  onChange={this.updateInput} />
+                  <Input
+                    name="email"
+                    type="email"
+                    value={this.state.form.email}
+                    onChange={this.updateInput} />
                 </Col>
               </FormGroup>
               <Button onClick={() => this.submitForm(this.state.form)}>Submit</Button>

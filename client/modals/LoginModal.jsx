@@ -8,9 +8,9 @@ class LoginModal extends React.Component {
     super(props);
     this.state = {
       modal: false,
-      form:{
-        username:'',
-        password:'',
+      form: {
+        username: '',
+        password: '',
       },
     };
     this.toggle = this.toggle.bind(this);
@@ -30,20 +30,20 @@ class LoginModal extends React.Component {
     this.setState({ form: form });
   }
 
-  submitForm (form) {
+  submitForm(form) {
     axios.post('/login', {
       username: form.username,
       password: form.password
     })
-    .then(response => {
-      if(response.data){
-        console.log("User has signed in data= ", response.data);
-        this.props.orginizationLoggedIn(response.data)
-      } else {
-        console.log("User Credential didnot match");
-      }
-    })
-    .catch(err => console.log('Err', err));
+      .then(response => {
+        if (response.data) {
+          console.log("User has signed in data= ", response.data);
+          this.props.orginizationLoggedIn(response.data)
+        } else {
+          console.log("User Credential didnot match");
+        }
+      })
+      .catch(err => console.log('Err', err));
   }
 
 
@@ -54,8 +54,8 @@ class LoginModal extends React.Component {
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Login Into Your Account</ModalHeader>
           <ModalBody>
-            <Input name="username" placeholder="User Name" type="text" value={this.state.form.username} onChange={this.updateInput}/>
-            <Input name="password" placeholder="Password" type="text" value={this.state.form.password} onChange={this.updateInput}/>
+            <Input name="username" placeholder="User Name" type="text" value={this.state.form.username} onChange={this.updateInput} />
+            <Input name="password" placeholder="Password" type="text" value={this.state.form.password} onChange={this.updateInput} />
             <Button outline color="primary" onClick={() => this.submitForm(this.state.form)}>Sign In</Button>{' '}
             <Button color="sucess" onClick={() => this.toggle}><a href="/auth/google">Login with Google+</a></Button>{' '}
           </ModalBody>
