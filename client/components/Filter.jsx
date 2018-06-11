@@ -7,6 +7,7 @@ class Filter extends React.Component {
     super(props);
     this.updateInput = this.updateInput.bind(this);
     this.searchOpps = this.searchOpps.bind(this);
+    this.updateCause = this.updateCause.bind(this);
 
     this.state = {
       currFilter: {
@@ -23,18 +24,26 @@ class Filter extends React.Component {
     // if mile > currFilter.mile
     //        result is the Get request from database baseon the new search.
     // else filter the props.opportunities based on new mile
-    return (this.prop.opps.filter((opp) => {
+    console.log("this is currFilter:");
+    console.log(currFilter);
+    return (this.props.opps.filter((opp) => {
       opp.start_Date > currFilter.start_Date && opp.end_Date < currFilter.end_Date && opp.cause.indexOf(cause) != -1
     }))
   }
 
-
-
   updateInput(e) {
     console.log(e.target.value);
-    const currFilter = this.state.currFilter; // Copy current state to object 'form'
+    const currFilter = this.state.currFilter; // Copy current state to currFilter
     currFilter[e.target.name] = e.target.value; // Set  key:value to form
     this.setState({ currFilter: currFilter });
+  }
+
+  updateCause(e) {
+    const currFilter = this.state.currFilter
+    currFilter.cause.push(e.target.value);
+    this.setState({
+      currFilter: currFilter
+    })
   }
 
   render() {
@@ -44,9 +53,9 @@ class Filter extends React.Component {
       causes.push(op.cause);
     });
 
-    let causeOptions = _.uniq(causes).map((cause, index) => {
+    let causeOptions = _.uniq(causes).map((cause) => {
       return (
-        <Input type="radio" name='cause' value='cause' />
+        cause
       )
     })
 
@@ -58,8 +67,15 @@ class Filter extends React.Component {
           type="number"
           value={this.state.mile}
           onChange={this.updateInput} />
+
         <label> Choose Your Cause </label>
-        {causeOptions}
+        <Input
+          name="cause"
+          type="checkbox"
+          value={causeOptions}
+          onChange={this.updateCause}
+        />
+        <span class="checkmark"></span>
         <label> Choose Your Time </label>
         <Input
           name="start_date"

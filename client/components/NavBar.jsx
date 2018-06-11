@@ -79,7 +79,7 @@ class NavBar extends React.Component {
       </React.Fragment>
     ) : (
           <React.Fragment>
-            <NavItem>
+            <NavItem className="mr-auto">
               <OrgSignupModal />
             </NavItem>
             <NavItem>
@@ -92,7 +92,7 @@ class NavBar extends React.Component {
         );
     return (
       <Navbar color="white" light expand="md">
-        <NavbarBrand href="/">The Volunteer Opportunity Seaching Place</NavbarBrand>
+        <NavbarBrand href="/">The Volunteers Rock</NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav className="ml-auto" navbar>
