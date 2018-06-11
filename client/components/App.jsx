@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import store from '../store.js';
 import axios from 'axios';
-import $ from 'jquery';
+import { GAPI_KEY } from '../../config.js'
 
 import Filter from './Filter.jsx';
 import OpsList from './OpsList.jsx';
@@ -17,6 +17,8 @@ class App extends Component {
       view: 'main',
       opportunities: [],
       filtedOpps: [],
+      oppsToPassDown: [],
+      howManyPages: [0],
       isLoggedIn: false,
       isOrganization: false,
       user: {},
@@ -30,9 +32,14 @@ class App extends Component {
     this.volunteerForOpp = this.volunteerForOpp.bind(this);
     this.isLoggedInToggleForTesting = this.isLoggedInToggleForTesting.bind(this);
     this.orginizationLoggedIn = this.orginizationLoggedIn.bind(this);
+    this.passDownOpps = this.passDownOpps.bind(this);
   }
 
   componentDidMount() {
+    const gmapScriptEl = document.createElement(`script`)
+    gmapScriptEl.src = `https://maps.googleapis.com/maps/api/js?key=${GAPI_KEY}&libraries=places`
+    document.querySelector(`body`).insertAdjacentElement(`beforeend`, gmapScriptEl)
+
     axios.get('/main')
       .then((response) => {
         if ('googleId' in response.data) {
@@ -53,6 +60,20 @@ class App extends Component {
         console.log("Error in main page GET request ", err);
       })
   }
+
+  passDownOpps(pageNumber) {
+    let allOpps = this.state.opportunities;
+    let numOfPages = Math.ceil(allOpps.length / 5);
+    numOfPages = [...Array(numOfPages).keys()];
+    let numberToEnd = pageNumber * 5;
+    let numberToStart = numberToEnd - 5;
+    let portionOfOpps = allOpps.slice(numberToStart, numberToEnd);
+
+    this.setState({
+      oppsToPassDown: portionOfOpps,
+      howManyPages: numOfPages
+    });
+  };
 
   orginizationLoggedIn(org) {
     this.setState({
@@ -110,6 +131,8 @@ class App extends Component {
           view: 'opportunities',
           opportunities: response.data,
         });
+
+        this.passDownOpps(1);
       })
       .catch((err) => {
         throw (err)
@@ -134,6 +157,7 @@ class App extends Component {
         this.setState({
           view: 'main',
           opportunities: [],
+          oppsToPassDown: [],
           isLoggedIn: false,
           isOrganization: false,
           user: {},
@@ -164,7 +188,7 @@ class App extends Component {
     if (view === 'main') {
       return <Main getOpp={this.getOpps} zipcodeState={this.state.zipcode} zipcode={this.zip.bind(this)} />
     } else if (view === 'opportunities') {
-      return <OpsList volunteerForOpp={this.volunteerForOpp} opportunities={this.state.opportunities} setOpsListView={this.setOpsListView} />
+      return <OpsList numOfPages={this.state.howManyPages} passDownOpps={this.passDownOpps} volunteerForOpp={this.volunteerForOpp} opportunities={this.state.oppsToPassDown} setOpsListView={this.setOpsListView} />
     } else if (view === 'loadAllMarkers') {
       return <LoadAllMarkers opportunities={this.state.opportunities} />
     } else if (view === 'filtedOpps') {
