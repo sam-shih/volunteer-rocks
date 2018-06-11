@@ -154,7 +154,7 @@ class App extends Component {
           <NavBar 
             changeView={this.changeView} 
             isLoggedIn={this.state.isLoggedIn}
-            user={this.state.user.name || this.state.user}
+            user={this.state.user}
             isLoggedInToggleForTesting={this.isLoggedInToggleForTesting}
             isOrganization={this.state.isOrganization}
             logOut={this.logOut}

@@ -83,14 +83,13 @@ app.get('/main', (req, res) => {
   console.log(sessionTest);
 
   if ('user' in req) {
+    console.log('user in req', req.session.passport.user)
     res.status(200).send(req.session.passport.user).end('true');
-  } else {
-    if ('userId' in req.session) {
-      res.status(200).send(req.session)
-    }
+  } else if ('userId' in req.session) {
+    console.log('userId org', req.session.name)
+    res.status(200).send(req.session)
   }
-  
-  ('user' in req) ? res.status(200).send(req.session.passport.user).end('true') : res.status(401).end('false');
+    
 });
 
 app.post('/login', (req, res) => {
