@@ -25,6 +25,7 @@ class App extends Component {
     this.logOut = this.logOut.bind(this);
     this.getOpps = this.getOpps.bind(this);
     this.changeView = this.changeView.bind(this);
+    this.setOpsListView = this.setOpsListView.bind(this);
     this.volunteerForOpp = this.volunteerForOpp.bind(this);
     this.isLoggedInToggleForTesting = this.isLoggedInToggleForTesting.bind(this);
     this.orginizationLoggedIn = this.orginizationLoggedIn.bind(this);
@@ -61,7 +62,8 @@ class App extends Component {
 
   isLoggedInToggleForTesting() {
     this.setState({
-      isLoggedIn: !this.state.isLoggedIn
+      isLoggedIn: !this.state.isLoggedIn,
+      isOrganization: !this.state.isOrganization
     });
   }
 
@@ -137,14 +139,23 @@ class App extends Component {
       });
   }
 
+  setOpsListView(option, ops) {
+    this.setState({
+      view: option,
+      filtedOpps: ops
+    })
+  }
+
   renderView() {
     const {view} = this.state;
     if (view === 'main') {
       return <Main getOpp={this.getOpps} zipcodeState={this.state.zipcode} zipcode={this.zip.bind(this)} />
     } else if (view === 'opportunities') {
-      return <OpsList enroll={this.volunteerForOpp} opportunities={this.state.opportunities} filtedOpps={this.state.filtedOpps}/>
+      return <OpsList enroll={this.volunteerForOpp} opportunities={this.state.opportunities} setOpsListView={this.setOpsListView} />
     } else if (view === 'loadAllMarkers') {
       return <LoadAllMarkers opportunities={this.state.opportunities} />
+    } else if (view === 'filtedOpps') {
+      return <OpsList enroll={this.volunteerForOpp} opportunities={this.state.filtedOpps} setOpsListView={this.setOpsListView}  />
     }
   }
 

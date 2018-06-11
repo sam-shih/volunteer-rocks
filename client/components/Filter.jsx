@@ -2,11 +2,11 @@ import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, NavLink, Input, Form, FormGroup, Label, Col } from 'reactstrap';
 import _ from 'underscore';
 
-
 class Filter extends React.Component {
   constructor (props){
     super(props);
     this.updateInput = this.updateInput.bind(this);
+    this.searchOpps = this.searchOpps.bind(this);
 
   this.state = {
     currFilter: {
@@ -19,11 +19,11 @@ class Filter extends React.Component {
 }
 //after use entering the submit button of filter, it will change the opportunity view at OrsList.jsx
 
-  searchOpps(opps) {
+  searchOpps(currFilter) {
     // if mile > currFilter.mile
     //        result is the Get request from database baseon the new search.
     // else filter the props.opportunities based on new mile
-    return (opps.filter((opp) => {
+    return (this.prop.opps.filter((opp) => {
       opp.start_Date > currFilter.start_Date && opp.end_Date < currFilter.end_Date && opp.cause.indexOf(cause) != -1
       }))
     }
@@ -70,7 +70,7 @@ class Filter extends React.Component {
                         type="date"
                         value={this.state.end_date}
                         onChange={this.updateInput} />
-                  <Button onClick={() => this.searchOpps(this.state.form)}>Submit</Button>
+                  <Button onClick={() => this.searchOpps(this.state.currFilter)}>Submit</Button>
             </div>
           );
        }
