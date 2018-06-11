@@ -37,7 +37,8 @@ class LoginModal extends React.Component {
     })
     .then(response => {
       if(response.data){
-        console.log("User has signed in ");
+        console.log("User has signed in data= ", response.data);
+        this.props.orginizationLoggedIn(response.data)
       } else {
         console.log("User Credential didnot match");
       }

@@ -17,6 +17,7 @@ class App extends Component {
       view: 'main',
       opportunities: [],
       isLoggedIn: false,
+      isOrganization: false,
       user: {},
       zipcode: ''
     }
@@ -25,20 +26,36 @@ class App extends Component {
     this.changeView = this.changeView.bind(this);
     this.volunteerForOpp = this.volunteerForOpp.bind(this);
     this.isLoggedInToggleForTesting = this.isLoggedInToggleForTesting.bind(this);
+    this.orginizationLoggedIn = this.orginizationLoggedIn.bind(this);
   }
 
   componentDidMount() {
     axios.get('/main')
     .then((response) => {
-      console.log("this is a GET response from 'main page' ", response.data)
-      this.setState({
-        user: response.data,
-        isLoggedIn: true
-      })
+      if ('googleId' in response.data) {
+        console.log("volunteer logged in", response.data)
+        this.setState({
+          user: response.data,
+          isLoggedIn: true
+        });
+      } else {
+        console.log("organization logged in", response.data)
+        this.setState({
+          user: response.data.name,
+          isOrganization: true
+        });
+      }
     })
     .catch((err) => {
       console.log("Error in main page GET request ", err);
     })
+  }
+
+  orginizationLoggedIn(org) {
+    this.setState({
+      user: org,
+      isOrganization: true
+    });
   }
 
   isLoggedInToggleForTesting() {
@@ -65,10 +82,9 @@ class App extends Component {
     axios.post('/enroll', { oppId: oppId })
       .then((response) => {
         let responseData = response.data;
-        console.log('This is resposen from enroll', response);
         if (responseData === 'login') {
           alert('Please login before enrolling');
-        } else if (responseData === 'success') {
+        } else if (responseData === 'enrolled') {
           alert('Successfully enrolled in opportunity');
         } else if (responseData === 'already') {
           alert('You have already enrolled in this opportunity');
@@ -113,6 +129,7 @@ class App extends Component {
           view: 'main',
           opportunities: [],
           isLoggedIn: false,
+          isOrganization: false,
           user: {},
           zipcode: ''
         });
@@ -137,9 +154,11 @@ class App extends Component {
           <NavBar 
             changeView={this.changeView} 
             isLoggedIn={this.state.isLoggedIn}
-            user={this.state.user}
+            user={this.state.user.name || this.state.user}
             isLoggedInToggleForTesting={this.isLoggedInToggleForTesting}
+            isOrganization={this.state.isOrganization}
             logOut={this.logOut}
+            orginizationLoggedIn={this.orginizationLoggedIn}
           />
           {this.renderView()}
         </div>

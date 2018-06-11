@@ -29,6 +29,7 @@ const checkOrganizationExists = function(req, res, session) {
 }
 
 const checkUserCredential = function(userCredential, res, session, req) {
+  console.log('are we in checkuser?')
   Organizations.findOne({name: userCredential.username}, (err, user) => {
     if(err) throw err;
     if(user) { // if username found check password
@@ -36,9 +37,12 @@ const checkUserCredential = function(userCredential, res, session, req) {
         if(err) throw err;
 
         if(isMatch) { // if password send 200 status
-          req.session.userId = user._id;// create session
-          res.status(200).end('true')
+          console.log('ismatch is true')
+          req.session.userId = user._id;
+          req.session.name = user.name;// create session
+          res.status(200).end(user.name)
         } else {
+          console.log(user, ' user in checkuser ================')
           res.status(401).end('false');
         }
 

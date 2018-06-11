@@ -24,7 +24,34 @@ class NavBar extends React.Component {
   }
   render() {
     const isLoggedIn = this.props.isLoggedIn;
+    const isOrganization = this.props.isOrganization;
     const navView = isLoggedIn ? (
+      <React.Fragment>
+        <NavItem>
+          <NavLink href="#" onClick={this.props.isLoggedInToggleForTesting}>Click Me</NavLink>
+        </NavItem>
+        <UncontrolledDropdown nav inNavbar>
+          <DropdownToggle nav caret>
+          <img 
+            src={this.props.user.picture} 
+            alt={this.props.user.name} 
+            className={'img-circle'}/>
+          </DropdownToggle>
+          <DropdownMenu right>
+            <DropdownItem>
+              My Opportunities
+            </DropdownItem>
+            <DropdownItem>
+              More Stuff?
+            </DropdownItem>
+            <DropdownItem divider />
+            <DropdownItem href="#" onClick={() => this.props.logOut() }>
+              Log Out
+            </DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown> 
+      </React.Fragment>
+    ) : isOrganization ? (
       <React.Fragment>
         <NavItem>
           <NavLink href="#" onClick={this.props.isLoggedInToggleForTesting}>Click Me</NavLink>
@@ -34,7 +61,7 @@ class NavBar extends React.Component {
         </NavItem>
         <UncontrolledDropdown nav inNavbar>
           <DropdownToggle nav caret>
-          <img src={this.props.user.picture} alt={this.props.user.name} />
+            {this.props.user.name}
           </DropdownToggle>
           <DropdownMenu right>
             <DropdownItem>
@@ -59,7 +86,7 @@ class NavBar extends React.Component {
           <OrgSignupModal />
         </NavItem>
         <NavItem>
-          <LoginModal />
+          <LoginModal orginizationLoggedIn={this.props.orginizationLoggedIn}/>
         </NavItem>
         <NavItem>
           <Button outline color="secondary">Sign Up</Button>{' '}

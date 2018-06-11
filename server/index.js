@@ -82,6 +82,14 @@ app.get('/main', (req, res) => {
   var sessionTest = ('user' in req) ? `*** SESSION EXISTS for ${req.session.passport.user.name}` : "*** NO SESSION ***";
   console.log(sessionTest);
 
+  if ('user' in req) {
+    res.status(200).send(req.session.passport.user).end('true');
+  } else {
+    if ('userId' in req.session) {
+      res.status(200).send(req.session)
+    }
+  }
+  
   ('user' in req) ? res.status(200).send(req.session.passport.user).end('true') : res.status(401).end('false');
 });
 
