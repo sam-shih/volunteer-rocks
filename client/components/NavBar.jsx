@@ -61,7 +61,7 @@ class NavBar extends React.Component {
         </NavItem>
         <UncontrolledDropdown nav inNavbar>
           <DropdownToggle nav caret>
-            {this.props.user.name}
+            {this.props.user}
           </DropdownToggle>
           <DropdownMenu right>
             <DropdownItem>
