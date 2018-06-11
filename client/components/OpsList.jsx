@@ -32,7 +32,7 @@ class OpsList extends React.Component {
               {this.props.opportunities.map(op => { return <Ops key={op._id} opportunity={op} /> } )}
             </Col>
             <Col xs="4">
-              <Filter opp={this.props.opportunities} filtedOpps={this.props.filtedOpps}/>
+              {/* <Filter opps={this.props.opportunities} filtedOpps={this.props.filtedOpps}/> */}
             </Col>
             </Row>
         </Container>
