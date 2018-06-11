@@ -10,7 +10,7 @@ let Volunteer = models.Volunteers;
 let Organization = models.Organizations;
 let Opportunity = models.Opportunities;
 
-const newVolunteer = function(volunteer) {
+const newVolunteer = function(volunteer, done) {
   let aNewVolunteer = new Volunteer({
     googleId: volunteer.googleId,
     name: volunteer.name,
@@ -25,8 +25,8 @@ const newVolunteer = function(volunteer) {
     if (err) {
       throw err;
     }
-
     console.log(`A new volunteer, ${volunteer.name}, has been saved`);
+    return done(err, volunteer);
   });
 };
 
