@@ -41,9 +41,8 @@ passport.use(new GoogleStrategy({
           googleId: profile.id,
           name: name,
           picture: profile.photos[0].value
-        });
-
-        return done(err, profile);
+        }, done)
+        return;
       }
 
       return done(err, volunteer);
@@ -59,7 +58,7 @@ passport.serializeUser(function(volunteer, done) {
 
 passport.deserializeUser(function(serializedObj, done) {
   console.log('serializedobj', serializedObj)
-  VolunteerModel.findOne({ googleId: serializedObj.id }, function(err, volunteer) {
+  VolunteerModel.findOne({ googleId: serializedObj.googleId }, function(err, volunteer) {
     console.log('deserialize', volunteer)
     done(err, volunteer);
   });
@@ -80,8 +79,10 @@ app.get('/auth/google/callback', passport.authenticate('google', { successRedire
 app.get('/main', (req, res) => {
   console.log('This is user', req.user);
   console.log('This is session', req.session)
-  console.log("session exist check:- ",req.session.passport.user);
-  req.session.passport.user ? res.status(200).send(req.session.passport.user).end('true') : res.status(401).end('false');
+  var sessionTest = ('passport' in req.session) ? `*** SESSION EXISTS for ${req.session.passport.user.name}` : "*** NO SESSION ***";
+  console.log(sessionTest);
+
+  ('passport' in req.session) ? res.status(200).send(req.session.passport.user).end('true') : res.status(401).end('false');
 });
 
 app.post('/login', (req, res) => {

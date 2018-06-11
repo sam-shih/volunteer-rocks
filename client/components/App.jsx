@@ -20,6 +20,7 @@ class App extends Component {
       user: {},
       zipcode: ''
     }
+    this.logOut = this.logOut.bind(this);
     this.getOpps = this.getOpps.bind(this);
     this.changeView = this.changeView.bind(this);
     this.volunteerForOpp = this.volunteerForOpp.bind(this);
@@ -105,6 +106,19 @@ class App extends Component {
       });
   }
 
+  logOut() {
+    axios.get('/logout')
+      .then(response => {
+        this.setState({
+          view: 'main',
+          opportunities: [],
+          isLoggedIn: false,
+          user: {},
+          zipcode: ''
+        });
+      });
+  }
+
   renderView() {
     const {view} = this.state;
     if (view === 'main') {
@@ -125,6 +139,7 @@ class App extends Component {
             isLoggedIn={this.state.isLoggedIn}
             user={this.state.user}
             isLoggedInToggleForTesting={this.isLoggedInToggleForTesting}
+            logOut={this.logOut}
           />
           {this.renderView()}
         </div>

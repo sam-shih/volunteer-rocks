@@ -34,7 +34,7 @@ class NavBar extends React.Component {
         </NavItem>
         <UncontrolledDropdown nav inNavbar>
           <DropdownToggle nav caret>
-          <img src={this.props.user.photos[0].value.slice(0, -2) + '30'} alt={this.props.user.displayName} />
+          <img src={this.props.user.picture} alt={this.props.user.name} />
           </DropdownToggle>
           <DropdownMenu right>
             <DropdownItem>
@@ -44,7 +44,7 @@ class NavBar extends React.Component {
               More Stuff?
             </DropdownItem>
             <DropdownItem divider />
-            <DropdownItem href="#" onClick={() => axios.get('/logout') }>
+            <DropdownItem href="#" onClick={() => this.props.logOut() }>
               Log Out
             </DropdownItem>
           </DropdownMenu>
