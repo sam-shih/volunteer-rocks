@@ -40,7 +40,7 @@ class NavBar extends React.Component {
           </DropdownToggle>
           <DropdownMenu right>
             <DropdownItem>
-              <div onClick={() => this.props.myOpportunities()}>My Opportunities</div>
+              <div onClick={(e) => this.props.myOpportunities(e)}>My Opportunities</div>
             </DropdownItem>
             <DropdownItem>
               <div onClick={() => this.props.changeView('loadAllMarkers')}>Map All</div>
