@@ -1,9 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, NavLink, Input, Form, FormGroup, Label, Col } from 'reactstrap';
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
-import { initAutoComplete, fillInAddress, geolocate } from './mapFuncs';
 import AddressAutoComplete from './AddressAutoComplete.jsx'
+import { Button, Modal, ModalHeader, ModalBody, NavLink, Input, Form, FormGroup, Label, Col } from 'reactstrap';
 
 class CreateOpModal extends React.Component {
   constructor(props) {
@@ -35,9 +33,9 @@ class CreateOpModal extends React.Component {
   }
 
   updateInput(e) {
-    const form = this.state.form; // Copy current state to object 'form'
-    form[e.target.name] = e.target.value; // Set  key:value to form
-    this.setState({ form: form }); // Replace state.form to form from above
+    const form = this.state.form;
+    form[e.target.name] = e.target.value;
+    this.setState({ form: form });
   }
 
   updateAddress(address) {
@@ -57,7 +55,7 @@ class CreateOpModal extends React.Component {
       end_date: form.end_date,
       phone: form.phone,
       email: form.email
-    }) // Send form to server
+    })
       .then(response => {
         console.log('Form posted to server')
         this.toggle();

@@ -1,10 +1,8 @@
 import React from 'react';
 import Ops from './Ops.jsx';
 
-
 import { Container, Row, Col, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import Filter from './Filter.jsx';
-
 
 //First render the props.opportunities view,
 // if the user clicks the filter submit button on Filter.jsx, render the filter view.
@@ -46,7 +44,7 @@ class OpsList extends React.Component {
               </Pagination>
             </Col>
             <Col xs="4">
-              {/* <Filter opps={this.props.opportunities} filtedOpps={this.props.filtedOpps}/> */}
+              {/* <Filter opps={this.props.opportunities} filteredOpps={this.props.filteredOpps}/> */}
             </Col>
           </Row>
         </Container>

@@ -2,7 +2,7 @@ const models = require('./models.js');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 var googleMapsClient = require('@google/maps').createClient({
-  key: 'AIzaSyCRAApdBppT4hFHnGCq5hFczdWLkAKoeqU',
+  key: process.env.GAPI_KEY,
   Promise: Promise
 });
 

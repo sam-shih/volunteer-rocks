@@ -1,8 +1,6 @@
 const models = require('./models.js');
 const bcrypt = require('bcrypt');
-let Volunteers = models.Volunteers;
 let Organizations = models.Organizations;
-let Opportunities = models.Opportunities;
 let retrieveFromDb = require('./retrieveFromDb.js');
 let saveToDb = require('./saveToDb.js');
 

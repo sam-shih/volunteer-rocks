@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, NavLink, Input, Form, FormGroup, Label, Col } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, NavLink, Input, Form, FormGroup, Label, Col } from 'reactstrap';
 
 class OrgSignupModal extends React.Component {
   constructor(props) {
@@ -31,9 +31,9 @@ class OrgSignupModal extends React.Component {
 
   updateInput(e) {
     console.log(e.target.value);
-    const form = this.state.form; // Copy current state to object 'form'
-    form[e.target.name] = e.target.value; // Set  key:value to form
-    this.setState({ form: form }); // Replace state.form to form from above
+    const form = this.state.form;
+    form[e.target.name] = e.target.value;
+    this.setState({ form: form });
   }
 
   submitForm(form) {
@@ -49,7 +49,7 @@ class OrgSignupModal extends React.Component {
       phone: form.phone,
       email: form.email,
       password: form.password
-    }) // Send form to server
+    })
       .then(response => {
         console.log('Form posted to server')
         this.toggle
