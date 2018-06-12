@@ -9,7 +9,6 @@ const VolunteerModel = require('../database/models.js').Volunteers;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const saveExampleOpportunity = require('../database/exampleOpGenarator.js');
 const addVolunteerToOpp = require('../database/addVolunteerToOpp').checkIfEnrolled;
-let theCbURL = process.env.O_AUTH_CB || 'http://localhost:3000/auth/google/callback';
 
 const app = express();
 
@@ -28,7 +27,7 @@ app.use(passport.session());
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID, // Please get clientID (instructions in README)
     clientSecret: process.env.CLIENT_SECRET, // Please get clientSecret (instructions in README)
-    callbackURL: theCbURL
+    callbackURL: process.env.O_AUTH_CB
   },
   function (accessToken, refreshToken, profile, done) {
     let name = profile.displayName;
