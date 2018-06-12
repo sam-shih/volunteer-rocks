@@ -171,6 +171,7 @@ class App extends Component {
     })
   }
 
+<<<<<<< HEAD
 <<<<<<< f382ba2e2dc5a4c70ffd2c9383613b16b11f511e
 <<<<<<< 6866c55f8d829eabda54cb80c66cec63798948a6
   myOpportunities(e) {
@@ -182,9 +183,11 @@ class App extends Component {
 =======
   myOpportunities() {
 >>>>>>> Fixed a var naming mixup
+=======
+  myOpportunities() {
+>>>>>>> aa86567161c68dcb002e491254cee1d15b68c338
     axios.get('/myOps')
       .then(response => {
-        console.log('response.data')
         this.setState({
           view: 'myOpportunities',
           filteredOpps: response.data
