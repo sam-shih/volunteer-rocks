@@ -27,7 +27,7 @@ class App extends Component {
     this.changeView = this.changeView.bind(this);
     this.passDownOpps = this.passDownOpps.bind(this);
     this.setOpsListView = this.setOpsListView.bind(this);
-    this.myOpportunitiesd = this.myOpportunitiesd.bind(this);
+    this.myOpportunities = this.myOpportunities.bind(this);
     this.volunteerForOpp = this.volunteerForOpp.bind(this);
     this.organizationLoggedIn = this.organizationLoggedIn.bind(this);
     this.isLoggedInToggleForTesting = this.isLoggedInToggleForTesting.bind(this);
@@ -171,11 +171,9 @@ class App extends Component {
     })
   }
 
-  myOpportunitiesd() {
-    console.log('myops in app')
+  myOpportunities() {
     axios.get('/myOps')
       .then(response => {
-        console.log('response.data')
         this.setState({
           view: 'myOpportunities',
           filteredOpps: response.data
@@ -209,7 +207,7 @@ class App extends Component {
           isOrganization={this.state.isOrganization}
           logOut={this.logOut}
           organizationLoggedIn={this.organizationLoggedIn}
-          myOpportunitiesd={this.myOpportunitiesd}
+          myOpportunities={this.myOpportunities}
         />
         {this.renderView()}
       </div>
