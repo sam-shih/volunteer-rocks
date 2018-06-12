@@ -36,14 +36,14 @@ const getOpportunities = function (limit, res) {
 };
 
 const myOpportunities = function (id, res) {
-  Volunteers.findById(id, function (err, oppsData) {
+  Volunteers.findById(id, function (err, volunteer) {
     if (err) {
       throw err;
     }
-    console.log('OPPPPPPS DATAAAAAAA HELLO', oppsData)
+    console.log('OPPPPPPS DATAAAAAAA HELLO', volunteer)
     Opportunities.find({
       '_id': {
-        $in: oppsData.opList
+        $in: volunteer.opList
       }
     }, function (err, result) {
       res.status(200).json(result);
