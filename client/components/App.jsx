@@ -171,7 +171,8 @@ class App extends Component {
     })
   }
 
-  myOpportunities() {
+  myOpportunities(e) {
+    e.preventDefault()
     console.log('myops in app')
     axios.get('/myOps')
       .then(response => {
