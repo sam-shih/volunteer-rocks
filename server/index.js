@@ -97,6 +97,7 @@ app.post('/signup', (req, res) => {
 });
 
 app.get('/myOps', (req, res) => {
+  console.log('in mops ./server')
   retrieveFromDb.myOpportunities(req.session.passport.user._id, res);
 })
 
