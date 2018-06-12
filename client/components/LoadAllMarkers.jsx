@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
+import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
 import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
 import axios from 'axios';
 
@@ -33,7 +33,6 @@ class LoadAllMarkers extends Component {
           gridSize={60}
         >
           {this.state.ops.map(marker => (
-            // console.log(op.location.lat, op.location.lng)
             <Marker
               key={marker._id}
               position={{ lat: marker.location.lat, lng: marker.location.lng }}
@@ -45,7 +44,6 @@ class LoadAllMarkers extends Component {
     return (
       <div>
         <OpportunityMap
-          // markers={this.state.ops}
           containerElement={<div style={{ height: `900px`, width: '1700px' }} />}
           mapElement={<div style={{ height: `100%` }} />}
         />

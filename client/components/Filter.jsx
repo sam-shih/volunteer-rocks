@@ -7,7 +7,6 @@ class Filter extends React.Component {
     super(props);
     this.updateInput = this.updateInput.bind(this);
     this.searchOpps = this.searchOpps.bind(this);
-    this.updateCause = this.updateCause.bind(this);
 
     this.state = {
       currFilter: {
@@ -18,32 +17,22 @@ class Filter extends React.Component {
       }
     }
   }
-  //after use entering the submit button of filter, it will change the opportunity view at OrsList.jsx
+  //after user entering the submit button of filter, it will change the opportunity view at OrsList.jsx
 
   searchOpps(currFilter) {
     // if mile > currFilter.mile
     //        result is the Get request from database baseon the new search.
     // else filter the props.opportunities based on new mile
-    console.log("this is currFilter:");
-    console.log(currFilter);
     return (this.props.opps.filter((opp) => {
-      opp.start_Date > currFilter.start_Date && opp.end_Date < currFilter.end_Date && opp.cause.indexOf(cause) != -1
+      opp.start_date > currFilter.start_date && opp.end_date < currFilter.end_date && opp.cause.indexOf(currFilter.cause) !== -1
     }))
   }
 
   updateInput(e) {
     console.log(e.target.value);
     const currFilter = this.state.currFilter; // Copy current state to currFilter
-    currFilter[e.target.name] = e.target.value; // Set  key:value to form
+    currFilter[e.target.name] = e.target.value; // Set  key:value to currFilter
     this.setState({ currFilter: currFilter });
-  }
-
-  updateCause(e) {
-    const currFilter = this.state.currFilter
-    currFilter.cause.push(e.target.value);
-    this.setState({
-      currFilter: currFilter
-    })
   }
 
   render() {
@@ -55,7 +44,12 @@ class Filter extends React.Component {
 
     let causeOptions = _.uniq(causes).map((cause) => {
       return (
-        cause
+        <label>{cause}
+          <Input type="checkbox"
+            value={cause}
+            onChange={e => this.state.currFilter.cause.push(e.target.value)} />
+          <span class="checkmark"></span>
+        </label>
       )
     })
 
@@ -67,15 +61,9 @@ class Filter extends React.Component {
           type="number"
           value={this.state.mile}
           onChange={this.updateInput} />
-
-        <label> Choose Your Cause </label>
-        <Input
-          name="cause"
-          type="checkbox"
-          value={causeOptions}
-          onChange={this.updateCause}
-        />
         <span class="checkmark"></span>
+        <label> Choose Your Cause </label>
+        <div> {causeOptions}</div>
         <label> Choose Your Time </label>
         <Input
           name="start_date"

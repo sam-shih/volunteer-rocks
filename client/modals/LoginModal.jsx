@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, NavLink, Input } from 'reactstrap';
-import { GoogleLogin } from 'react-google-login';
+import { Button, Modal, ModalHeader, ModalBody, NavLink, Input } from 'reactstrap';
 import axios from 'axios';
 
 class LoginModal extends React.Component {
@@ -38,7 +37,7 @@ class LoginModal extends React.Component {
       .then(response => {
         if (response.data) {
           console.log("User has signed in data= ", response.data);
-          this.props.orginizationLoggedIn(response.data)
+          this.props.organizationLoggedIn(response.data)
         } else {
           console.log("User Credential didnot match");
         }

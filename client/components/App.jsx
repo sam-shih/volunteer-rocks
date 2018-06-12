@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Provider } from 'react-redux';
-import store from '../store.js';
 import axios from 'axios';
 import { GAPI_KEY } from '../../config.js'
 
@@ -16,7 +14,7 @@ class App extends Component {
     this.state = {
       view: 'main',
       opportunities: [],
-      filtedOpps: [],
+      filteredOpps: [],
       oppsToPassDown: [],
       howManyPages: [0],
       isLoggedIn: false,
@@ -27,17 +25,17 @@ class App extends Component {
     this.logOut = this.logOut.bind(this);
     this.getOpps = this.getOpps.bind(this);
     this.changeView = this.changeView.bind(this);
+    this.passDownOpps = this.passDownOpps.bind(this);
     this.setOpsListView = this.setOpsListView.bind(this);
     this.myOppotunities = this.myOppotunities.bind(this);
     this.volunteerForOpp = this.volunteerForOpp.bind(this);
+    this.organizationLoggedIn = this.organizationLoggedIn.bind(this);
     this.isLoggedInToggleForTesting = this.isLoggedInToggleForTesting.bind(this);
-    this.orginizationLoggedIn = this.orginizationLoggedIn.bind(this);
-    this.passDownOpps = this.passDownOpps.bind(this);
   }
 
   componentDidMount() {
     const gmapScriptEl = document.createElement(`script`)
-    gmapScriptEl.src = `https://maps.googleapis.com/maps/api/js?key=${GAPI_KEY}&libraries=places`
+    gmapScriptEl.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.GAPI_KEY}&libraries=places`
     document.querySelector(`body`).insertAdjacentElement(`beforeend`, gmapScriptEl)
 
     axios.get('/main')
@@ -75,7 +73,7 @@ class App extends Component {
     });
   };
 
-  orginizationLoggedIn(org) {
+  organizationLoggedIn(org) {
     this.setState({
       user: org,
       isOrganization: true
@@ -169,7 +167,7 @@ class App extends Component {
   setOpsListView(option, ops) {
     this.setState({
       view: option,
-      filtedOpps: ops
+      filteredOpps: ops
     })
   }
 
@@ -178,7 +176,7 @@ class App extends Component {
       .then(response => {
         this.setState({
           view: 'myOpportunities',
-          filtedOpps: response.data
+          filteredOpps: response.data
         });
       });
   }
@@ -191,30 +189,28 @@ class App extends Component {
       return <OpsList numOfPages={this.state.howManyPages} passDownOpps={this.passDownOpps} volunteerForOpp={this.volunteerForOpp} opportunities={this.state.oppsToPassDown} setOpsListView={this.setOpsListView} />
     } else if (view === 'loadAllMarkers') {
       return <LoadAllMarkers opportunities={this.state.opportunities} />
-    } else if (view === 'filtedOpps') {
-      return <OpsList volunteerForOpp={this.volunteerForOpp} opportunities={this.state.filtedOpps} setOpsListView={this.setOpsListView} />
+    } else if (view === 'filteredOpps') {
+      return <OpsList volunteerForOpp={this.volunteerForOpp} opportunities={this.state.filteredOpps} setOpsListView={this.setOpsListView} />
     } else if (view === 'myOpportunities') {
-      return <OpsList opportunities={this.state.filtedOpps} setOpsListView={this.setOpsListView} />
+      return <OpsList opportunities={this.state.filteredOpps} setOpsListView={this.setOpsListView} />
     }
   }
 
   render() {
     return (
-      <Provider store={store}>
-        <div>
-          <NavBar
-            changeView={this.changeView}
-            isLoggedIn={this.state.isLoggedIn}
-            user={this.state.user}
-            isLoggedInToggleForTesting={this.isLoggedInToggleForTesting}
-            isOrganization={this.state.isOrganization}
-            logOut={this.logOut}
-            orginizationLoggedIn={this.orginizationLoggedIn}
-            myOppotunities={this.myOppotunities}
-          />
-          {this.renderView()}
-        </div>
-      </ Provider>
+      <div>
+        <NavBar
+          changeView={this.changeView}
+          isLoggedIn={this.state.isLoggedIn}
+          user={this.state.user}
+          isLoggedInToggleForTesting={this.isLoggedInToggleForTesting}
+          isOrganization={this.state.isOrganization}
+          logOut={this.logOut}
+          organizationLoggedIn={this.organizationLoggedIn}
+          myOppotunities={this.myOppotunities}
+        />
+        {this.renderView()}
+      </div>
     );
   }
 };

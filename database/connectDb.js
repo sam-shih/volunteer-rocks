@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
-var mongoURI = 'mongodb://admin:password1@ds050189.mlab.com:50189/volunteer-rocks';
-mongoose.connect(mongoURI);
+mongoose.connect(prcoess.env.MONGODB_URI);
 
 var db = mongoose.connection;
 

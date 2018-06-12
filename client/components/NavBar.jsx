@@ -1,7 +1,5 @@
 import React from 'react';
-import axios from 'axios';
 import OrgSignupModal from '../modals/OrgSignupModal.jsx';
-import SignupModal from '../modals/SignupModal.jsx';
 import LoginModal from '../modals/LoginModal.jsx';
 import CreateOpModal from '../modals/CreateOpModal.jsx';
 
@@ -83,7 +81,7 @@ class NavBar extends React.Component {
               <OrgSignupModal />
             </NavItem>
             <NavItem>
-              <LoginModal orginizationLoggedIn={this.props.orginizationLoggedIn} />
+              <LoginModal organizationLoggedIn={this.props.organizationLoggedIn} />
             </NavItem>
             <NavItem>
               <Button outline color="primary">Sign Up</Button>{' '}
