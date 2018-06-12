@@ -171,9 +171,13 @@ class App extends Component {
     })
   }
 
+<<<<<<< 6866c55f8d829eabda54cb80c66cec63798948a6
   myOpportunities(e) {
     e.preventDefault()
     console.log('myops in app')
+=======
+  myOpportunities() {
+>>>>>>> Fixed a var naming mixup
     axios.get('/myOps')
       .then(response => {
         console.log('response.data')
