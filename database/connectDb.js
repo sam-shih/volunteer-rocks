@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connect(prcoess.env.MONGODB_URI);
+mongoose.connect(process.env.MONGODB_URI);
 
 var db = mongoose.connection;
 
