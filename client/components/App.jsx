@@ -27,7 +27,7 @@ class App extends Component {
     this.changeView = this.changeView.bind(this);
     this.passDownOpps = this.passDownOpps.bind(this);
     this.setOpsListView = this.setOpsListView.bind(this);
-    this.myOpportunities = this.myOpportunities.bind(this);
+    this.myOpportunitiesd = this.myOpportunitiesd.bind(this);
     this.volunteerForOpp = this.volunteerForOpp.bind(this);
     this.organizationLoggedIn = this.organizationLoggedIn.bind(this);
     this.isLoggedInToggleForTesting = this.isLoggedInToggleForTesting.bind(this);
@@ -171,9 +171,13 @@ class App extends Component {
     })
   }
 
+<<<<<<< f382ba2e2dc5a4c70ffd2c9383613b16b11f511e
 <<<<<<< 6866c55f8d829eabda54cb80c66cec63798948a6
   myOpportunities(e) {
     e.preventDefault()
+=======
+  myOpportunitiesd() {
+>>>>>>> Fixed a var naming mixup
     console.log('myops in app')
 =======
   myOpportunities() {
@@ -214,7 +218,7 @@ class App extends Component {
           isOrganization={this.state.isOrganization}
           logOut={this.logOut}
           organizationLoggedIn={this.organizationLoggedIn}
-          myOpportunities={this.myOpportunities}
+          myOpportunitiesd={this.myOpportunitiesd}
         />
         {this.renderView()}
       </div>
