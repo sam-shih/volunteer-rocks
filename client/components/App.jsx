@@ -172,8 +172,10 @@ class App extends Component {
   }
 
   myOpportunities() {
+    console.log('myops in app')
     axios.get('/myOps')
       .then(response => {
+        console.log('response.data')
         this.setState({
           view: 'myOpportunities',
           filteredOpps: response.data
