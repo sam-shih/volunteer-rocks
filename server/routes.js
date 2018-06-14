@@ -4,12 +4,13 @@ const oppCtrl = require('./controllers/oppController.js')
 
 
 router.route('/api/logout')
-  .get()
+  .get(userCtrl.logout)
 
 router.route('/api/login')
-  .put(userCtrl.login)
+  .post(userCtrl.login)
 
-
+router.route('/api/main')
+  .get(oppCtrl.main)
 
 router.route('/api/users')
   .post(userCtrl.signUp)

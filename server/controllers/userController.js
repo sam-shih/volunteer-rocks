@@ -1,6 +1,6 @@
-const checkdb = require('../database/checkdbs.js');
-const retrieveFromDb = require('../database/retrieveFromDb.js');
-const addVolunteerToOpp = require('../database/addVolunteerToOpp').checkIfEnrolled;
+const checkdb = require('../../database/checkdbs.js');
+const retrieveFromDb = require('../../database/retrieveFromDb.js');
+const addVolunteerToOpp = require('../../database/addVolunteerToOpp').checkIfEnrolled;
 
 exports.signUp = (req, res) => {
   return checkdb.checkOrganizationExists(req, res)
@@ -25,4 +25,7 @@ exports.enroll = (req, res) => {
 
 exports.logout = (req, res) => {
   //how do we want to hangle logouts?
+  req.logout();
+  req.session.destroy();
+  res.redirect('/');
 }

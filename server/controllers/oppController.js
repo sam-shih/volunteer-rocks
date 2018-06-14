@@ -1,5 +1,5 @@
-const saveToDb = require('../database/saveToDb.js');
-const retrieveFromDb = require('../database/retrieveFromDb.js');
+const saveToDb = require('../../database/saveToDb.js');
+const retrieveFromDb = require('../../database/retrieveFromDb.js');
 const axios = require('axios');
 
 exports.fetchAll = (req, res) => {
@@ -20,4 +20,13 @@ exports.fetchByZip = (req, res) => {
 exports.addNew = (req, res) => {
   saveToDb.newOpportunity(req.body);
   res.sendStatus(200);
+}
+
+exports.main = (req, res) => {
+  var sessionTest = ('user' in req) ? `*** SESSION EXISTS for ${req.session.passport.user.name}` : "*** NO SESSION ***";
+  if ('user' in req) {
+    res.status(200).send(req.session.passport.user).end('true');
+  } else if ('userId' in req.session) {
+    res.status(200).send(req.session)
+  }
 }
