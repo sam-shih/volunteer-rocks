@@ -2,7 +2,7 @@ const models = require('./models.js');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 var googleMapsClient = require('@google/maps').createClient({
-  key: process.env.GAPI_KEY,
+  key: "AIzaSyAceVbYzIL8yvIXoltC1dQzg40sDVlxtuE",
   Promise: Promise
 });
 
@@ -62,9 +62,9 @@ const newOrganization = function (organization, res, req, session) {
 };
 
 const newOpportunity = function (opportunity) {
-
+  console.log(opportunity)
   googleMapsClient.geocode({
-      address: opportunity.address
+    address: opportunity.address
     }).asPromise()
     .then((response) => {
       let zipcode = '';
