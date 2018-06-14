@@ -25,9 +25,9 @@ app.use(passport.session());
 
 
 passport.use(new GoogleStrategy({
-    clientID: process.env.CLIENT_ID, // Please get clientID (instructions in README)
-    clientSecret: process.env.CLIENT_SECRET, // Please get clientSecret (instructions in README)
-    callbackURL: process.env.O_AUTH_CB
+  clientID: "623460598606-jt79n40o89bp0mppi4aosv313vkq7and.apps.googleusercontent.com", // Please get clientID (instructions in README)
+  clientSecret: "KuEwLAXDBNRDqsRHpKj7sjLz", // Please get clientSecret (instructions in README)
+  callbackURL: "http://localhost:3000/"
   },
   function (accessToken, refreshToken, profile, done) {
     let name = profile.displayName;
