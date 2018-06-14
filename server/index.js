@@ -106,8 +106,8 @@ app.post('/newOpp', (req, res) => {
   res.sendStatus(200);
 });
 
-// link for getting new key for below https://www.zipcodeapi.com/
-//click on zip in radius.
+// // link for getting new key for below https://www.zipcodeapi.com/
+// //click on zip in radius.
 app.post('/opportunities', (req, res) => {
   let zipApiUrl = `https://www.zipcodeapi.com/rest/O4i5XLUvKKDgHEb3Sw8QNYxNG6NW8Sk7KqQ3kVKI0sodef9qD1THnwOHrd4u4KvD/radius.json/${req.body.zipcode}/50/mile`;
 
