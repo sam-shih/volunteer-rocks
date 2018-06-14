@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { GAPI_KEY } from '../../config.js'
 
 import Filter from './Filter.jsx';
 import OpsList from './OpsList.jsx';
@@ -35,7 +34,7 @@ class App extends Component {
 
   componentDidMount() {
     const gmapScriptEl = document.createElement(`script`)
-    gmapScriptEl.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.GAPI_KEY}&libraries=places`
+    gmapScriptEl.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAceVbYzIL8yvIXoltC1dQzg40sDVlxtuE&libraries=places`
     document.querySelector(`body`).insertAdjacentElement(`beforeend`, gmapScriptEl)
 
     axios.get('/main')
