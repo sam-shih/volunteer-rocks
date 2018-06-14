@@ -49,9 +49,7 @@ const checkUserCredential = function (userCredential, res, session, req) {
           console.log(user, ' user in checkuser ================')
           res.status(401).end('false');
         }
-
       });
-
     } else {
       res.status(401).end('false'); //if username not found
     }
