@@ -9,7 +9,6 @@ const VolunteerModel = require('../database/models.js').Volunteers;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const saveExampleOpportunity = require('../database/exampleOpGenarator.js');
 const addVolunteerToOpp = require('../database/addVolunteerToOpp').checkIfEnrolled;
-const config = require('../config');
 
 const app = express();
 
@@ -24,16 +23,11 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 passport.use(new GoogleStrategy({
-<<<<<<< HEAD
   clientID: "623460598606-jt79n40o89bp0mppi4aosv313vkq7and.apps.googleusercontent.com", // Please get clientID (instructions in README)
   clientSecret: "KuEwLAXDBNRDqsRHpKj7sjLz", // Please get clientSecret (instructions in README)
   callbackURL: "http://localhost:3000/"
-=======
-    clientID: "623460598606-jt79n40o89bp0mppi4aosv313vkq7and.apps.googleusercontent.com", // Please get clientID (instructions in README)
-    clientSecret: "KuEwLAXDBNRDqsRHpKj7sjLz", // Please get clientSecret (instructions in README)
-    callbackURL: "http://localhost:3000/"
->>>>>>> f9c94f8ef8348806c611251888b4470774a8f328
   },
   function (accessToken, refreshToken, profile, done) {
     let name = profile.displayName;
@@ -116,6 +110,7 @@ app.post('/newOpp', (req, res) => {
 //click on zip in radius.
 app.post('/opportunities', (req, res) => {
   let zipApiUrl = `https://www.zipcodeapi.com/rest/O4i5XLUvKKDgHEb3Sw8QNYxNG6NW8Sk7KqQ3kVKI0sodef9qD1THnwOHrd4u4KvD/radius.json/${req.body.zipcode}/50/mile`;
+
   axios.get(zipApiUrl)
     .then(response => {
       retrieveFromDb.getZipCodeSearch(response.data.zip_codes, res);
