@@ -121,14 +121,13 @@ class App extends Component {
 
   getOpps(e, zipcode) {
     e.preventDefault();
-    axios.post('/opportunities', { zipcode: zipcode })
+    axios.get('/api/opportunities')
       .then((response) => {
         console.log(response.data);
         this.setState({
           view: 'opportunities',
           opportunities: response.data,
         });
-
         this.passDownOpps(1);
       })
       .catch((err) => {

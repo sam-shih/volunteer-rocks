@@ -6,6 +6,8 @@ const session = require('express-session');
 
 const VolunteerModel = require('../database/models.js').Volunteers;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const exampleDB = require('../database/exampleOpGenarator.js');
+const addVolunteerToOpp = require('../database/addVolunteerToOpp').checkIfEnrolled;
 
 let app = express();
 
@@ -21,10 +23,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+
 passport.use(new GoogleStrategy({
-  clientID: "623460598606-jt79n40o89bp0mppi4aosv313vkq7and.apps.googleusercontent.com", // Please get clientID (instructions in README)
-  clientSecret: "KuEwLAXDBNRDqsRHpKj7sjLz", // Please get clientSecret (instructions in README)
-  callbackURL: "http://localhost:3000/"
+  clientID: "623460598606-jt79n40o89bp0mppi4aosv313vkq7and.apps.googleusercontent.com",
+  clientSecret: "KuEwLAXDBNRDqsRHpKj7sjLz", 
+  callbackURL: "http://localhost:3000/auth/google/callback"
   },
   function (accessToken, refreshToken, profile, done) {
     let name = profile.displayName;
@@ -60,6 +63,44 @@ passport.deserializeUser(function (serializedObj, done) {
     done(err, volunteer);
   });
 });
+
+app.get('/main', (req, res) => {
+  var sessionTest = ('user' in req) ? `*** SESSION EXISTS for ${req.session.passport.user.name}` : "*** NO SESSION ***";
+  if ('user' in req) {
+    res.status(200).send(req.session.passport.user).end('true');
+  } else if ('userId' in req.session) {
+    res.status(200).send(req.session)
+  }
+});
+
+app.post('/login', (req, res) => {
+  checkdb.checkUserCredential(req.body, res, session, req);
+});
+
+app.get('/logout', function (req, res) {
+  req.logout();
+  req.session.destroy();
+  res.redirect('/');
+})
+
+app.post('/signup', (req, res) => {
+  checkdb.checkOrganizationExists(req, res);
+});
+
+app.get('/init', (req, res) =>{
+  exampleDB.initDBsetup();
+})
+
+app.get('/auth/google', passport.authenticate('google', {
+  scope: ['https://www.googleapis.com/auth/plus.login']
+}));
+
+app.get('/auth/google/callback', passport.authenticate('google', {
+  successRedirect: '/',
+  failureRedirect: '/'
+}));
+
+
 
 app.use('/', routes);
 

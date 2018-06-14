@@ -7,14 +7,15 @@ exports.fetchAll = (req, res) => {
 }
 
 exports.fetchByZip = (req, res) => {
-  let zipApiUrl = `https://www.zipcodeapi.com/rest/O4i5XLUvKKDgHEb3Sw8QNYxNG6NW8Sk7KqQ3kVKI0sodef9qD1THnwOHrd4u4KvD/radius.json/${req.body.zipcode}/50/mile`;
+  // let zipApiUrl = `https://www.zipcodeapi.com/rest/O4i5XLUvKKDgHEb3Sw8QNYxNG6NW8Sk7KqQ3kVKI0sodef9qD1THnwOHrd4u4KvD/radius.json/${req.body.zipcode}/50/mile`;
 
-  axios.get(zipApiUrl)
-    .then(response => {
-      retrieveFromDb.getZipCodeSearch(response.data.zip_codes, res);
-    }).catch(err => {
-      throw err;
-    });
+  // axios.get(zipApiUrl)
+  //   .then(response => {
+  //     retrieveFromDb.getZipCodeSearch(response.data.zip_codes, res);
+  //   }).catch(err => {
+  //     throw err;
+  //   });
+  retrieveFromDb.getOpportunities(50, res);
 }
 
 exports.addNew = (req, res) => {
