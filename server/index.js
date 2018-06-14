@@ -25,9 +25,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new GoogleStrategy({
+<<<<<<< HEAD
+  clientID: "623460598606-jt79n40o89bp0mppi4aosv313vkq7and.apps.googleusercontent.com", // Please get clientID (instructions in README)
+  clientSecret: "KuEwLAXDBNRDqsRHpKj7sjLz", // Please get clientSecret (instructions in README)
+  callbackURL: "http://localhost:3000/"
+=======
     clientID: "623460598606-jt79n40o89bp0mppi4aosv313vkq7and.apps.googleusercontent.com", // Please get clientID (instructions in README)
     clientSecret: "KuEwLAXDBNRDqsRHpKj7sjLz", // Please get clientSecret (instructions in README)
     callbackURL: "http://localhost:3000/"
+>>>>>>> f9c94f8ef8348806c611251888b4470774a8f328
   },
   function (accessToken, refreshToken, profile, done) {
     let name = profile.displayName;
