@@ -1,18 +1,19 @@
 const axios = require('axios');
 const express = require('express');
-const routes = require("./routes.js");``
 const passport = require('passport');
 const session = require('express-session');
-
+const checkdb = require('../database/checkdbs.js');
+const saveToDb = require('../database/saveToDb.js');
+const retrieveFromDb = require('../database/retrieveFromDb.js');
 const VolunteerModel = require('../database/models.js').Volunteers;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const exampleDB = require('../database/exampleOpGenarator.js');
+//const saveExampleOpportunity = require('../database/exampleOpGenarator.js');
 const addVolunteerToOpp = require('../database/addVolunteerToOpp').checkIfEnrolled;
 
-let app = express();
+const app = express();
 
 app.use(express.json());
-app.use(express.static(__dirname + '/../client/dist'))
+app.use(express.static(__dirname + '/../client/dist'));
 app.use(session({
   secret: 'Frooty Tooty Loopy',
   cookie: {
@@ -23,11 +24,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-
 passport.use(new GoogleStrategy({
-  clientID: "623460598606-jt79n40o89bp0mppi4aosv313vkq7and.apps.googleusercontent.com",
-  clientSecret: "KuEwLAXDBNRDqsRHpKj7sjLz", 
-  callbackURL: "http://localhost:3000/auth/google/callback"
+  clientID: "623460598606-jt79n40o89bp0mppi4aosv313vkq7and.apps.googleusercontent.com", // Please get clientID (instructions in README)
+  clientSecret: "KuEwLAXDBNRDqsRHpKj7sjLz", // Please get clientSecret (instructions in README)
+  callbackURL: "http://localhost:3000/"
   },
   function (accessToken, refreshToken, profile, done) {
     let name = profile.displayName;
@@ -64,6 +64,15 @@ passport.deserializeUser(function (serializedObj, done) {
   });
 });
 
+app.get('/auth/google', passport.authenticate('google', {
+  scope: ['https://www.googleapis.com/auth/plus.login']
+}));
+
+app.get('/auth/google/callback', passport.authenticate('google', {
+  successRedirect: '/',
+  failureRedirect: '/'
+}));
+
 app.get('/main', (req, res) => {
   var sessionTest = ('user' in req) ? `*** SESSION EXISTS for ${req.session.passport.user.name}` : "*** NO SESSION ***";
   if ('user' in req) {
@@ -87,21 +96,42 @@ app.post('/signup', (req, res) => {
   checkdb.checkOrganizationExists(req, res);
 });
 
-app.get('/init', (req, res) =>{
-  exampleDB.initDBsetup();
+app.get('/myOps', (req, res) => {
+  console.log('in mops ./server')
+  retrieveFromDb.myOpportunities(req.session.passport.user._id, res);
 })
 
-app.get('/auth/google', passport.authenticate('google', {
-  scope: ['https://www.googleapis.com/auth/plus.login']
-}));
+app.post('/newOpp', (req, res) => {
+  saveToDb.newOpportunity(req.body);
+  res.sendStatus(200);
+});
 
-app.get('/auth/google/callback', passport.authenticate('google', {
-  successRedirect: '/',
-  failureRedirect: '/'
-}));
+// // link for getting new key for below https://www.zipcodeapi.com/
+// //click on zip in radius.
+app.post('/opportunities', (req, res) => {
+  let zipApiUrl = `https://www.zipcodeapi.com/rest/O4i5XLUvKKDgHEb3Sw8QNYxNG6NW8Sk7KqQ3kVKI0sodef9qD1THnwOHrd4u4KvD/radius.json/${req.body.zipcode}/50/mile`;
 
+  axios.get(zipApiUrl)
+    .then(response => {
+      retrieveFromDb.getZipCodeSearch(response.data.zip_codes, res);
+    }).catch(err => {
+      throw err;
+    });
+});
 
+app.get('/opportunities/all', (req, res) => {
+  retrieveFromDb.getOpportunities(1000, res);
+});
 
-app.use('/', routes);
+app.post('/enroll', (req, res) => {
+  let opportunity = req.body.opportunity;
+  if (req.user) {
+    addVolunteerToOpp(opportunity, req.user._id, res);
+  } else {
+    res.send('login')
+  }
+});
+
+// saveExampleOpportunity.saveExampleOpportunity(); // Uncomment and run to generate exampleOpportunityData
 
 module.exports = app;
