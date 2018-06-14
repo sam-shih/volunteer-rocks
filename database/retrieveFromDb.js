@@ -52,11 +52,11 @@ const myOpportunities = function (id, res) {
 };
 
 const getZipCodeSearch = function (zipCodes, res) {
+  console.log(zipCodes);
+  let zipCodesArray = [];
   zipCodes.forEach((zip) => {
     zipCodesArray.push(zip.zip_code);
   });
-  console.log(zipCodesArray);
-
   Opportunities.find()
     .where('zipcode')
     .in(zipCodesArray)
@@ -65,11 +65,11 @@ const getZipCodeSearch = function (zipCodes, res) {
         console.log("Error " + err)
         res.send(err);
       } else {
+        console.log(opps)
         res.status(200).json(opps);
         res.end();
       }
     });
-
 };
 
 module.exports.myOpportunities = myOpportunities;

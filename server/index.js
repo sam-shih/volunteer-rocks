@@ -7,7 +7,7 @@ const saveToDb = require('../database/saveToDb.js');
 const retrieveFromDb = require('../database/retrieveFromDb.js');
 const VolunteerModel = require('../database/models.js').Volunteers;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const saveExampleOpportunity = require('../database/exampleOpGenarator.js');
+const exampleDB = require('../database/exampleOpGenarator.js');
 const addVolunteerToOpp = require('../database/addVolunteerToOpp').checkIfEnrolled;
 
 const app = express();
@@ -24,10 +24,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+
 passport.use(new GoogleStrategy({
-  clientID: "623460598606-jt79n40o89bp0mppi4aosv313vkq7and.apps.googleusercontent.com", // Please get clientID (instructions in README)
-  clientSecret: "KuEwLAXDBNRDqsRHpKj7sjLz", // Please get clientSecret (instructions in README)
-  callbackURL: "http://localhost:3000/"
+  clientID: "623460598606-jt79n40o89bp0mppi4aosv313vkq7and.apps.googleusercontent.com",
+  clientSecret: "KuEwLAXDBNRDqsRHpKj7sjLz", 
+  callbackURL: "http://localhost:3000/auth/google/callback"
   },
   function (accessToken, refreshToken, profile, done) {
     let name = profile.displayName;
@@ -63,6 +64,10 @@ passport.deserializeUser(function (serializedObj, done) {
     done(err, volunteer);
   });
 });
+
+app.get('/init', (req, res) =>{
+  exampleDB.initDBsetup();
+})
 
 app.get('/auth/google', passport.authenticate('google', {
   scope: ['https://www.googleapis.com/auth/plus.login']
@@ -108,15 +113,18 @@ app.post('/newOpp', (req, res) => {
 
 // link for getting new key for below https://www.zipcodeapi.com/
 //click on zip in radius.
-app.post('/opportunities', (req, res) => {
-  let zipApiUrl = `https://www.zipcodeapi.com/rest/O4i5XLUvKKDgHEb3Sw8QNYxNG6NW8Sk7KqQ3kVKI0sodef9qD1THnwOHrd4u4KvD/radius.json/${req.body.zipcode}/50/mile`;
+// app.post('/opportunities', (req, res) => {
+//   let zipApiUrl = `https://www.zipcodeapi.com/rest/O4i5XLUvKKDgHEb3Sw8QNYxNG6NW8Sk7KqQ3kVKI0sodef9qD1THnwOHrd4u4KvD/radius.json/${req.body.zipcode}/50/mile`;
 
-  axios.get(zipApiUrl)
-    .then(response => {
-      retrieveFromDb.getZipCodeSearch(response.data.zip_codes, res);
-    }).catch(err => {
-      throw err;
-    });
+//   axios.get(zipApiUrl)
+//     .then(response => {
+//       retrieveFromDb.getZipCodeSearch(response.data.zip_codes, res);
+//     }).catch(err => {
+//       throw err;
+//     });
+// });
+app.post('/opportunities', (req, res) => {
+  retrieveFromDb.getOpportunities(50, res);
 });
 
 app.get('/opportunities/all', (req, res) => {
