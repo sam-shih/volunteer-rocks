@@ -30,7 +30,7 @@ class NavBar extends React.Component {
     const navView = isLoggedIn ? (
       <React.Fragment>
         <NavItem>
-          <OrgSignupModal />
+          <CreateOpModal user={this.props.user}/>
         </NavItem>
         <NavItem>
           <OrganizationsCreate createOrganization={this.props.createOrganization.bind(this)}/>

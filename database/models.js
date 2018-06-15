@@ -46,6 +46,7 @@ var opportunitiesSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  createdBy: [], //first element is _id, second is username
   description: String,
   cause: String,
   zipcode: String,

@@ -37,25 +37,29 @@ class OrgSignupModal extends React.Component {
   }
 
   submitForm(form) {
-    console.log(form, 'newOrg signup form')
-    axios.post('/signup', {
-      name: form.name,
-      address: {
-        street: form.street,
-        city: form.city,
-        state: form.state,
-        zipcode: form.zipcode
-      },
-      phone: form.phone,
-      email: form.email,
-      password: form.password
-    })
-      .then(response => {
-        console.log('Form posted to server')
-        this.toggle
-
+    if(form.name.length === 0) {
+      alert('Please enter an organization name.')
+    } else {
+      console.log(form, 'newOrg signup form')
+      axios.post('/signup', {
+        name: form.name,
+        address: {
+          street: form.street,
+          city: form.city,
+          state: form.state,
+          zipcode: form.zipcode
+        },
+        phone: form.phone,
+        email: form.email,
+        password: form.password
       })
-      .catch(err => console.log('Err', err));
+        .then(response => {
+          console.log('Form posted to server')
+          this.toggle
+
+        })
+        .catch(err => console.log('Err', err));
+    }
   }
 
   render() {
