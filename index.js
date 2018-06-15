@@ -9,13 +9,13 @@ const socketIO = require('socket.io')(server);
 
 
 socketIO.on('connection', function(socket) {
-  console.log('yo you connected!');
+  console.log('socket connected!');
   socket.on('chat message', function(msg){
     console.log('message: ' + msg);
     socketIO.emit('chat message', msg);
   });
   socket.on('disconnect', function (data) {
-  console.log('hey disconnected!', data);
+  console.log('socket disconnected!', data);
   });
 });
 // Namespace? Possibly to talk with specific administrations
