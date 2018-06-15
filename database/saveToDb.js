@@ -30,35 +30,22 @@ const newVolunteer = function (volunteer, done) {
   });
 };
 
-const newOrganization = function (organization, res, req, session) {
-  let hashPassword = '';
-
-  bcrypt.hash(organization.password, 10, function (err, hash) {
-    hashPassword = hash;
-
-    let aNewOrganization = new Organization({
-      name: organization.name,
-      password: hashPassword,
-      address: organization.address,
-      phone: organization.phone,
-      email: organization.email,
-      password: hashPassword
-      //TODO: 'Insert opList'
-    });
-
-    aNewOrganization.save(function (err, organization) {
-      if (err) {
-        throw err;
-      }
-
-      console.log(`A new organization, ${organization.name}, has been saved`);
-      req.session.userId = organization._id;
-      req.session.name = organization.name;
-      console.log(req.session.user);
-      res.status(201).end();
-    });
-
-  });
+exports.insertOrganization = function ({name, street, city, state, zipcode, phone}) {
+  const address = {street, city, state, zipcode}
+  return new Promise((resolve, reject)=>{
+    let newOrganization = new Organization({
+      name,
+      address,
+      phone,
+    })
+    newOrganization.save()
+      .then(savedOrg=>{
+        resolve(savedOrg);
+      })
+      .catch(error=>{
+        reject(error);
+      })
+  })
 };
 
 const newOpportunity = function (opportunity) {
@@ -103,6 +90,5 @@ const newOpportunity = function (opportunity) {
 };
 
 module.exports.newOpportunity = newOpportunity;
-module.exports.newOrganization = newOrganization;
 module.exports.newVolunteer = newVolunteer;
 ``

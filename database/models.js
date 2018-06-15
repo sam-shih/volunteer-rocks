@@ -31,11 +31,6 @@ var organizationSchema = mongoose.Schema({
     required: true,
     unique: true
   },
-  password: {
-    type: String,
-    required: true,
-    select: false
-  },
   address: {
     street: String,
     city: String,
@@ -43,7 +38,7 @@ var organizationSchema = mongoose.Schema({
     zipcode: String,
   },
   phone: String,
-  email: String,
+  logo: String,
 });
 
 var opportunitiesSchema = mongoose.Schema({
