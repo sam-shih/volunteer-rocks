@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const userCtrl = require('./controllers/userController.js');
-const oppCtrl = require('./controllers/oppController.js')
-
+const oppCtrl = require('./controllers/oppController.js');
+const orgCtrl = require('./controllers/orgController.js');
 
 router.route('/api/logout')
   .get(userCtrl.logout)
@@ -21,5 +21,8 @@ router.route('/api/opportunities')
   .post(oppCtrl.addNew)
   .put(oppCtrl.fetchByZip)
   .get(oppCtrl.fetchAll)
+
+router.route('/api/organizations')
+  .post(orgCtrl.createOrganization)
 
 module.exports = router;
