@@ -10,6 +10,7 @@ class CreateOpModal extends React.Component {
       modal: false,
       form: {
         title: '',
+        createBy: [this.props.user._id, this.props.user.name],
         description: '',
         cause: '',
         address: '',
@@ -45,23 +46,27 @@ class CreateOpModal extends React.Component {
   }
 
   submitForm(form) {
-    console.log(form, 'newOp creation form')
-    axios.post('/newOpp', {
-      title: form.title,
-      description: form.description,
-      cause: form.cause,
-      address: form.address,
-      start_date: form.start_date,
-      end_date: form.end_date,
-      phone: form.phone,
-      email: form.email
-    })
-      .then(response => {
-        console.log('Form posted to server')
-        this.toggle();
-
+    if (form.title === '') {
+      alert('Please add a title for this opportunity!')
+    } else {
+      console.log(form, 'newOp creation form')
+      axios.post('api/opportunities', {
+          title: form.title,
+          createdBy: [this.props.user._id, this.props.user.name],
+          description: form.description,
+          cause: form.cause,
+          address: form.address,
+          start_date: form.start_date,
+          end_date: form.end_date,
+          phone: form.phone,
+          email: form.email
       })
-      .catch(err => console.log('Err', err));
+        .then(response => {
+          console.log('Form posted to server')
+          this.toggle();
+        })
+        .catch(err => console.log('Err', err));
+    }
   }
 
   render() {
@@ -84,18 +89,7 @@ class CreateOpModal extends React.Component {
                 </Col>
               </FormGroup>
               <FormGroup row>
-                <Label for="description" sm={2}>Description</Label>
-                <Col sm={10}>
-                  <Input
-                    type="text"
-                    name="description"
-                    id="description"
-                    value={this.state.form.description}
-                    onChange={this.updateInput} />
-                </Col>
-              </FormGroup>
-              <FormGroup row>
-                <Label for="cause" sm={2}>Cause</Label>
+                <Label for="cause" sm={2}>Organization</Label>
                 <Col sm={10}>
                   <Input
                     type="text"
@@ -115,17 +109,15 @@ class CreateOpModal extends React.Component {
               </FormGroup>
               <FormGroup row>
                 <Label for="start_date" sm={2}>Start Date</Label>
-                <Col sm={10}>
+                <Col sm={4}>
                   <Input
                     name="start_date"
                     type="date"
                     value={this.state.form.start_date}
                     onChange={this.updateInput} />
                 </Col>
-              </FormGroup>
-              <FormGroup row>
-                <Label for="end_date" sm={2}>End Date</Label>
-                <Col sm={10}>
+                <Label for="end_date" sm={1.5}>End Date</Label>
+                <Col sm={4}>
                   <Input
                     name="end_date"
                     type="date"
@@ -135,21 +127,30 @@ class CreateOpModal extends React.Component {
               </FormGroup>
               <FormGroup row>
                 <Label for="number" sm={2}>Phone</Label>
-                <Col sm={10}>
+                <Col sm={3}>
                   <Input
                     name="phone"
                     type="tel"
                     value={this.state.form.phone}
                     onChange={this.updateInput} />
                 </Col>
-              </FormGroup>
-              <FormGroup row>
-                <Label for="email" sm={2}>E-mail</Label>
-                <Col sm={10}>
+                <Label for="email" sm={1.5}>E-mail</Label>
+                <Col sm={5}>
                   <Input
                     name="email"
                     type="email"
                     value={this.state.form.email}
+                    onChange={this.updateInput} />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label for="description" sm={2}>Description</Label>
+                <Col sm={10}>
+                  <Input
+                    type="textarea"
+                    name="description"
+                    id="description"
+                    value={this.state.form.description}
                     onChange={this.updateInput} />
                 </Col>
               </FormGroup>

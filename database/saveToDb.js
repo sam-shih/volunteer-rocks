@@ -49,7 +49,7 @@ exports.insertOrganization = function ({name, street, city, state, zipcode, phon
 };
 
 const newOpportunity = function (opportunity) {
-  console.log(opportunity)
+  //console.log(opportunity)
   googleMapsClient.geocode({
     address: opportunity.address
     }).asPromise()
@@ -61,9 +61,10 @@ const newOpportunity = function (opportunity) {
           zipcode = gmapi.address_components[i].short_name;
         }
       }
-
+      console.log(opportunity.createdBy)
       let aNewOpportunity = new Opportunity({
         title: opportunity.title,
+        createdBy: opportunity.createdBy,
         description: opportunity.description,
         cause: opportunity.cause,
         zipcode: zipcode,
@@ -73,10 +74,11 @@ const newOpportunity = function (opportunity) {
         phone: opportunity.phone,
         email: opportunity.email,
         location: {
-          lat: gmapi.geometry.location.lat,
-          lng: gmapi.geometry.location.lng
+          lng: gmapi.geometry.location.lng,
+          lat: gmapi.geometry.location.lat
         }
       });
+
       aNewOpportunity.save(function (err, opportunity) {
         if (err) {
           console.log(err);

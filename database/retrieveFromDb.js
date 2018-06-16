@@ -54,26 +54,27 @@ const myOpportunities = function (id, res) {
   })
 };
 
-const getZipCodeSearch = function (zipCodes, res) {
-  console.log(zipCodes);
-  let zipCodesArray = [];
-  zipCodes.forEach((zip) => {
-    zipCodesArray.push(zip.zip_code);
-  });
-  Opportunities.find()
-    .where('zipcode')
-    .in(zipCodesArray)
-    .exec((err, opps) => {
-      if (err) {
-        console.log("Error " + err)
-        res.send(err);
-      } else {
-        console.log(opps)
-        res.status(200).json(opps);
-        res.end();
+const getZipCodeSearch = function (coords) {
+  console.log('Coords from inside db: ', coords);
+  return new Promise((resolve, reject) => {
+    Opportunities.find({
+      location: {
+        $geoNear: {
+          $geometry: {
+            type: 'Point',
+            coordinates: coords
+          },
+          $maxDistance: 80467.2
+        }
       }
-    });
+    }).exec().then(nearestOpps => {
+      resolve(nearestOpps);
+    }).catch(err => {
+      reject(err);
+    })
+  })
 };
+
 
 module.exports.myOpportunities = myOpportunities;
 module.exports.getVolunteers = getVolunteers;

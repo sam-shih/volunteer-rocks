@@ -22,8 +22,9 @@ class App extends Component {
       user: {},
       zipcode: ''
     }
+    this.getLatLngByZipcode = this.getLatLngByZipcode.bind(this);
     this.logOut = this.logOut.bind(this);
-    this.getOpps = this.getOpps.bind(this);
+    this.findOppsByZip = this.findOppsByZip.bind(this);
     this.changeView = this.changeView.bind(this);
     this.passDownOpps = this.passDownOpps.bind(this);
     this.setOpsListView = this.setOpsListView.bind(this);
@@ -97,6 +98,7 @@ class App extends Component {
   }
 
   zip(e) {
+    console.log(e.target.value);
     this.setState({
       zipcode: e.target.value
     });
@@ -121,20 +123,39 @@ class App extends Component {
       });
   }
 
-  getOpps(e, zipcode) {
-    e.preventDefault();
-    axios.get('/api/opportunities')
-      .then((response) => {
-        console.log(response.data);
-        this.setState({
-          view: 'opportunities',
-          opportunities: response.data,
-        });
-        this.passDownOpps(1);
-      })
-      .catch((err) => {
-        throw (err)
+  getLatLngByZipcode(zipcode) {
+    let geocoder = new google.maps.Geocoder();
+    let address = zipcode;
+    return new Promise(function(resolve, reject) {
+      geocoder.geocode({ 'address': address }, function (results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          let latitude = results[0].geometry.location.lat();
+          let longitude = results[0].geometry.location.lng();
+          resolve([longitude, latitude]);
+        } else {
+          reject(status);
+        }
       });
+    });
+  }
+
+  findOppsByZip(e, zipcode) {
+    e.preventDefault();
+    this.getLatLngByZipcode(zipcode)
+    .then((coords) => {
+      console.log('Client side coords: ', coords);
+      axios.put('/api/opportunities', {
+        coords: coords
+      }).then((response) => {
+          this.setState({
+            view: 'opportunities',
+            opportunities: response.data
+          })
+          this.passDownOpps(1);
+        }).catch((err) => {
+          throw(err)
+        })
+    })
   }
 
   createOrganization(form) {
@@ -199,9 +220,9 @@ class App extends Component {
   renderView() {
     const { view } = this.state;
     if (view === 'main') {
-      return <Main getOpp={this.getOpps} zipcodeState={this.state.zipcode} zipcode={this.zip.bind(this)} />
+      return <Main findOppsByZip={this.findOppsByZip} getOpp={this.getOpps} zipcodeState={this.state.zipcode} zipcode={this.zip.bind(this)} />
     } else if (view === 'opportunities') {
-      return <OpsList numOfPages={this.state.howManyPages} passDownOpps={this.passDownOpps} volunteerForOpp={this.volunteerForOpp} opportunities={this.state.oppsToPassDown} setOpsListView={this.setOpsListView} />
+      return <OpsList numOfPages={this.state.howManyPages} passDownOpps={this.passDownOpps} volunteerForOpp={this.volunteerForOpp} opportunities={this.state.oppsToPassDown} setOpsListView={this.setOpsListView} zipcode={this.state.zipcode}/>
     } else if (view === 'loadAllMarkers') {
       return <LoadAllMarkers opportunities={this.state.opportunities} />
     } else if (view === 'filteredOpps') {

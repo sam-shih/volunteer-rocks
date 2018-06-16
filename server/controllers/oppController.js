@@ -1,24 +1,24 @@
 const saveToDb = require('../../database/saveToDb.js');
 const retrieveFromDb = require('../../database/retrieveFromDb.js');
-const axios = require('axios');
 
 exports.fetchAll = (req, res) => {
   retrieveFromDb.getOpportunities(1000, res);
 }
 
 exports.fetchByZip = (req, res) => {
-  // let zipApiUrl = `https://www.zipcodeapi.com/rest/O4i5XLUvKKDgHEb3Sw8QNYxNG6NW8Sk7KqQ3kVKI0sodef9qD1THnwOHrd4u4KvD/radius.json/${req.body.zipcode}/50/mile`;
+  console.log('Request body coords from server: ', req.body.coords)
 
-  // axios.get(zipApiUrl)
-  //   .then(response => {
-  //     retrieveFromDb.getZipCodeSearch(response.data.zip_codes, res);
-  //   }).catch(err => {
-  //     throw err;
-  //   });
-  retrieveFromDb.getOpportunities(50, res);
+  retrieveFromDb.getZipCodeSearch(req.body.coords)
+  .then(nearestOpps => {
+    res.status(200).send(nearestOpps);
+  }).catch(err => {
+    console.error(err.message);
+    res.status(404).send(err);
+  })
 }
 
 exports.addNew = (req, res) => {
+  //console.log("YESSS!", req.body);
   saveToDb.newOpportunity(req.body);
   res.sendStatus(200);
 }

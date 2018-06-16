@@ -16,7 +16,7 @@ const Main = (props) => (
                   <input type="text" className="form-control form-control-sm" placeholder="Enter your zip code..." onChange={props.zipcode.bind(this)} />
                 </div>
                 <div className="col-12 col-md-3">
-                  <button type="submit" className="btn btn-block btn-sm btn-primary" onClick={(e) => props.getOpp(e, props.zipcodeState)}>Search</button>
+                  <button type="submit" className="btn btn-block btn-sm btn-primary" onClick={(e) => props.findOppsByZip(e, props.zipcodeState)}>Search</button>
                 </div>
               </div>
             </form>
@@ -34,8 +34,8 @@ const Main = (props) => (
           </div>
         </div>
         <div className="row no-gutters">
-          <div className="col-lg-6 text-white showcase-img image2" ></div>
-          < div className="col-lg-6 my-auto showcase-text" >
+          <div className="col-lg-6 text-white showcase-img image2"></div>
+          <div className="col-lg-6 my-auto showcase-text">
             <h2>Sign Up Today</h2>
             <p className="lead mb-0">You'll have access to our awesome filters!  Just click on your user icon once you're signed in to view a map of opportunities in your area.</p>
           </div>
