@@ -9,11 +9,11 @@ class Comment extends React.Component {
     this.state = {
       collapse: false,
       comment: '',
-      comments: []
+      comments: [{user: 'zack', comment: 'this opp sucks', date: '06/12/18'}, {user: 'feng', comment: 'this opp is great', date: '06/13/18'}]
     };
     this.addComment = this.addComment.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.loginUser = this.loginUser.bind(this);
+    this.renderView = this.renderView.bind(this);
   }
 
   toggle() {
@@ -43,31 +43,73 @@ class Comment extends React.Component {
     })
   }
 
-  loginUser() {
-    console.log('Clicked textarea!', this.props.isLoggedIn)
-    if (this.props.isLoggedIn === false) {
+  renderView() {
+    console.log(this.props.user)
+    if (this.props.isLoggedIn === false || this.props.user === {}) {
       // log user in through google account
+      return (
+        <div>
+          <Button outline color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>View Comments</Button>
+          <Collapse isOpen={this.state.collapse}>
+
+            <Card>
+              <CardBody>
+                <Form >
+                  <FormGroup>
+                    <Label for="commentText"><img src={`https://image.ibb.co/nCj2xy/if_user_man_678132_1.png`}/> Anonymous</Label>
+                    <a href="/auth/google"><Input type="textarea" name="text" id="commentText" placeholder="Comment on this volunteer opportunity..." /></a>
+                  </FormGroup>
+                  <Button disabled>Submit</Button>
+                </Form>
+              </CardBody>
+            </Card>
+            <Card>
+              {this.state.comments.map(comment => {
+                return (
+                  <CardBody>
+                    <h3>Comment list goes here</h3>
+                    {comment.user} {comment.comment} {comment.date}
+                  </CardBody>
+                )
+              })}
+            </Card>
+          </Collapse>
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <Button outline color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>View Comments</Button>
+          <Collapse isOpen={this.state.collapse}>
+            <Card>
+              <CardBody>
+                <Form >
+                  <FormGroup>
+                    <Label for="commentText"><img src={this.props.user.picture}/> {this.props.user.name}</Label>
+                    <Input type="textarea" name="text" id="commentText" placeholder="Comment on this volunteer opportunity..." onChange={this.addComment} onClick={this.renderView}/>
+                  </FormGroup>
+                  <Button onClick={(e) => this.handleSubmit(e, this.state.comment)}>Submit</Button>
+                </Form>
+              </CardBody>
+            </Card>
+            <Card>
+              {this.state.comments.map(comment => {
+                return (<CardBody>
+                  <h3>Comment list goes here</h3>
+                  {comment.user} {comment.comment} {comment.date}
+                </CardBody>
+                )
+              })}
+            </Card>
+          </Collapse>
+        </div>
+      )
     }
   }
 
   render() {
     return (
-      <div>
-        <Button outline color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>View Comments</Button>
-        <Collapse isOpen={this.state.collapse}>
-          <Card>
-            <CardBody>
-              <Form >
-                <FormGroup>
-                  <Label for="commentText"></Label>
-                  <Input type="textarea" name="text" id="commentText" placeholder="Comment on this volunteer opportunity..." onChange={this.addComment} onClick={this.loginUser}/>
-                </FormGroup>
-                <Button onClick={(e) => this.handleSubmit(e, this.state.comment)}>Submit</Button>
-              </Form>
-            </CardBody>
-          </Card>
-        </Collapse>
-      </div>
+      this.renderView()
     );
   }
 }

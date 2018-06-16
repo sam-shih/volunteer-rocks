@@ -29,7 +29,7 @@ const Ops = function (props) {
             <Button outline color="primary" onClick={() => props.volunteerForOpp(props.opportunity)}>Volunteer</Button>
           </Col>
           <Col xs="10">
-            <Comment isLoggedIn={props.isLoggedIn}/>
+            <Comment isLoggedIn={props.isLoggedIn} user={props.user}/>
           </Col>
         </Row>
       </CardBody>

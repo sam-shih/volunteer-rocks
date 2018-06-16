@@ -203,7 +203,7 @@ class App extends Component {
     if (view === 'main') {
       return <Main findOppsByZip={this.findOppsByZip} getOpp={this.getOpps} zipcodeState={this.state.zipcode} zipcode={this.zip.bind(this)} />
     } else if (view === 'opportunities') {
-      return <OpsList numOfPages={this.state.howManyPages} passDownOpps={this.passDownOpps} volunteerForOpp={this.volunteerForOpp} opportunities={this.state.oppsToPassDown} setOpsListView={this.setOpsListView} zipcode={this.state.zipcode} isLoggedIn={this.state.isLoggedIn}/>
+      return <OpsList numOfPages={this.state.howManyPages} passDownOpps={this.passDownOpps} volunteerForOpp={this.volunteerForOpp} opportunities={this.state.oppsToPassDown} setOpsListView={this.setOpsListView} zipcode={this.state.zipcode} isLoggedIn={this.state.isLoggedIn} user={this.state.user}/>
     } else if (view === 'loadAllMarkers') {
       return <LoadAllMarkers opportunities={this.state.opportunities} />
     } else if (view === 'filteredOpps') {
