@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Button, Modal, ModalHeader, ModalBody, NavLink, Input, Form, FormGroup, Label, Col } from 'reactstrap';
 
-class OrgSignupModal extends React.Component {
+class OrganizationsCreate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,12 +14,10 @@ class OrgSignupModal extends React.Component {
         state: '',
         zipcode: '',
         phone: '',
-        email: '',
-        password: ''
       }
     }
     this.updateInput = this.updateInput.bind(this);
-    this.submitForm = this.submitForm.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.toggle = this.toggle.bind(this);
   }
 
@@ -36,40 +34,18 @@ class OrgSignupModal extends React.Component {
     this.setState({ form: form });
   }
 
-  submitForm(form) {
-    if(form.name.length === 0) {
-      alert('Please enter an organization name.')
-    } else {
-      console.log(form, 'newOrg signup form')
-      axios.post('/signup', {
-        name: form.name,
-        address: {
-          street: form.street,
-          city: form.city,
-          state: form.state,
-          zipcode: form.zipcode
-        },
-        phone: form.phone,
-        email: form.email,
-        password: form.password
-      })
-        .then(response => {
-          console.log('Form posted to server')
-          this.toggle
-
-        })
-        .catch(err => console.log('Err', err));
-    }
+  handleSubmit(){
+    this.props.createOrganization(this.state.form)
   }
 
   render() {
     return (
       <React.Fragment>
-        <NavLink href="#" onClick={this.toggle}>Recruit Volunteers</NavLink>
+        <NavLink href="#" onClick={this.toggle}>Create an Organization</NavLink>
         <Modal size="lg" isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.toggle}>Create an Account for your Organization</ModalHeader>
+          <ModalHeader toggle={this.toggle}></ModalHeader>
           <ModalBody>
-            <Form onSubmit={this.submitForm}>
+            <Form onSubmit={this.handleSubmit}>
               <FormGroup row>
                 <Label for="name" sm={2}>Organization</Label>
                 <Col sm={10}>
@@ -132,27 +108,7 @@ class OrgSignupModal extends React.Component {
                     onChange={this.updateInput} />
                 </Col>
               </FormGroup>
-              <FormGroup row>
-                <Label for="email" sm={2}>E-mail</Label>
-                <Col sm={10}>
-                  <Input
-                    name="email"
-                    type="text"
-                    value={this.state.form.email}
-                    onChange={this.updateInput} />
-                </Col>
-              </FormGroup>
-              <FormGroup row>
-                <Label for="password" sm={2}>Password</Label>
-                <Col sm={10}>
-                  <Input
-                    name="password"
-                    type="text"
-                    value={this.state.form.password}
-                    onChange={this.updateInput} />
-                </Col>
-              </FormGroup>
-              <Button onClick={() => this.submitForm(this.state.form)}>Submit</Button>
+              <Button onClick={this.handleSubmit}>Submit</Button>
             </Form>
           </ModalBody>
         </Modal>
@@ -161,4 +117,4 @@ class OrgSignupModal extends React.Component {
   }
 }
 
-export default OrgSignupModal;
+export default OrganizationsCreate;

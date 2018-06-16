@@ -2,6 +2,7 @@ import React from 'react';
 import OrgSignupModal from '../modals/OrgSignupModal.jsx';
 import LoginModal from '../modals/LoginModal.jsx';
 import CreateOpModal from '../modals/CreateOpModal.jsx';
+import OrganizationsCreate from '../modals/OrganizationsCreate.jsx';
 
 import {
   NavbarToggler, NavbarBrand, NavItem,
@@ -29,7 +30,10 @@ class NavBar extends React.Component {
     const navView = isLoggedIn ? (
       <React.Fragment>
         <NavItem>
-          <OrgSignupModal />
+          <CreateOpModal user={this.props.user}/>
+        </NavItem>
+        <NavItem>
+          <OrganizationsCreate createOrganization={this.props.createOrganization.bind(this)}/>
         </NavItem>
         <UncontrolledDropdown nav inNavbar>
           <DropdownToggle nav caret>

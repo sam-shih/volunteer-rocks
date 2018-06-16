@@ -18,6 +18,7 @@ exports.fetchByZip = (req, res) => {
 }
 
 exports.addNew = (req, res) => {
+  //console.log("YESSS!", req.body);
   saveToDb.newOpportunity(req.body);
   res.sendStatus(200);
 }

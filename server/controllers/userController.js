@@ -1,6 +1,6 @@
 const checkdb = require('../../database/checkdbs.js');
 const retrieveFromDb = require('../../database/retrieveFromDb.js');
-const addVolunteerToOpp = require('../../database/addVolunteerToOpp').checkIfEnrolled;
+const addVolunteerToOpp = require('../../database/addVolunteerToOpp.js');
 
 exports.signUp = (req, res) => {
   return checkdb.checkOrganizationExists(req, res)
@@ -17,7 +17,16 @@ exports.fetchOpps = (req, res) => {
 exports.enroll = (req, res) => {
   let opportunity = req.body.opportunity;
   if (req.user) {
-    addVolunteerToOpp(opportunity, req.user._id, res);
+    addVolunteerToOpp.checkIfEnrolled(opportunity, req.user._id, res);
+  } else {
+    res.send('login')
+  }
+}
+
+exports.sub = (req, res) => {
+  let opportunity = req.body.opportunity;
+  if (req.user) {
+    addVolunteerToOpp.subscribeToOpp(opportunity, req.user._id, res);
   } else {
     res.send('login')
   }

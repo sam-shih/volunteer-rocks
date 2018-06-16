@@ -156,10 +156,8 @@ class App extends Component {
     })
   }
 
-  postNewOrganizationForm(form) {
-    axios.post('/organization', {
-
-    })
+  createOrganization(form) {
+    axios.post('/api/organizations', {form})
       .then((response) => {
         alert('New Organization Saved');
       })
@@ -227,6 +225,7 @@ class App extends Component {
           logOut={this.logOut}
           organizationLoggedIn={this.organizationLoggedIn}
           myOpportunities={this.myOpportunities}
+          createOrganization={this.createOrganization.bind(this)}
         />
         {this.renderView()}
       </div>

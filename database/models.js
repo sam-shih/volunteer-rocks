@@ -18,6 +18,7 @@ var volunteerSchema = mongoose.Schema({
   phone: String,
   email: String,
   opList: [Schema.ObjectId],
+  subbedList: [],
   created_at: {
     type: Date,
     default: Date.now
@@ -31,11 +32,6 @@ var organizationSchema = mongoose.Schema({
     required: true,
     unique: true
   },
-  password: {
-    type: String,
-    required: true,
-    select: false
-  },
   address: {
     street: String,
     city: String,
@@ -43,7 +39,7 @@ var organizationSchema = mongoose.Schema({
     zipcode: String,
   },
   phone: String,
-  email: String,
+  logo: String,
 });
 
 var opportunitiesSchema = mongoose.Schema({
@@ -51,6 +47,7 @@ var opportunitiesSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  createdBy: [], //first element is _id, second is username
   description: String,
   cause: String,
   zipcode: String,
@@ -63,7 +60,8 @@ var opportunitiesSchema = mongoose.Schema({
     lng: Number,
     lat: Number
   },
-  volunteerers: []
+  volunteerers: [],
+  subscribed: []
 });
 opportunitiesSchema.index({location: '2dsphere'});
 
