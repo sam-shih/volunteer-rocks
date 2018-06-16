@@ -42,5 +42,7 @@ const Ops = function (props) {
 
 // {' '}
 //             <Button outline color="warning" onClick={() => props.watchOpp(props.opportunity)}>Watch</Button>
+// {' '}
+//         <Button outline color="warning" onClick={() => props.watchOpp(props.opportunity)}>Watch</Button>
 
 export default Ops;
