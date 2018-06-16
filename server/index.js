@@ -23,8 +23,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
 passport.use(new GoogleStrategy({
   clientID: "623460598606-jt79n40o89bp0mppi4aosv313vkq7and.apps.googleusercontent.com",
   clientSecret: "KuEwLAXDBNRDqsRHpKj7sjLz", 

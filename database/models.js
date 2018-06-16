@@ -37,6 +37,7 @@ var organizationSchema = mongoose.Schema({
     state: String,
     zipcode: String,
   },
+  opportunities: [],
   phone: String,
   logo: String,
 });

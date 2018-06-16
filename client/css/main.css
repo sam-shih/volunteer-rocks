@@ -12,6 +12,10 @@ h6 {
   font-weight: 700;
 }
 
+.logo{
+  height: 30px;
+}
+
 .image1 {
   background: url("../img/BeachCleaning.jpg")
 }
@@ -22,6 +26,10 @@ h6 {
 
 .image3 {
   background: url("../img/oldhands.jpg")
+}
+
+.image-circle{
+  border-radius: 50%;
 }
 
 header.masthead {
