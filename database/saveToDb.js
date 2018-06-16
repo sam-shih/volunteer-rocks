@@ -74,17 +74,17 @@ const newOpportunity = function (opportunity) {
         phone: opportunity.phone,
         email: opportunity.email,
         location: {
-          lat: gmapi.geometry.location.lat,
-          lng: gmapi.geometry.location.lng
+          lng: gmapi.geometry.location.lng,
+          lat: gmapi.geometry.location.lat
         }
       });
-      console.log(aNewOpportunity)
-      // aNewOpportunity.save(function (err, opportunity) {
-      //   if (err) {
-      //     console.log(err);
-      //   }
-      //   console.log("Success in saving newOpportunity")
-      // });
+
+      aNewOpportunity.save(function (err, opportunity) {
+        if (err) {
+          console.log(err);
+        }
+        console.log("Success in saving newOpportunity")
+      });
     })
     .catch((err) => {
       console.log(err);

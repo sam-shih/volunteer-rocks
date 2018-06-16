@@ -57,12 +57,13 @@ var opportunitiesSchema = mongoose.Schema({
   phone: String,
   email: String,
   location: {
-    lat: Number,
-    lng: Number
+    lng: Number,
+    lat: Number
   },
   volunteerers: [],
   subscribed: []
 });
+opportunitiesSchema.index({location: '2dsphere'});
 
 var Volunteers = mongoose.model('Volunteers', volunteerSchema);
 var Organizations = mongoose.model('Organizations', organizationSchema);
