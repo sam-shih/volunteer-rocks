@@ -97,7 +97,7 @@ class App extends Component {
     }
   }
 
-  zip(e) {
+  handleSearch(e) {
     console.log(e.target.value);
     this.setState({
       zipcode: e.target.value
@@ -149,7 +149,8 @@ class App extends Component {
       }).then((response) => {
           this.setState({
             view: 'opportunities',
-            opportunities: response.data
+            opportunities: response.data,
+            zipcode: ''
           })
           this.passDownOpps(1);
         }).catch((err) => {
@@ -220,7 +221,7 @@ class App extends Component {
   renderView() {
     const { view } = this.state;
     if (view === 'main') {
-      return <Main findOppsByZip={this.findOppsByZip} getOpp={this.getOpps} zipcodeState={this.state.zipcode} zipcode={this.zip.bind(this)} />
+      return <Main findOppsByZip={this.findOppsByZip} getOpp={this.getOpps} />
     } else if (view === 'opportunities') {
       return <OpsList numOfPages={this.state.howManyPages} passDownOpps={this.passDownOpps} volunteerForOpp={this.volunteerForOpp} opportunities={this.state.oppsToPassDown} setOpsListView={this.setOpsListView} zipcode={this.state.zipcode}/>
     } else if (view === 'loadAllMarkers') {
@@ -248,6 +249,28 @@ class App extends Component {
           createOrganization={this.createOrganization.bind(this)}
           joinOrganization={this.joinOrganization.bind(this)}
         />
+      <header className="masthead text-white text-center">
+        <div className="overlay"></div>
+          <div className="container">
+            <div className="row">
+              <div className="col-xl-9 mx-auto">
+                <h3 className="mb-5">Search for volunteer opportunities in your area now!</h3>
+              </div>
+              <div className="col-lg-6 mx-auto">
+                <form>
+                  <div className="form-row">
+                    <div className="col-12 col-md-9 mb-2 mb-md-0">
+                      <input type="text" className="form-control form-control-sm" placeholder="Enter your zip code..." onChange={this.handleSearch.bind(this)} />
+                    </div>
+                    <div className="col-12 col-md-3">
+                      <button type="submit" className="btn btn-block btn-sm btn-primary" onClick={(e) => this.findOppsByZip(e, this.state.zipcode)}>Search</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </header>
         {this.renderView()}
       </div>
     );

@@ -1,6 +1,4 @@
 const models = require('./models.js');
-const bcrypt = require('bcrypt');
-const session = require('express-session');
 var googleMapsClient = require('@google/maps').createClient({
   key: "AIzaSyAceVbYzIL8yvIXoltC1dQzg40sDVlxtuE",
   Promise: Promise
@@ -9,6 +7,25 @@ var googleMapsClient = require('@google/maps').createClient({
 let Volunteer = models.Volunteers;
 let Organization = models.Organizations;
 let Opportunity = models.Opportunities;
+
+exports.findUserAndJoinOrganization = ({userId, orgId}) => {
+  return new Promise ((resolve ,reject)=>{
+  Volunteer.findByIdAndUpdate(userId, {$push: {
+    organizations: orgId
+  }})
+  .exec().then((updated)=>{
+    Organization.findByIdAndUpdate(orgId, {$push: {
+      members: userId
+    }})
+    .exec().then((updated)=>{
+      resolve(updated)
+    })
+  })
+  })
+  .catch(error=>{
+    reject(error);
+  })
+}
 
 const newVolunteer = function (volunteer, done) {
   let aNewVolunteer = new Volunteer({

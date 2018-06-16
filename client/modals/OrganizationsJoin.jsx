@@ -8,7 +8,8 @@ class OrganizationsJoin extends Component{
     super(props);
     this.state = {
       isOpen: false,
-      selected: ''
+      selected: '',
+      orgId: '',
     }
     this.toggle = this.toggle.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
@@ -21,15 +22,17 @@ class OrganizationsJoin extends Component{
   }
 
   handleSelect(event){
-    console.log(event.target.value)
-    console.log(event.target)
+    const index = event.target.selectedIndex;
+    const selectedElement = event.target.childNodes[index];
+    const orgId = selectedElement.getAttribute('id');
     this.setState({
-      selected: event.target.value,
+      orgId: orgId,
+      selected: event.target.value
     })
   }
 
   handleSubmit(){
-    this.props.joinOrganization(this.state.selected)
+    this.props.joinOrganization(this.state.orgId)
   }
 
   render(){
@@ -44,14 +47,15 @@ class OrganizationsJoin extends Component{
                 <Label for="orgs">{this.state.selected === '' ? false : `You have selected ${this.state.selected}`}</Label>
                 <Input type="select" name="select" id="orgs"
                 value={this.state.selected} multiple
+                onChange={this.handleSelect}
                 >
                   {
                     this.props.orgs.map(org=>
-                      <option onChange={this.handleSelect} id={org._id}>{org.name}</option>
+                      <option id={org._id}>{org.name}</option>
                     )
                   }
                 </Input>
-                <Button style={{'marginTop': '10px'}}onClick={this.handleSubmit}>Submit</Button>
+                <Button style={{'marginTop': '10px'}}onClick={this.handleSubmit.bind(this)}>Submit</Button>
               </FormGroup>
             </Form>
           </ModalBody>

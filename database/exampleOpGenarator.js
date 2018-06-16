@@ -4,7 +4,7 @@ const saveToDb = require('./saveToDb.js');
 
 const saveExampleOpportunity = () => {
   const opportunities = [];
-  for (var i = 0; i < 200; i++) {
+  for (var i = 0; i < 300; i++) {
     let opportunity = {};
     const randomAddress = rrad.addresses[Math.floor(Math.random() * rrad.addresses.length)];
     opportunity['title'] = "Community Service";

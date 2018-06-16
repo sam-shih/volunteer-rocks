@@ -9,7 +9,7 @@ import Map from './Map.jsx';
 
 const Ops = function (props) {
   return (
-    <Card>
+    <Card className="opportunityEntry">
       <CardBody>
         <Row>
           <Col xs="6">

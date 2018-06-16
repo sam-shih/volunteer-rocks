@@ -13,7 +13,11 @@ h6 {
 }
 
 .logo{
-  height: 30px;
+  height: 25px
+}
+
+.opportunityEntry{
+  margin-top: 10px
 }
 
 .image1 {
@@ -60,8 +64,8 @@ header.masthead h1 {
 
 @media (min-width: 768px) {
   header.masthead {
-    padding-top: 12rem;
-    padding-bottom: 12rem;
+    padding-top: 10rem;
+    padding-bottom: 10rem;
   }
   header.masthead h1 {
     font-size: 3rem;

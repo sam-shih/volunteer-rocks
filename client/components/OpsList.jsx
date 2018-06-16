@@ -3,7 +3,6 @@ import Ops from './Ops.jsx';
 
 import { Container, Row, Col, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import Filter from './Filter.jsx';
-import _ from 'underscore';
 
 //First render the props.opportunities view,
 // if the user clicks the filter submit button on Filter.jsx, render the filter view.
