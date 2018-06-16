@@ -43,7 +43,7 @@ class OrganizationsCreate extends React.Component {
       <React.Fragment>
         <NavLink href="#" onClick={this.toggle}>Create an Organization</NavLink>
         <Modal size="lg" isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.toggle}></ModalHeader>
+          <ModalHeader toggle={this.toggle}>Create a new organization</ModalHeader>
           <ModalBody>
             <Form onSubmit={this.handleSubmit}>
               <FormGroup row>

@@ -38,6 +38,7 @@ var organizationSchema = mongoose.Schema({
     state: String,
     zipcode: String,
   },
+  opportunities: [],
   phone: String,
   logo: String,
 });
@@ -63,7 +64,6 @@ var opportunitiesSchema = mongoose.Schema({
   volunteerers: [],
   subscribed: []
 });
-opportunitiesSchema.index({location: '2dsphere'});
 
 var Volunteers = mongoose.model('Volunteers', volunteerSchema);
 var Organizations = mongoose.model('Organizations', organizationSchema);

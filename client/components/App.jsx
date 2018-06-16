@@ -12,6 +12,7 @@ class App extends Component {
     super(props);
     this.state = {
       view: 'main',
+      organizations: [],
       opportunities: [],
       filteredOpps: [],
       oppsToPassDown: [],
@@ -38,6 +39,7 @@ class App extends Component {
     gmapScriptEl.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAceVbYzIL8yvIXoltC1dQzg40sDVlxtuE&libraries=places`
     document.querySelector(`body`).insertAdjacentElement(`beforeend`, gmapScriptEl)
 
+    this.getOrganizations()
     axios.get('/main')
       .then((response) => {
         if ('googleId' in response.data) {
@@ -160,10 +162,27 @@ class App extends Component {
     axios.post('/api/organizations', {form})
       .then((response) => {
         alert('New Organization Saved');
+        this.getOrganizations();
       })
       .catch((err) => {
         throw (err);
       });
+  }
+
+  getOrganizations(){
+    axios.get('/api/organizations')
+      .then(orgs=>{
+        this.setState({
+          organizations: orgs.data,
+        })
+      })
+  }
+
+  joinOrganization(orgId){
+    axios.put(`/api/organizations/`, 
+      {orgId, userId: this.state.user._id})
+      .then(()=>{
+      })
   }
 
   logOut() {
@@ -217,6 +236,7 @@ class App extends Component {
     return (
       <div>
         <NavBar
+          orgs={this.state.organizations}
           changeView={this.changeView}
           isLoggedIn={this.state.isLoggedIn}
           user={this.state.user}
@@ -226,6 +246,7 @@ class App extends Component {
           organizationLoggedIn={this.organizationLoggedIn}
           myOpportunities={this.myOpportunities}
           createOrganization={this.createOrganization.bind(this)}
+          joinOrganization={this.joinOrganization.bind(this)}
         />
         {this.renderView()}
       </div>
