@@ -31,11 +31,20 @@ socketIO.on('connection', function(socket) {
 });
 
 /*
+// General chat
+  // each user has a chat feature and a socket that opens up automatically
+  // any user can talk on this chat window
+  // implement janky chat window for now
 // Namespace or room socket ID? Possibly to talk with specific administrations
-// specific window to talk
+// if a user/adminstration gets a message does the window automatically pop up?
+// where should the chat be? Is it a constant chat window that users and organizations have?
+// how to test chat, log in as one user send a message log out and log in as the other user?
+// does user enter organization into a window before sending a message?
+// if another user messages the same organization does it pop up a different window?
+// if users are creating organizations, how do we know what user made the organization so messages can be sent to the user?
+// Where in the code could I put a chat window for a logged in user
 // to save or not save the chat
 // join leave rooms
-// put into react somehow
 Idea?
 
   everytime a user is created a new namespace shoudl be created on the server side and client?
