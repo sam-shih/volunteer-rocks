@@ -11,7 +11,7 @@ exports.login = (req, res) => {
 }
 
 exports.fetchOpps = (req, res) => {
-  return retrieveFromDb.myOpportunities(req.session.passport.user._id, res)
+  return retrieveFromDb.findOpportunitiesByUser(req.session.passport.user._id, res)
 }
 
 exports.enroll = (req, res) => {

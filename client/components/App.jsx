@@ -19,7 +19,8 @@ class App extends Component {
       howManyPages: [0],
       isLoggedIn: false,
       isOrganization: false,
-      user: {},
+      user: '',
+      userId: '',
       zipcode: ''
     }
     this.getLatLngByZipcode = this.getLatLngByZipcode.bind(this);
@@ -46,6 +47,7 @@ class App extends Component {
           console.log("volunteer logged in", response.data)
           this.setState({
             user: response.data,
+            userId: response.data._id,
             isLoggedIn: true
           });
         } else {
@@ -105,7 +107,7 @@ class App extends Component {
   }
 
   volunteerForOpp(opportunity) {
-    axios.post('/enroll', { opportunity: opportunity })
+    axios.put('/api/users', { opportunity: opportunity })
       .then((response) => {
         let responseData = response.data;
         if (responseData === 'login') {
@@ -187,7 +189,7 @@ class App extends Component {
   }
 
   logOut() {
-    axios.get('/logout')
+    axios.get('/api/logout')
       .then(response => {
         this.setState({
           view: 'main',
@@ -209,7 +211,7 @@ class App extends Component {
   }
 
   myOpportunities() {
-    axios.get('/myOps')
+    axios.get('/api/users')
       .then(response => {
         this.setState({
           view: 'myOpportunities',
@@ -223,7 +225,9 @@ class App extends Component {
     if (view === 'main') {
       return <Main findOppsByZip={this.findOppsByZip} getOpp={this.getOpps} />
     } else if (view === 'opportunities') {
-      return <OpsList numOfPages={this.state.howManyPages} passDownOpps={this.passDownOpps} volunteerForOpp={this.volunteerForOpp} opportunities={this.state.oppsToPassDown} setOpsListView={this.setOpsListView} zipcode={this.state.zipcode}/>
+      return <OpsList numOfPages={this.state.howManyPages} passDownOpps={this.passDownOpps} 
+      volunteerForOpp={this.volunteerForOpp} opportunities={this.state.oppsToPassDown} 
+      setOpsListView={this.setOpsListView} zipcode={this.state.zipcode} user={this.state.user}/>
     } else if (view === 'loadAllMarkers') {
       return <LoadAllMarkers opportunities={this.state.opportunities} />
     } else if (view === 'filteredOpps') {

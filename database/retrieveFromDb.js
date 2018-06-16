@@ -38,7 +38,7 @@ const getOpportunities = function (limit, res) {
   }).limit(limit);
 };
 
-const myOpportunities = function (id, res) {
+exports.findOpportunitiesByUser = function (id, res) {
   Volunteers.findById(id, function (err, volunteer) {
     if (err) {
       throw err;
@@ -76,7 +76,6 @@ const getZipCodeSearch = function (coords) {
 };
 
 
-module.exports.myOpportunities = myOpportunities;
 module.exports.getVolunteers = getVolunteers;
 module.exports.getOrganizations = getOrganizations;
 module.exports.getOpportunities = getOpportunities;

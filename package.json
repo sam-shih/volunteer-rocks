@@ -26,7 +26,8 @@
     "react-places-autocomplete": "^7.1.2",
     "reactstrap": "^6.0.1",
     "simple-line-icons": "^2.4.1",
-    "socket.io": "^2.1.1"
+    "socket.io": "^2.1.1",
+    "react-star-rating": "^1.4.2"
   },
   "author": "",
   "license": "ISC",
