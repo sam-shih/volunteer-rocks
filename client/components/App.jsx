@@ -40,6 +40,28 @@ class App extends Component {
     const gmapScriptEl = document.createElement(`script`)
     gmapScriptEl.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAceVbYzIL8yvIXoltC1dQzg40sDVlxtuE&libraries=places`
     document.querySelector(`body`).insertAdjacentElement(`beforeend`, gmapScriptEl)
+    // chat
+    $(function () {
+      var socket = io();
+      $('#everybody').submit(function(){
+        socket.emit('chat message', $('#m').val());
+        $('#m').val('');
+        return false;
+      });
+      socket.on('chat message', function(msg){
+        $('#messages').append($('<li>').text(msg));
+      });
+
+      var privateSocket = io('/jabroni');
+      $('#private').submit(function(){
+        privateSocket.emit('chat message', $('#pM').val());
+        $('#pM').val('');
+        return false;
+      });
+      privateSocket.on('chat message', function(msg){
+        $('#privateMessages').append($('<li>').text(msg));
+      });
+    });
 
     this.getOrganizations()
     axios.get('/main')
@@ -266,9 +288,9 @@ class App extends Component {
     if (view === 'main') {
       return <Main findOppsByZip={this.findOppsByZip} getOpp={this.getOpps} />
     } else if (view === 'opportunities') {
-      return <OpsList numOfPages={this.state.howManyPages} passDownOpps={this.passDownOpps} 
-      volunteerForOpp={this.volunteerForOpp} opportunities={this.state.oppsToPassDown} 
-      setOpsListView={this.setOpsListView} zipcode={this.state.zipcode} user={this.state.user} 
+      return <OpsList numOfPages={this.state.howManyPages} passDownOpps={this.passDownOpps}
+      volunteerForOpp={this.volunteerForOpp} opportunities={this.state.oppsToPassDown}
+      setOpsListView={this.setOpsListView} zipcode={this.state.zipcode} user={this.state.user}
       userId={this.state.userId} isLoggedIn={this.state.isLoggedIn} watchOpp={this.watchOpp}/>
     } else if (view === 'loadAllMarkers') {
       return <LoadAllMarkers opportunities={this.state.opportunities} />

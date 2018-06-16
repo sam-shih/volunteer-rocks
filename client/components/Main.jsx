@@ -24,7 +24,11 @@ const Main = (props) => (
             <h2>Tell your friends!</h2>
             <p className="lead mb-0">Let your friends know about us! Volunteering is a great way to spend time with friends or family.</p>
           </div>
+            <ul id="privateMessages"></ul>
         </div>
+          <ul id="messages"></ul>
+          <form id="everybody" action=""><input id="m" autoComplete="off" /><button>Send</button></form>
+          <form id="private" action=""><input id="pM" autoComplete="off" /><button>private</button></form>
       </div>
     </section>
   </React.Fragment>
