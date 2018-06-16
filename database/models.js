@@ -18,6 +18,7 @@ var volunteerSchema = mongoose.Schema({
   phone: String,
   email: String,
   opList: [Schema.ObjectId],
+  subbedList: [],
   created_at: {
     type: Date,
     default: Date.now
@@ -59,7 +60,8 @@ var opportunitiesSchema = mongoose.Schema({
     lat: Number,
     lng: Number
   },
-  volunteerers: []
+  volunteerers: [],
+  subscribed: []
 });
 
 var Volunteers = mongoose.model('Volunteers', volunteerSchema);
