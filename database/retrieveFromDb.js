@@ -1,4 +1,5 @@
 const models = require('./models.js');
+const db = require('./connectDb.js');
 let Volunteers = models.Volunteers;
 let Organizations = models.Organizations;
 let Opportunities = models.Opportunities;
@@ -15,13 +16,15 @@ const getVolunteers = function (callback, limit) {
 };
 
 const getOrganizations = function (callback, limit) {
-  Organizations.find({}, function (err, orgData) {
-    if (err) {
-      throw err;
-    }
-
-    callback(orgData);
-  }).limit(limit);
+  return new Promise((resolve, reject)=>{
+    Organizations.find()
+    .then(orgs=>{
+      resolve(orgs);
+    })
+    .catch(error=>{
+      reject(error);
+    })
+  })
 };
 
 const getOpportunities = function (limit, res) {
@@ -35,7 +38,7 @@ const getOpportunities = function (limit, res) {
   }).limit(limit);
 };
 
-const myOpportunities = function (id, res) {
+exports.findOpportunitiesByUser = function (id, res) {
   Volunteers.findById(id, function (err, volunteer) {
     if (err) {
       throw err;
@@ -73,7 +76,6 @@ const getZipCodeSearch = function (coords) {
 };
 
 
-module.exports.myOpportunities = myOpportunities;
 module.exports.getVolunteers = getVolunteers;
 module.exports.getOrganizations = getOrganizations;
 module.exports.getOpportunities = getOpportunities;

@@ -2,28 +2,6 @@ import React from 'react';
 
 const Main = (props) => (
   <React.Fragment>
-    <header className="masthead text-white text-center">
-      <div className="overlay"></div>
-      <div className="container">
-        <div className="row">
-          <div className="col-xl-9 mx-auto">
-            <h3 className="mb-5">Search for volunteer opportunities in your area now!</h3>
-          </div>
-          <div className="col-lg-6 mx-auto">
-            <form>
-              <div className="form-row">
-                <div className="col-12 col-md-9 mb-2 mb-md-0">
-                  <input type="text" className="form-control form-control-sm" placeholder="Enter your zip code..." onChange={props.zipcode.bind(this)} />
-                </div>
-                <div className="col-12 col-md-3">
-                  <button type="submit" className="btn btn-block btn-sm btn-primary" onClick={(e) => props.findOppsByZip(e, props.zipcodeState)}>Search</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </header>
     <section className="showcase">
       <div className="container-fluid p-0">
         <div className="row no-gutters">

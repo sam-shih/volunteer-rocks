@@ -23,7 +23,8 @@ var volunteerSchema = mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  picture: String
+  picture: String,
+  organizations: []
 });
 
 var organizationSchema = mongoose.Schema({
@@ -38,6 +39,8 @@ var organizationSchema = mongoose.Schema({
     state: String,
     zipcode: String,
   },
+  opportunities: [],
+  members: [],
   phone: String,
   logo: String,
 });
@@ -48,6 +51,7 @@ var opportunitiesSchema = mongoose.Schema({
     required: true
   },
   createdBy: [], //first element is _id, second is username
+  organization: String,
   description: String,
   cause: String,
   zipcode: String,
@@ -56,6 +60,7 @@ var opportunitiesSchema = mongoose.Schema({
   end_date: Date,
   phone: String,
   email: String,
+  rating: [],
   location: {
     lng: Number,
     lat: Number
@@ -63,7 +68,9 @@ var opportunitiesSchema = mongoose.Schema({
   volunteerers: [],
   subscribed: []
 });
+
 opportunitiesSchema.index({location: '2dsphere'});
+
 
 var Volunteers = mongoose.model('Volunteers', volunteerSchema);
 var Organizations = mongoose.model('Organizations', organizationSchema);

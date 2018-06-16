@@ -12,6 +12,14 @@ h6 {
   font-weight: 700;
 }
 
+.logo{
+  height: 25px
+}
+
+.opportunityEntry{
+  margin-top: 10px
+}
+
 .image1 {
   background: url("../img/BeachCleaning.jpg")
 }
@@ -22,6 +30,10 @@ h6 {
 
 .image3 {
   background: url("../img/oldhands.jpg")
+}
+
+.image-circle{
+  border-radius: 50%;
 }
 
 header.masthead {
@@ -52,8 +64,8 @@ header.masthead h1 {
 
 @media (min-width: 768px) {
   header.masthead {
-    padding-top: 12rem;
-    padding-bottom: 12rem;
+    padding-top: 10rem;
+    padding-bottom: 10rem;
   }
   header.masthead h1 {
     font-size: 3rem;

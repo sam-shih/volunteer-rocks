@@ -9,8 +9,9 @@ import Comment from './Comment.jsx';
 import Map from './Map.jsx';
 
 const Ops = function (props) {
+  console.log(props)
   return (
-    <Card>
+    <Card className="opportunityEntry">
       <CardBody>
         <Row>
           <Col xs="6">
@@ -18,6 +19,9 @@ const Ops = function (props) {
             <CardSubtitle>{props.opportunity.cause}</CardSubtitle>
             <CardText>{props.opportunity.description}</CardText>
             <CardText>{props.opportunity.formatted_address}</CardText>
+            <CardText>
+              {props.opportunity.volunteerers.includes()}
+            </CardText>
           </Col>
           <Col xs="6">
             <Map op={props.opportunity} />

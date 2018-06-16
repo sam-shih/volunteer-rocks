@@ -24,5 +24,7 @@ router.route('/api/opportunities')
 
 router.route('/api/organizations')
   .post(orgCtrl.createOrganization)
+  .get(orgCtrl.fetchOrganizations)
+  .put(orgCtrl.joinOrganization)
 
 module.exports = router;

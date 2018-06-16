@@ -3,6 +3,7 @@ import OrgSignupModal from '../modals/OrgSignupModal.jsx';
 import LoginModal from '../modals/LoginModal.jsx';
 import CreateOpModal from '../modals/CreateOpModal.jsx';
 import OrganizationsCreate from '../modals/OrganizationsCreate.jsx';
+import OrganizationsJoin from '../modals/OrganizationsJoin.jsx';
 
 import {
   NavbarToggler, NavbarBrand, NavItem,
@@ -32,15 +33,31 @@ class NavBar extends React.Component {
         <NavItem>
           <CreateOpModal user={this.props.user}/>
         </NavItem>
+
+
         <NavItem>
-          <OrganizationsCreate createOrganization={this.props.createOrganization.bind(this)}/>
+          <UncontrolledDropdown nav inNavbar>
+            <DropdownToggle nav caret>
+              Organizations
+            </DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem>
+                <OrganizationsCreate createOrganization={this.props.createOrganization.bind(this)}/>
+              </DropdownItem>
+              <DropdownItem>
+                <OrganizationsJoin joinOrganization={this.props.joinOrganization.bind(this)} orgs={this.props.orgs}/>
+              </DropdownItem>
+            </DropdownMenu>
+          </UncontrolledDropdown>
         </NavItem>
+
+
         <UncontrolledDropdown nav inNavbar>
           <DropdownToggle nav caret>
             <img
               src={this.props.user.picture}
               alt={this.props.user.name}
-              className={'img-circle'} />
+              className='img-circle' />
           </DropdownToggle>
           <DropdownMenu right>
             <DropdownItem>
@@ -94,7 +111,9 @@ class NavBar extends React.Component {
         );
     return (
       <Navbar color="white" light expand="md">
-        <NavbarBrand href="/">The Volunteers Rock</NavbarBrand>
+        <NavbarBrand href="/">
+          <img className="logo" src={require("./logo.png")}/>
+        </NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav className="ml-auto" navbar>

@@ -12,13 +12,15 @@ class App extends Component {
     super(props);
     this.state = {
       view: 'main',
+      organizations: [],
       opportunities: [],
       filteredOpps: [],
       oppsToPassDown: [],
       howManyPages: [0],
       isLoggedIn: false,
       isOrganization: false,
-      user: {},
+      user: '',
+      userId: '',
       zipcode: ''
     }
     this.getLatLngByZipcode = this.getLatLngByZipcode.bind(this);
@@ -38,12 +40,14 @@ class App extends Component {
     gmapScriptEl.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAceVbYzIL8yvIXoltC1dQzg40sDVlxtuE&libraries=places`
     document.querySelector(`body`).insertAdjacentElement(`beforeend`, gmapScriptEl)
 
+    this.getOrganizations()
     axios.get('/main')
       .then((response) => {
         if ('googleId' in response.data) {
           console.log("volunteer logged in", response.data)
           this.setState({
             user: response.data,
+            userId: response.data._id,
             isLoggedIn: true
           });
         } else {
@@ -95,7 +99,7 @@ class App extends Component {
     }
   }
 
-  zip(e) {
+  handleSearch(e) {
     console.log(e.target.value);
     this.setState({
       zipcode: e.target.value
@@ -103,7 +107,7 @@ class App extends Component {
   }
 
   volunteerForOpp(opportunity) {
-    axios.post('/enroll', { opportunity: opportunity })
+    axios.put('/api/users', { opportunity: opportunity })
       .then((response) => {
         let responseData = response.data;
         if (responseData === 'login') {
@@ -147,7 +151,8 @@ class App extends Component {
       }).then((response) => {
           this.setState({
             view: 'opportunities',
-            opportunities: response.data
+            opportunities: response.data,
+            zipcode: ''
           })
           this.passDownOpps(1);
         }).catch((err) => {
@@ -160,14 +165,31 @@ class App extends Component {
     axios.post('/api/organizations', {form})
       .then((response) => {
         alert('New Organization Saved');
+        this.getOrganizations();
       })
       .catch((err) => {
         throw (err);
       });
   }
 
+  getOrganizations(){
+    axios.get('/api/organizations')
+      .then(orgs=>{
+        this.setState({
+          organizations: orgs.data,
+        })
+      })
+  }
+
+  joinOrganization(orgId){
+    axios.put(`/api/organizations/`,
+      {orgId, userId: this.state.user._id})
+      .then(()=>{
+      })
+  }
+
   logOut() {
-    axios.get('/logout')
+    axios.get('/api/logout')
       .then(response => {
         this.setState({
           view: 'main',
@@ -189,7 +211,7 @@ class App extends Component {
   }
 
   myOpportunities() {
-    axios.get('/myOps')
+    axios.get('/api/users')
       .then(response => {
         this.setState({
           view: 'myOpportunities',
@@ -201,7 +223,7 @@ class App extends Component {
   renderView() {
     const { view } = this.state;
     if (view === 'main') {
-      return <Main findOppsByZip={this.findOppsByZip} getOpp={this.getOpps} zipcodeState={this.state.zipcode} zipcode={this.zip.bind(this)} />
+      return <Main findOppsByZip={this.findOppsByZip} getOpp={this.getOpps} />
     } else if (view === 'opportunities') {
       return <OpsList numOfPages={this.state.howManyPages} passDownOpps={this.passDownOpps} volunteerForOpp={this.volunteerForOpp} opportunities={this.state.oppsToPassDown} setOpsListView={this.setOpsListView} zipcode={this.state.zipcode} isLoggedIn={this.state.isLoggedIn} user={this.state.user}/>
     } else if (view === 'loadAllMarkers') {
@@ -217,6 +239,7 @@ class App extends Component {
     return (
       <div>
         <NavBar
+          orgs={this.state.organizations}
           changeView={this.changeView}
           isLoggedIn={this.state.isLoggedIn}
           user={this.state.user}
@@ -226,7 +249,30 @@ class App extends Component {
           organizationLoggedIn={this.organizationLoggedIn}
           myOpportunities={this.myOpportunities}
           createOrganization={this.createOrganization.bind(this)}
+          joinOrganization={this.joinOrganization.bind(this)}
         />
+      <header className="masthead text-white text-center">
+        <div className="overlay"></div>
+          <div className="container">
+            <div className="row">
+              <div className="col-xl-9 mx-auto">
+                <h3 className="mb-5">Search for volunteer opportunities in your area now!</h3>
+              </div>
+              <div className="col-lg-6 mx-auto">
+                <form>
+                  <div className="form-row">
+                    <div className="col-12 col-md-9 mb-2 mb-md-0">
+                      <input type="text" className="form-control form-control-sm" placeholder="Enter your zip code..." onChange={this.handleSearch.bind(this)} />
+                    </div>
+                    <div className="col-12 col-md-3">
+                      <button type="submit" className="btn btn-block btn-sm btn-primary" onClick={(e) => this.findOppsByZip(e, this.state.zipcode)}>Search</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </header>
         {this.renderView()}
       </div>
     );
