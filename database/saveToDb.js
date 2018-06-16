@@ -49,7 +49,7 @@ exports.insertOrganization = function ({name, street, city, state, zipcode, phon
 };
 
 const newOpportunity = function (opportunity) {
-  console.log(opportunity)
+  //console.log(opportunity)
   googleMapsClient.geocode({
     address: opportunity.address
     }).asPromise()
@@ -61,9 +61,10 @@ const newOpportunity = function (opportunity) {
           zipcode = gmapi.address_components[i].short_name;
         }
       }
-
+      console.log(opportunity.createdBy)
       let aNewOpportunity = new Opportunity({
         title: opportunity.title,
+        createdBy: opportunity.createdBy,
         description: opportunity.description,
         cause: opportunity.cause,
         zipcode: zipcode,
@@ -77,12 +78,13 @@ const newOpportunity = function (opportunity) {
           lng: gmapi.geometry.location.lng
         }
       });
-      aNewOpportunity.save(function (err, opportunity) {
-        if (err) {
-          console.log(err);
-        }
-        console.log("Success in saving newOpportunity")
-      });
+      console.log(aNewOpportunity)
+      // aNewOpportunity.save(function (err, opportunity) {
+      //   if (err) {
+      //     console.log(err);
+      //   }
+      //   console.log("Success in saving newOpportunity")
+      // });
     })
     .catch((err) => {
       console.log(err);

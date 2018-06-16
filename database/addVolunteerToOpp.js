@@ -43,5 +43,20 @@ const addVolunteerToOpp = function (opportunity, volId, res) {
   });
 };
 
+const subscribeToOpp = function(opportunity, volId, res) {
+  Opportunities.findByIdAndUpdate(opportunity._id, {
+    $push: { subscribed: volId }
+  }, function (err, foundOpp) {
+    if (err) {throw err;}
+    Volunteers.findByIdAndUpdate(volId, {
+      $push: { subbedList: opportunity }
+    }, function (err, volunteer) {
+      if (err) {throw err;}
+      res.send('subscribed');
+    })
+  })
+};
+
 module.exports.addVolunteerToOpp = addVolunteerToOpp;
 module.exports.checkIfEnrolled = checkIfEnrolled;
+module.exports.subscribeToOpp = subscribeToOpp;
