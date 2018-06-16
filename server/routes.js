@@ -26,6 +26,7 @@ router.route('/api/users')
   .post(userCtrl.signUp)
   .put(userCtrl.enroll)
   .get(userCtrl.fetchOpps)
+  .patch(userCtrl.sub)
 
 router.route('/api/opportunities')
   .post(oppCtrl.addNew)
