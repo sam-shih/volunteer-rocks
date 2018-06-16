@@ -12,7 +12,7 @@ class LoadAllMarkers extends Component {
   }
 
   componentDidMount() {
-    axios.get('/opportunities/all')
+    axios.get('/api/opportunities')
       .then(response => {
         this.setState({
           ops: response.data
