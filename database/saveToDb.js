@@ -86,10 +86,11 @@ const newOpportunity = function (opportunity) {
         phone: opportunity.phone,
         email: opportunity.email,
         location: {
-          lat: gmapi.geometry.location.lat,
-          lng: gmapi.geometry.location.lng
+          lng: gmapi.geometry.location.lng,
+          lat: gmapi.geometry.location.lat
         }
       });
+
       aNewOpportunity.save(function (err, opportunity) {
         if (err) {
           console.log(err);
