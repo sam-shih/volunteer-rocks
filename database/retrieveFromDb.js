@@ -3,6 +3,7 @@ const db = require('./connectDb.js');
 let Volunteers = models.Volunteers;
 let Organizations = models.Organizations;
 let Opportunities = models.Opportunities;
+let Comments = models.Comments;
 let zipCodesArray = [];
 
 const getVolunteers = function (callback, limit) {
@@ -55,7 +56,6 @@ exports.findOpportunitiesByUser = function (id, res) {
 };
 
 const getZipCodeSearch = function (coords) {
-  console.log('Coords from inside db: ', coords);
   return new Promise((resolve, reject) => {
     Opportunities.find({
       location: {
@@ -75,6 +75,38 @@ const getZipCodeSearch = function (coords) {
   })
 };
 
+exports.findCommentsByOppId = function(oppId) {
+  return new Promise((resolve, reject) => {
+    Comments.find({opportunityId: oppId}).sort({date: -1})
+    .then(commentsByOppId => {
+      resolve(commentsByOppId);
+    }).catch(err => {
+      reject(err);
+    })
+  })
+};
+
+exports.findCommentByIdAndDelete = function(commentId) {
+  return new Promise((resolve, reject) => {
+    Comments.findByIdAndRemove(commentId)
+    .then(deletedComment => {
+      resolve(deletedComment);
+    }).catch(err => {
+      reject(err);
+    })
+  })
+}
+
+exports.findCommentByIdAndUpdate = function(commentId, editComment) {
+  return new Promise((resolve, reject) => {
+    Comments.findByIdAndUpdate(commentId, { $set: {'comment': editComment} }, { $new: true })
+    .then(updatedComment => {
+      resolve(updatedComment);
+    }).catch(err => {
+      reject(err);
+    })
+  })
+}
 
 module.exports.getVolunteers = getVolunteers;
 module.exports.getOrganizations = getOrganizations;

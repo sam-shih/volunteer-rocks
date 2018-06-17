@@ -6,6 +6,7 @@ import {
 } from 'reactstrap';
 import Rating from 'react-rating';
 import Map from './Map.jsx';
+import Comment from './Comment.jsx';
 
 class Ops extends React.Component {
   constructor(props){
@@ -48,11 +49,18 @@ class Ops extends React.Component {
               {/* <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" /> */}
             </Col>
           </Row>
-          <Button outline color="primary" onClick={() => this.props.volunteerForOpp(this.props.opportunity)}>Volunteer</Button>
+          <Row>
+          <Col xs="2">
+            <Button outline color="primary" onClick={() => this.props.volunteerForOpp(this.props.opportunity)}>Volunteer</Button>
+          </Col>
+          <Col xs="10">
+            <Comment isLoggedIn={this.props.isLoggedIn} user={this.props.user} oppId={this.props.opportunity._id}/>
+          </Col>
+        </Row>
         </CardBody>
       </Card>
     );
   }
-};
+}
 
 export default Ops;

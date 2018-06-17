@@ -23,11 +23,14 @@
     "passport": "^0.4.0",
     "popper.js": "^1.14.3",
     "react-google-maps": "^9.4.5",
+    "react-infinite-scroll-component": "^4.1.0",
     "react-places-autocomplete": "^7.1.2",
+    "react-star-rating": "^1.4.2",
     "reactstrap": "^6.0.1",
     "simple-line-icons": "^2.4.1",
     "socket.io": "^2.1.1",
-    "react-rating": "^1.1.2"
+    "react-rating": "^1.1.2",
+    "moment" :"^2.22.2"
   },
   "author": "",
   "license": "ISC",

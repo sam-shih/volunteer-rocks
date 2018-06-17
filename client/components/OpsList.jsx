@@ -23,8 +23,6 @@ class OpsList extends React.Component {
   }
 
   render() {
-    console.log('Opps: ', this.props.opportunities);
-    console.log('Num of pages: ', this.props.numOfPages);
     return (
       <div className="opportunity">
         <Container>
@@ -37,9 +35,9 @@ class OpsList extends React.Component {
             </Col>
 
             <Pagination aria-label="Opportunities navigation">
-              {this.props.numOfPages.map(function (page) {
+              {this.props.numOfPages.map(function (page, i) {
                 return (
-                  <PaginationItem onClick={() => this.props.passDownOpps(page + 1)}>
+                  <PaginationItem onClick={() => this.props.passDownOpps(page + 1)} key={i}>
                     <PaginationLink>
                       {page + 1}
                     </PaginationLink>

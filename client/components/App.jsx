@@ -100,7 +100,6 @@ class App extends Component {
   }
 
   handleSearch(e) {
-    console.log(e.target.value);
     this.setState({
       zipcode: e.target.value
     });
@@ -145,7 +144,6 @@ class App extends Component {
     e.preventDefault();
     this.getLatLngByZipcode(zipcode)
     .then((coords) => {
-      console.log('Client side coords: ', coords);
       axios.put('/api/opportunities', {
         coords: coords
       }).then((response) => {
@@ -182,7 +180,7 @@ class App extends Component {
   }
 
   joinOrganization(orgId){
-    axios.put(`/api/organizations/`, 
+    axios.put(`/api/organizations/`,
       {orgId, userId: this.state.user._id})
       .then(()=>{
       })
@@ -227,7 +225,8 @@ class App extends Component {
     } else if (view === 'opportunities') {
       return <OpsList numOfPages={this.state.howManyPages} passDownOpps={this.passDownOpps} 
       volunteerForOpp={this.volunteerForOpp} opportunities={this.state.oppsToPassDown} 
-      setOpsListView={this.setOpsListView} zipcode={this.state.zipcode} user={this.state.user} userId={this.state.userId}/>
+      setOpsListView={this.setOpsListView} zipcode={this.state.zipcode} user={this.state.user} 
+      userId={this.state.userId} isLoggedIn={this.state.isLoggedIn}/>
     } else if (view === 'loadAllMarkers') {
       return <LoadAllMarkers opportunities={this.state.opportunities} />
     } else if (view === 'filteredOpps') {

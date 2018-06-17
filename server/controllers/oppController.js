@@ -6,8 +6,6 @@ exports.fetchAll = (req, res) => {
 }
 
 exports.fetchByZip = (req, res) => {
-  console.log('Request body coords from server: ', req.body.coords)
-
   retrieveFromDb.getZipCodeSearch(req.body.coords)
   .then(nearestOpps => {
     res.status(200).send(nearestOpps);

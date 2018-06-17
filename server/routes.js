@@ -12,6 +12,16 @@ router.route('/api/login')
 router.route('/api/main')
   .get(oppCtrl.main)
 
+router.route('/api/deleteComment')
+  .post(userCtrl.deleteComment)
+
+router.route('/api/editComment')
+  .put(userCtrl.editComment)
+
+router.route('/api/comments')
+  .post(userCtrl.createComment)
+  .put(userCtrl.fetchCommentsByOppId)
+
 router.route('/api/users')
   .post(userCtrl.signUp)
   .put(userCtrl.enroll)
