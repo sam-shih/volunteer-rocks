@@ -227,7 +227,7 @@ class App extends Component {
     } else if (view === 'opportunities') {
       return <OpsList numOfPages={this.state.howManyPages} passDownOpps={this.passDownOpps} 
       volunteerForOpp={this.volunteerForOpp} opportunities={this.state.oppsToPassDown} 
-      setOpsListView={this.setOpsListView} zipcode={this.state.zipcode} user={this.state.user}/>
+      setOpsListView={this.setOpsListView} zipcode={this.state.zipcode} user={this.state.user} userId={this.state.userId}/>
     } else if (view === 'loadAllMarkers') {
       return <LoadAllMarkers opportunities={this.state.opportunities} />
     } else if (view === 'filteredOpps') {
