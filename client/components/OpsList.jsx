@@ -23,23 +23,20 @@ class OpsList extends React.Component {
   }
 
   render() {
-    console.log('Opps: ', this.props.opportunities);
-    console.log('Num of pages: ', this.props.numOfPages);
     return (
       <div className="opportunity">
         <Container>
           <Row>
             <Col md="12">
               {this.props.opportunities.map(op => {
-                return <Ops volunteerForOpp={this.props.volunteerForOpp} 
-                opportunity={op} user={this.props.user} key={op._id}/>
+                return <Ops volunteerForOpp={this.props.volunteerForOpp} opportunity={op} isLoggedIn={this.props.isLoggedIn} user={this.props.user} key={op._id}/>
               })}
             </Col>
 
             <Pagination aria-label="Opportunities navigation">
-              {this.props.numOfPages.map(function (page) {
+              {this.props.numOfPages.map(function (page, i) {
                 return (
-                  <PaginationItem onClick={() => this.props.passDownOpps(page + 1)}>
+                  <PaginationItem onClick={() => this.props.passDownOpps(page + 1)} key={i}>
                     <PaginationLink>
                       {page + 1}
                     </PaginationLink>

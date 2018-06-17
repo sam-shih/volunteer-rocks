@@ -5,10 +5,10 @@ import {
   Row, Col
 } from 'reactstrap';
 
+import Comment from './Comment.jsx';
 import Map from './Map.jsx';
 
 const Ops = function (props) {
-  console.log(props)
   return (
     <Card className="opportunityEntry">
       <CardBody>
@@ -27,7 +27,14 @@ const Ops = function (props) {
             {/* <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" /> */}
           </Col>
         </Row>
-        <Button outline color="primary" onClick={() => props.volunteerForOpp(props.opportunity)}>Volunteer</Button>
+        <Row>
+          <Col xs="2">
+            <Button outline color="primary" onClick={() => props.volunteerForOpp(props.opportunity)}>Volunteer</Button>
+          </Col>
+          <Col xs="10">
+            <Comment isLoggedIn={props.isLoggedIn} user={props.user} oppId={props.opportunity._id}/>
+          </Col>
+        </Row>
       </CardBody>
     </Card>
   );

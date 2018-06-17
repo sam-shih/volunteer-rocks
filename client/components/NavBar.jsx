@@ -34,7 +34,6 @@ class NavBar extends React.Component {
           <CreateOpModal user={this.props.user}/>
         </NavItem>
 
-
         <NavItem>
           <UncontrolledDropdown nav inNavbar>
             <DropdownToggle nav caret>

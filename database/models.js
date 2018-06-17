@@ -71,11 +71,33 @@ var opportunitiesSchema = mongoose.Schema({
 
 opportunitiesSchema.index({location: '2dsphere'});
 
+var commentsSchema = mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  opportunityId: {
+    type: String,
+    required: true
+  },
+  userId: String,
+  comment: {
+    type: String,
+    required: true
+  },
+  picture: String,
+  date: {
+    type: Date,
+    default: Date.now
+  }
+});
 
 var Volunteers = mongoose.model('Volunteers', volunteerSchema);
 var Organizations = mongoose.model('Organizations', organizationSchema);
 var Opportunities = mongoose.model('Opportunities', opportunitiesSchema);
+var Comments = mongoose.model('Comments', commentsSchema);
 
 module.exports.Volunteers = Volunteers;
 module.exports.Organizations = Organizations;
 module.exports.Opportunities = Opportunities;
+module.exports.Comments = Comments;
