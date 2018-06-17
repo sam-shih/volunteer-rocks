@@ -2,7 +2,7 @@ import React from 'react';
 import { Collapse, Button, CardBody, Card, Form, FormGroup, Label, Input, FormText, Row, Col, Container } from 'reactstrap';
 import axios from 'axios';
 import moment from 'moment';
-import EditComment from '../modals/EditComment.jsx';
+// import EditComment from '../modals/EditComment.jsx';
 
 class Comment extends React.Component {
   constructor(props) {
