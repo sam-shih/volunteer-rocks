@@ -41,28 +41,6 @@ class App extends Component {
     const gmapScriptEl = document.createElement(`script`)
     gmapScriptEl.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAceVbYzIL8yvIXoltC1dQzg40sDVlxtuE&libraries=places`
     document.querySelector(`body`).insertAdjacentElement(`beforeend`, gmapScriptEl)
-    // chat
-    $(function () {
-      var socket = io();
-      $('#everybody').submit(function(){
-        socket.emit('chat message', $('#m').val());
-        $('#m').val('');
-        return false;
-      });
-      socket.on('chat message', function(msg){
-        $('#messages').append($('<li>').text(msg));
-      });
-
-      var privateSocket = io('/jabroni');
-      $('#private').submit(function(){
-        privateSocket.emit('chat message', $('#pM').val());
-        $('#pM').val('');
-        return false;
-      });
-      privateSocket.on('chat message', function(msg){
-        $('#privateMessages').append($('<li>').text(msg));
-      });
-    });
 
     this.getOrganizations()
     axios.get('/main')
@@ -218,14 +196,11 @@ class App extends Component {
       })
   }
 
-  joinOrganization(orgId, orgName){
+
+  joinOrganization(orgId){
     axios.put(`/api/organizations/`,
-      {orgId, orgName, userId: this.state.user._id})
-      .then(response=>{
-        console.log('left clientside');
-      })
-      .catch(error=>{
-        console.log('no dice')
+      {orgId, userId: this.state.user._id})
+      .then(()=>{
       })
   }
 

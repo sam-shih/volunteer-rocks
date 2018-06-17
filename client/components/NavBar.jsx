@@ -4,13 +4,13 @@ import LoginModal from '../modals/LoginModal.jsx';
 import CreateOpModal from '../modals/CreateOpModal.jsx';
 import OrganizationsCreate from '../modals/OrganizationsCreate.jsx';
 import OrganizationsJoin from '../modals/OrganizationsJoin.jsx';
-
 import {
   NavbarToggler, NavbarBrand, NavItem,
   Navbar, Collapse, UncontrolledDropdown,
   DropdownToggle, DropdownMenu, DropdownItem,
   Nav, Button
 } from 'reactstrap';
+import ChatBoxModal from '../modals/ChatBoxModal.jsx';
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -30,6 +30,9 @@ class NavBar extends React.Component {
     const isOrganization = this.props.isOrganization;
     const navView = isLoggedIn ? (
       <React.Fragment>
+        <NavItem>
+          <ChatBoxModal />
+        </NavItem>
         <NavItem>
           <CreateOpModal user={this.props.user}/>
         </NavItem>
