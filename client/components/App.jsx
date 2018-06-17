@@ -100,7 +100,6 @@ class App extends Component {
   }
 
   handleSearch(e) {
-    console.log(e.target.value);
     this.setState({
       zipcode: e.target.value
     });
@@ -145,7 +144,6 @@ class App extends Component {
     e.preventDefault();
     this.getLatLngByZipcode(zipcode)
     .then((coords) => {
-      console.log('Client side coords: ', coords);
       axios.put('/api/opportunities', {
         coords: coords
       }).then((response) => {

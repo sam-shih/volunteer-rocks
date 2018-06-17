@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
-import { Collapse, Button, CardBody, Card, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import React from 'react';
+import { Collapse, Button, CardBody, Card, Form, FormGroup, Label, Input, FormText, Row, Col, Container } from 'reactstrap';
 import axios from 'axios';
+import moment from 'moment';
+import EditComment from '../modals/EditComment.jsx';
 
 class Comment extends React.Component {
   constructor(props) {
@@ -9,31 +11,76 @@ class Comment extends React.Component {
     this.state = {
       collapse: false,
       comment: '',
-      comments: [{user: 'zack', comment: 'this opp sucks', date: '06/12/18'}, {user: 'feng', comment: 'this opp is great', date: '06/13/18'}]
+      comments: [],
     };
     this.addComment = this.addComment.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.renderView = this.renderView.bind(this);
+    this.toggle = this.toggle.bind(this);
+    this.handleDeleteComment = this.handleDeleteComment.bind(this);
+    this.handleEditComment = this.handleEditComment.bind(this);
   }
 
   toggle() {
-    this.setState({ collapse: !this.state.collapse });
+    axios.put('/api/comments', {
+      opportunityId: this.props.oppId
+    }).then(response => {
+      this.setState({
+        comments: response.data,
+        collapse: !this.state.collapse,
+      });
+    }).catch(err => {
+      console.error(err);
+    })
   }
 
-  addComment(e) {
+  addComment(e, comment) {
     this.setState({
       comment: e.target.value,
     });
-    console.log(e.target.value);
-    console.log(this.props.isLoggedIn)
   }
 
   handleSubmit(e, comment) {
     e.preventDefault();
     axios.post('/api/comments', {
-      googleId: googleId,
-      name: name,
+      name: this.props.user.name,
+      opportunityId: this.props.oppId,
+      userId: this.props.user._id,
+      picture: this.props.user.picture,
       comment: comment
+    }).then(response => {
+      this.setState({
+        comments: response.data
+      });
+    }).catch(err => {
+      console.error(err);
+    });
+  }
+
+  handleEditComment(e, commentObj, editComment) {
+    e.preventDefault();
+    let commentId = commentObj._id;
+    let oppId = commentObj.opportunityId;
+    axios.put('/api/editComment', {
+      editComment: editComment,
+      commentId: commentId,
+      oppId: oppId
+    }).then(response => {
+      this.setState({
+        comments: response.data
+      });
+    }).catch(err => {
+      console.error(err);
+    })
+  }
+
+  handleDeleteComment(e, comment) {
+    e.preventDefault();
+    let commentId = comment._id;
+    let oppId = comment.opportunityId;
+    axios.post('/api/deleteComment', {
+      commentId: commentId,
+      oppId: oppId
     }).then(response => {
       this.setState({
         comments: response.data
@@ -44,31 +91,41 @@ class Comment extends React.Component {
   }
 
   renderView() {
-    console.log(this.props.user)
-    if (this.props.isLoggedIn === false || this.props.user === {}) {
-      // log user in through google account
+    if (this.props.isLoggedIn === false) {
       return (
         <div>
           <Button outline color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>View Comments</Button>
           <Collapse isOpen={this.state.collapse}>
-
             <Card>
               <CardBody>
-                <Form >
+                <Form>
                   <FormGroup>
-                    <Label for="commentText"><img src={`https://image.ibb.co/nCj2xy/if_user_man_678132_1.png`}/> Anonymous</Label>
-                    <a href="/auth/google"><Input type="textarea" name="text" id="commentText" placeholder="Comment on this volunteer opportunity..." /></a>
+                    <Label for="createComment"><a href="/auth/google" style={{textDecoration: 'none'}}><img src={`http://www.stickpng.com/assets/images/58e91c61eb97430e8190650b.png`} style={{width: 30, height: 30}}/> Please log in to comment</a></Label>
+                    <Input type="textarea" name="text" ref="createComment" placeholder="Comment on this volunteer opportunity..." disabled/>
                   </FormGroup>
                   <Button disabled>Submit</Button>
                 </Form>
               </CardBody>
             </Card>
             <Card>
-              {this.state.comments.map(comment => {
+              {this.state.comments.map((comment, i) => {
                 return (
-                  <CardBody>
-                    <h3>Comment list goes here</h3>
-                    {comment.user} {comment.comment} {comment.date}
+                  <CardBody key={i}>
+                    <Container>
+                      <Row>
+                        <Col xs="3">
+                          <img src={comment.picture}/> {comment.name}
+                        </Col>
+                        <Col xs="3">
+                          {moment(comment.date).fromNow()}
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col md="12">
+                          { comment.comment }
+                        </Col>
+                      </Row>
+                    </Container>
                   </CardBody>
                 )
               })}
@@ -85,18 +142,39 @@ class Comment extends React.Component {
               <CardBody>
                 <Form >
                   <FormGroup>
-                    <Label for="commentText"><img src={this.props.user.picture}/> {this.props.user.name}</Label>
-                    <Input type="textarea" name="text" id="commentText" placeholder="Comment on this volunteer opportunity..." onChange={this.addComment} onClick={this.renderView}/>
+                    <Label for="createComment"><img src={this.props.user.picture}/> {this.props.user.name}</Label>
+                    <Input type="textarea" name="text" ref="createComment" placeholder="Comment on this volunteer opportunity..." onChange={this.addComment} value={this.state.comment}/>
                   </FormGroup>
                   <Button onClick={(e) => this.handleSubmit(e, this.state.comment)}>Submit</Button>
                 </Form>
               </CardBody>
             </Card>
             <Card>
-              {this.state.comments.map(comment => {
-                return (<CardBody>
-                  <h3>Comment list goes here</h3>
-                  {comment.user} {comment.comment} {comment.date}
+              {this.state.comments.map((comment, i) => {
+                let deleteComment;
+                let editComment;
+                if (this.props.user._id === comment.userId) {
+                  editComment = <EditComment user={this.props.user} commentObj={comment} handleEditComment={this.handleEditComment} handleDeleteComment={this.handleDeleteComment}/>
+                }
+                return (<CardBody key={i}>
+                  <Container>
+                    <Row>
+                      <Col xs="3">
+                        <img src={comment.picture}/> {comment.name}
+                      </Col>
+                      <Col xs="3">
+                        {moment(comment.date).fromNow()}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md="12">
+                        { comment.comment }
+                      </Col>
+                    </Row>
+                    <Row>
+                      {editComment}
+                    </Row>
+                  </Container>
                 </CardBody>
                 )
               })}

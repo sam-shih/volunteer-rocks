@@ -9,7 +9,6 @@ import Comment from './Comment.jsx';
 import Map from './Map.jsx';
 
 const Ops = function (props) {
-  console.log(props)
   return (
     <Card className="opportunityEntry">
       <CardBody>
@@ -33,7 +32,7 @@ const Ops = function (props) {
             <Button outline color="primary" onClick={() => props.volunteerForOpp(props.opportunity)}>Volunteer</Button>
           </Col>
           <Col xs="10">
-            <Comment isLoggedIn={props.isLoggedIn} user={props.user}/>
+            <Comment isLoggedIn={props.isLoggedIn} user={props.user} oppId={props.opportunity._id}/>
           </Col>
         </Row>
       </CardBody>

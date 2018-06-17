@@ -7,6 +7,7 @@ var googleMapsClient = require('@google/maps').createClient({
 let Volunteer = models.Volunteers;
 let Organization = models.Organizations;
 let Opportunity = models.Opportunities;
+let Comments = models.Comments;
 
 exports.findUserAndJoinOrganization = ({userId, orgId}) => {
   return new Promise ((resolve ,reject)=>{
@@ -108,6 +109,24 @@ const newOpportunity = function (opportunity) {
     });
 };
 
+exports.addNewComment = function({name, opportunityId, userId, picture, comment}) {
+  return new Promise((resolve, reject) => {
+    let newComment = new Comments({
+      name,
+      opportunityId,
+      userId,
+      picture,
+      comment
+    })
+    newComment.save()
+      .then(savedComment=>{
+        resolve(savedComment);
+      })
+      .catch(error=>{
+        reject(error);
+      })
+  });
+}
+
 module.exports.newOpportunity = newOpportunity;
 module.exports.newVolunteer = newVolunteer;
-``
