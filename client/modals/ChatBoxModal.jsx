@@ -11,12 +11,11 @@ class ChatBoxModal extends React.Component {
     this.state = {
       modal: false,
       messages: [],
-      room: null
+      room: 'general'
     }
     this.toggle = this.toggle.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
     this.joinRoom = this.joinRoom.bind(this);
-    this.socket
   }
 
   componentWillUnmount() {
@@ -37,11 +36,11 @@ class ChatBoxModal extends React.Component {
     $('#room').val('');
   }
 
-  sendMessage() {
+  sendMessage(e) {
     var setRoom = `/${this.state.room}`;
 
       // var socket;
-      // if(setRoom) {
+      // if(setRoom !== general) {
       //   socket = io(`/${setRoom}`);
       //   socket.emit('chat message', $('#m').val());
       //     $('#m').val('');
@@ -50,6 +49,7 @@ class ChatBoxModal extends React.Component {
       //   });
       // } else {
           // socket = io();
+          e.preventDefault();
           socket.emit('chat message', $('#m').val());
           $('#m').val('');
           socket.on('chat message', (msg) => {
