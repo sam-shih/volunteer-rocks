@@ -195,10 +195,14 @@ class App extends Component {
       })
   }
 
-  joinOrganization(orgId){
+  joinOrganization(orgId, orgName){
     axios.put(`/api/organizations/`,
-      {orgId, userId: this.state.user._id})
-      .then(()=>{
+      {orgId, orgName, userId: this.state.user._id})
+      .then(response=>{
+        console.log('left clientside');
+      })
+      .catch(error=>{
+        console.log('no dice')
       })
   }
 

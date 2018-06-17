@@ -9,10 +9,10 @@ let Organization = models.Organizations;
 let Opportunity = models.Opportunities;
 let Comments = models.Comments;
 
-exports.findUserAndJoinOrganization = ({userId, orgId}) => {
+exports.findUserAndJoinOrganization = ({userId, orgId, orgName}) => {
   return new Promise ((resolve ,reject)=>{
   Volunteer.findByIdAndUpdate(userId, {$push: {
-    organizations: orgId
+    organizations: {id: orgId, name: orgName}
   }})
   .exec().then((updated)=>{
     Organization.findByIdAndUpdate(orgId, {$push: {
@@ -82,6 +82,7 @@ const newOpportunity = function (opportunity) {
       console.log(opportunity.createdBy)
       let aNewOpportunity = new Opportunity({
         title: opportunity.title,
+        organization: opportunity.organization,
         createdBy: opportunity.createdBy,
         description: opportunity.description,
         cause: opportunity.cause,
