@@ -22,6 +22,7 @@ exports.fetchOrganizations = (req, res) =>{
 }
 
 exports.joinOrganization = (req, res)=>{
+  console.log(req.body)
   saveToDb.findUserAndJoinOrganization(req.body)
     .then(()=>{
       res.status(201).send();

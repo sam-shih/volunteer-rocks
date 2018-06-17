@@ -52,9 +52,10 @@ const subscribeToOpp = function(opportunity, volId, res) {
       $push: { subbedList: opportunity }
     }, function (err, volunteer) {
       if (err) {throw err;}
-      res.send('subscribed');
+      res.send('watching');
     })
   })
+  console.log(opportunity, 'finish?');
 };
 
 module.exports.addVolunteerToOpp = addVolunteerToOpp;

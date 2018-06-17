@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import AddressAutoComplete from './AddressAutoComplete.jsx'
-import { Button, Modal, ModalHeader, ModalBody, NavLink, Input, Form, FormGroup, Label, Col } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, NavLink, Input, Form, FormGroup, Label, Col, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 class CreateOpModal extends React.Component {
   constructor(props) {
@@ -18,13 +18,29 @@ class CreateOpModal extends React.Component {
         end_date: '',
         phone: '',
         email: ''
-      }
+      },
+      dropdownOpen: false,
+      currentOrg: 'Please choose an organization...'
     }
 
     this.updateInput = this.updateInput.bind(this);
     this.submitForm = this.submitForm.bind(this);
     this.updateAddress = this.updateAddress.bind(this);
     this.toggle = this.toggle.bind(this);
+    this.toggleDD = this.toggleDD.bind(this);
+  }
+
+  setOrg(sthn) {
+    this.setState({
+      currentOrg: sthn
+    })
+    console.log('hey!', sthn)
+  }
+
+  toggleDD() {
+    this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen
+    }));
   }
 
   toggle() {
@@ -52,6 +68,7 @@ class CreateOpModal extends React.Component {
       console.log(form, 'newOp creation form')
       axios.post('api/opportunities', {
           title: form.title,
+          organization: this.state.currentOrg,
           createdBy: [this.props.user._id, this.props.user.name],
           description: form.description,
           cause: form.cause,
@@ -70,6 +87,10 @@ class CreateOpModal extends React.Component {
   }
 
   render() {
+    console.log(this.props.user.organizations);
+    let uniqOrgs = this.props.user.organizations.filter((thing,index,self) =>
+      index === self.findIndex(t => t.id === thing.id && t.name ===thing.name) === index)
+    console.log(uniqOrgs);
     return (
       <React.Fragment>
         <NavLink href="#" onClick={this.toggle}>Create New Opportunity</NavLink>
@@ -89,14 +110,16 @@ class CreateOpModal extends React.Component {
                 </Col>
               </FormGroup>
               <FormGroup row>
-                <Label for="cause" sm={2}>Organization</Label>
+                <Label for="title" sm={2}>Organization</Label>
                 <Col sm={10}>
-                  <Input
-                    type="text"
-                    name="cause"
-                    id="cause"
-                    value={this.state.form.cause}
-                    onChange={this.updateInput} />
+                  <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDD} >
+                    <DropdownToggle caret outline color="secondary">
+                      {this.state.currentOrg}
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      {this.props.user.organizations.map((org, index)=> <DropdownItem key={org.id} onClick={this.setOrg.bind(this, org.name)}>{org.name}</DropdownItem>)}
+                    </DropdownMenu>
+                  </Dropdown>
                 </Col>
               </FormGroup>
               <FormGroup row>
@@ -162,5 +185,15 @@ class CreateOpModal extends React.Component {
     );
   }
 }
+
+                // <Label for="cause" sm={2}>Organization</Label>
+                // <Col sm={10}>
+                //   <Input
+                //     type="text"
+                //     name="cause"
+                //     id="cause"
+                //     value={this.state.form.cause}
+                //     onChange={this.updateInput} />
+                // </Col>
 
 export default CreateOpModal;

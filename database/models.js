@@ -50,6 +50,7 @@ var opportunitiesSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  organization:String,
   createdBy: [], //first element is _id, second is username
   organization: String,
   description: String,

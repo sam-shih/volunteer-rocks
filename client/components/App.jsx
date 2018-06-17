@@ -31,6 +31,7 @@ class App extends Component {
     this.setOpsListView = this.setOpsListView.bind(this);
     this.myOpportunities = this.myOpportunities.bind(this);
     this.volunteerForOpp = this.volunteerForOpp.bind(this);
+    this.watchOpp = this.watchOpp.bind(this);
     this.organizationLoggedIn = this.organizationLoggedIn.bind(this);
     this.isLoggedInToggleForTesting = this.isLoggedInToggleForTesting.bind(this);
   }
@@ -124,6 +125,21 @@ class App extends Component {
       });
   }
 
+  watchOpp(opportunity) {
+    axios.patch('/api/users', {opportunity: opportunity})
+    .then((response) => {
+      let responseData = response.data;
+      if (responseData === 'login') {
+        alert('Please login before enrolling');
+      } else if (responseData === 'watching') {
+        alert('Successfully watching this opportunity');
+      }
+    })
+    .catch((err) => {
+      throw err;
+    });
+  }
+
   getLatLngByZipcode(zipcode) {
     let geocoder = new google.maps.Geocoder();
     let address = zipcode;
@@ -179,10 +195,14 @@ class App extends Component {
       })
   }
 
-  joinOrganization(orgId){
+  joinOrganization(orgId, orgName){
     axios.put(`/api/organizations/`,
-      {orgId, userId: this.state.user._id})
-      .then(()=>{
+      {orgId, orgName, userId: this.state.user._id})
+      .then(response=>{
+        console.log('left clientside');
+      })
+      .catch(error=>{
+        console.log('no dice')
       })
   }
 
@@ -223,13 +243,13 @@ class App extends Component {
     if (view === 'main') {
       return <Main findOppsByZip={this.findOppsByZip} getOpp={this.getOpps} />
     } else if (view === 'opportunities') {
-      return <OpsList numOfPages={this.state.howManyPages} passDownOpps={this.passDownOpps} volunteerForOpp={this.volunteerForOpp} opportunities={this.state.oppsToPassDown} setOpsListView={this.setOpsListView} zipcode={this.state.zipcode} isLoggedIn={this.state.isLoggedIn} user={this.state.user}/>
+      return <OpsList numOfPages={this.state.howManyPages} passDownOpps={this.passDownOpps} volunteerForOpp={this.volunteerForOpp} opportunities={this.state.oppsToPassDown} setOpsListView={this.setOpsListView} zipcode={this.state.zipcode} isLoggedIn={this.state.isLoggedIn} user={this.state.user} watchOpp={this.watchOpp}/>
     } else if (view === 'loadAllMarkers') {
       return <LoadAllMarkers opportunities={this.state.opportunities} />
     } else if (view === 'filteredOpps') {
-      return <OpsList volunteerForOpp={this.volunteerForOpp} opportunities={this.state.filteredOpps} setOpsListView={this.setOpsListView} />
+      return <OpsList volunteerForOpp={this.volunteerForOpp} opportunities={this.state.filteredOpps} setOpsListView={this.setOpsListView} watchOpp={this.watchOpp}/>
     } else if (view === 'myOpportunities') {
-      return <OpsList opportunities={this.state.filteredOpps} setOpsListView={this.setOpsListView} />
+      return <OpsList opportunities={this.state.filteredOpps} setOpsListView={this.setOpsListView} watchOpp={this.watchOpp}/>
     }
   }
 

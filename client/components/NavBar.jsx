@@ -75,7 +75,7 @@ class NavBar extends React.Component {
     ) : isOrganization ? (
       <React.Fragment>
         <NavItem>
-          <CreateOpModal />
+          <CreateOpModal user={this.props.user}/>
         </NavItem>
         <UncontrolledDropdown nav inNavbar>
           <DropdownToggle nav caret>
