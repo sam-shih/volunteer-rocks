@@ -7,15 +7,13 @@ var server = app.listen(port, function() {
 });
 const socketIO = require('socket.io')(server);
 
-
 socketIO.on('connection', function(socket) {
-  console.log('socket connected!');
-  socket.on('chat message', function(msg){
-    console.log('message: ' + msg);
-    socketIO.emit('chat message', msg);
-  });
-  socket.on('disconnect', function (data) {
-  console.log('socket disconnected!', data);
+  console.log('socket connected everyone!');
+  socket.on('chat message', function(msg, room){
+    console.log('message: ' + msg + ':' + room);
+    socket.join(room);
+    socketIO.in(room).emit('chat message', msg);
   });
 });
-// Namespace? Possibly to talk with specific administrations
+
+

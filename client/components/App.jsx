@@ -218,14 +218,11 @@ class App extends Component {
       })
   }
 
-  joinOrganization(orgId, orgName){
+
+  joinOrganization(orgId){
     axios.put(`/api/organizations/`,
-      {orgId, orgName, userId: this.state.user._id})
-      .then(response=>{
-        console.log('left clientside');
-      })
-      .catch(error=>{
-        console.log('no dice')
+      {orgId, userId: this.state.user._id})
+      .then(()=>{
       })
   }
 
@@ -266,9 +263,9 @@ class App extends Component {
     if (view === 'main') {
       return <Main findOppsByZip={this.findOppsByZip} getOpp={this.getOpps} />
     } else if (view === 'opportunities') {
-      return <OpsList numOfPages={this.state.howManyPages} passDownOpps={this.passDownOpps} 
-      volunteerForOpp={this.volunteerForOpp} opportunities={this.state.oppsToPassDown} 
-      setOpsListView={this.setOpsListView} zipcode={this.state.zipcode} user={this.state.user} 
+      return <OpsList numOfPages={this.state.howManyPages} passDownOpps={this.passDownOpps}
+      volunteerForOpp={this.volunteerForOpp} opportunities={this.state.oppsToPassDown}
+      setOpsListView={this.setOpsListView} zipcode={this.state.zipcode} user={this.state.user}
       userId={this.state.userId} isLoggedIn={this.state.isLoggedIn} watchOpp={this.watchOpp}/>
     } else if (view === 'loadAllMarkers') {
       return <LoadAllMarkers opportunities={this.state.opportunities} />
