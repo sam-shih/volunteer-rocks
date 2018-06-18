@@ -18,7 +18,7 @@ class OrganizationsEntry extends Component{
       <Card className="orgEntry">
         <CardImg className="lightbox" top src={this.props.org.logo} />
         <CardBody>
-          <CardTitle>{this.props.org.name}</CardTitle>
+          <p>{this.props.org.name}</p>
           <Button onClick={()=>
             {if(confirm(`Are you sure you want to join ${this.props.org.name}`))
             {this.handleJoin(this.props.org._id)}}}>Join</Button>
