@@ -21,7 +21,7 @@ class ChatBoxModal extends React.Component {
     this.handleRoomInput = this.handleRoomInput.bind(this);
 
     socket.on('chat message', (msg, name) => {
-      var oneMessage = [name': 'msg];
+      var oneMessage = [name + ': ' + msg];
       console.log(msg);
       this.setState({
         chat: this.state.chat.concat(oneMessage)
