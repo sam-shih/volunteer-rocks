@@ -107,7 +107,9 @@ class Comment extends React.Component {
     if (this.props.isLoggedIn === false) {
       return (
         <div>
-          <Button outline color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>{`${this.state.comments.length} Comments`}</Button>
+          <Button outline color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>
+          {this.state.comments.length > 1 ? `${this.state.comments.length} Comments` : `${this.state.comments.length} Comment`}
+          </Button>
           <Collapse isOpen={this.state.collapse}>
             <Card>
               <CardBody>
@@ -151,7 +153,9 @@ class Comment extends React.Component {
     } else {
       return (
         <div>
-          <Button outline color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>View Comments</Button>
+          <Button outline color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>
+          {this.state.comments.length > 1 ? `${this.state.comments.length} Comments` : `${this.state.comments.length} Comment`}
+          </Button>
           <Collapse isOpen={this.state.collapse}>
             <Card>
               <CardBody>
