@@ -33,7 +33,7 @@ class NavBar extends React.Component {
     const navView = isLoggedIn ? (
       <React.Fragment>
         <NavItem>
-          <ChatBoxModal />
+          <ChatBoxModal name={this.props.user.name}/>
         </NavItem>
         <NavItem>
           <CreateOpModal user={this.props.user}/>

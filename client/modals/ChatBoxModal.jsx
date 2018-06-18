@@ -12,7 +12,7 @@ class ChatBoxModal extends React.Component {
       chat: [],
       message: '',
       roomInput: '',
-      currentRoom: ''
+      currentRoom: this.props.name
     }
     this.toggle = this.toggle.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
