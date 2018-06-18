@@ -8,6 +8,7 @@ import Rating from 'react-rating';
 import Map from './Map.jsx';
 import Comment from './Comment.jsx';
 import axios from 'axios';
+import moment from 'moment';
 
 class Ops extends React.Component {
   constructor(props){
@@ -48,11 +49,12 @@ class Ops extends React.Component {
               <CardTitle>{this.props.opportunity.title}</CardTitle>
               <CardSubtitle>{this.props.opportunity.cause}</CardSubtitle>
               <CardText>{this.props.opportunity.description}</CardText>
+              <CardText className='opportunityTime'>From: {moment(this.props.opportunity.start_date).format('MMMM Do YYYY')} To: {moment(this.props.opportunity.end_date).format('MMMM Do YYYY')}</CardText>
               <CardText>{this.props.opportunity.formatted_address}</CardText>
               <CardText>
                 {this.props.opportunity.volunteerers.includes(this.props.userId) ?
                 <div>
-                  <Rating 
+                  <Rating
                   {...this.props} onChange={this.handleRate.bind(this)}
                   initialRating={this.state.rating} />
                 </div>
