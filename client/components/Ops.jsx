@@ -7,19 +7,36 @@ import {
 import Rating from 'react-rating';
 import Map from './Map.jsx';
 import Comment from './Comment.jsx';
+import axios from 'axios';
 
 class Ops extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      rating: 2
+      rating: null,
     }
-
-    this.handleRate = this.handleRate.bind(this);
   }
 
-  handleRate(event){
-    this.setState({rating: event.target.value})
+  componentDidMount(){
+    const sumRating = this.props.opportunity.ratings.reduce((sum, element)=>{
+      return sum += element;
+    },0)
+    const averageRating =  sumRating/this.props.opportunity.ratings.length;
+    this.setState({rating: averageRating});
+  }
+
+  handleRate(value){
+    this.setState({rating: value})
+    axios.put(`/api/opportunities/ratings`,{
+      rating: value,
+      oppId: this.props.opportunity._id
+    })
+    .then(response=>{
+      console.log(response);
+    })
+    .catch(error=>{
+      console.log(error);
+    })
   }
 
   render(){
@@ -35,7 +52,9 @@ class Ops extends React.Component {
               <CardText>
                 {this.props.opportunity.volunteerers.includes(this.props.userId) ?
                 <div>
-                  <Rating {...this.props} initialRating={this.state.rating} />
+                  <Rating 
+                  {...this.props} onChange={this.handleRate.bind(this)}
+                  initialRating={this.state.rating} />
                 </div>
                 :
                 <div>

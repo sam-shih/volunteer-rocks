@@ -26,11 +26,15 @@ router.route('/api/users')
   .post(userCtrl.signUp)
   .put(userCtrl.enroll)
   .get(userCtrl.fetchOpps)
+  .patch(userCtrl.sub)
 
 router.route('/api/opportunities')
   .post(oppCtrl.addNew)
   .put(oppCtrl.fetchByZip)
   .get(oppCtrl.fetchAll)
+
+router.route('/api/opportunities/ratings')
+  .put(oppCtrl.updateRating)
 
 router.route('/api/organizations')
   .post(orgCtrl.createOrganization)

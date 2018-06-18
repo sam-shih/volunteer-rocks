@@ -32,7 +32,7 @@ class OrganizationsJoin extends Component{
   }
 
   handleSubmit(){
-    this.props.joinOrganization(this.state.orgId)
+    this.props.joinOrganization(this.state.orgId, this.state.selected)
   }
 
   render(){

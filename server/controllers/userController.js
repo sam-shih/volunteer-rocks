@@ -80,10 +80,12 @@ exports.fetchCommentsByOppId = (req, res) => {
 exports.sub = (req, res) => {
   let opportunity = req.body.opportunity;
   if (req.user) {
-    addVolunteerToOpp.subscribeToOpp(opportunity, req.user._id, res);
+     addVolunteerToOpp.subscribeToOpp(opportunity, req.user._id, res);
   } else {
     res.send('login')
   }
+  // console.log(req.body.opportunity, "opp")
+  // console.log(req.user, 'user')
 }
 
 exports.logout = (req, res) => {

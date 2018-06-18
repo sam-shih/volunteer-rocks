@@ -9,10 +9,10 @@ let Organization = models.Organizations;
 let Opportunity = models.Opportunities;
 let Comments = models.Comments;
 
-exports.findUserAndJoinOrganization = ({userId, orgId}) => {
+exports.findUserAndJoinOrganization = ({userId, orgId, orgName}) => {
   return new Promise ((resolve ,reject)=>{
   Volunteer.findByIdAndUpdate(userId, {$push: {
-    organizations: orgId
+    organizations: {id: orgId, name: orgName}
   }})
   .exec().then((updated)=>{
     Organization.findByIdAndUpdate(orgId, {$push: {
@@ -79,9 +79,9 @@ const newOpportunity = function (opportunity) {
           zipcode = gmapi.address_components[i].short_name;
         }
       }
-      console.log(opportunity.createdBy)
       let aNewOpportunity = new Opportunity({
         title: opportunity.title,
+        organization: opportunity.organization,
         createdBy: opportunity.createdBy,
         description: opportunity.description,
         cause: opportunity.cause,
@@ -91,6 +91,7 @@ const newOpportunity = function (opportunity) {
         end_date: opportunity.end_date,
         phone: opportunity.phone,
         email: opportunity.email,
+        averageRating: 0,
         location: {
           lng: gmapi.geometry.location.lng,
           lat: gmapi.geometry.location.lat
@@ -101,7 +102,6 @@ const newOpportunity = function (opportunity) {
         if (err) {
           console.log(err);
         }
-        console.log("Success in saving newOpportunity")
       });
     })
     .catch((err) => {

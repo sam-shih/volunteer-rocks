@@ -16,6 +16,50 @@ h6 {
   height: 25px
 }
 
+.tip {
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  background: transparent;
+  border: 10px solid #ccc;
+}
+
+.tip-right {
+  top: 10px;
+  right: -25px;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;  
+}
+
+.comment {
+  position: relative;
+  height: auto;
+  border-radius: 3px;
+  border: 2px solid #ccc;
+}
+
+.innerComment{
+  padding:5px, 5px
+}
+
+.body .message {
+  min-height: 30px;
+  border-radius: 3px;
+  font-family: Arial;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #797979;
+}
+
+
+
+.sub-text {
+  color:#aaa;
+  font-family:verdana;
+  font-size:11px;
+}
+
 .opportunityEntry{
   margin-top: 10px
 }

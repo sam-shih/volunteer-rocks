@@ -50,7 +50,8 @@ class Comment extends React.Component {
       comment: comment
     }).then(response => {
       this.setState({
-        comments: response.data
+        comments: response.data,
+        comment: '',
       });
     }).catch(err => {
       console.error(err);
@@ -111,21 +112,23 @@ class Comment extends React.Component {
               {this.state.comments.map((comment, i) => {
                 return (
                   <CardBody key={i}>
-                    <Container>
-                      <Row>
-                        <Col xs="3">
-                          <img src={comment.picture}/> {comment.name}
-                        </Col>
-                        <Col xs="3">
-                          {moment(comment.date).fromNow()}
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col md="12">
-                          { comment.comment }
-                        </Col>
-                      </Row>
-                    </Container>
+                  <Container>
+                    <Row>
+                      <Col xs="2">
+                        <img className="image-circle" src={comment.picture}/> {comment.name}
+                      </Col>
+                      <Col xs="10">
+                        <div className="comment">
+                          <div className="innerComment">
+                            <p>{comment.comment}</p>
+                          </div>
+                        </div>
+                        <br/>
+                        <div className="sub-text">{moment(comment.date).fromNow()}</div>
+                      </Col>
+                      <hr/>
+                    </Row>
+                  </Container>
                   </CardBody>
                 )
               })}
@@ -142,7 +145,7 @@ class Comment extends React.Component {
               <CardBody>
                 <Form >
                   <FormGroup>
-                    <Label for="createComment"><img src={this.props.user.picture}/> {this.props.user.name}</Label>
+                    <Label for="createComment"><img className="image-circle" src={this.props.user.picture}/> {this.props.user.name}</Label>
                     <Input type="textarea" name="text" ref="createComment" placeholder="Comment on this volunteer opportunity..." onChange={this.addComment} value={this.state.comment}/>
                   </FormGroup>
                   <Button onClick={(e) => this.handleSubmit(e, this.state.comment)}>Submit</Button>
@@ -159,20 +162,22 @@ class Comment extends React.Component {
                 return (<CardBody key={i}>
                   <Container>
                     <Row>
-                      <Col xs="3">
-                        <img src={comment.picture}/> {comment.name}
+                      <Col xs="2">
+                        <img className="image-circle" src={comment.picture}/> {comment.name}
                       </Col>
-                      <Col xs="3">
-                        {moment(comment.date).fromNow()}
+                      <Col xs="10">
+                        <div className="comment">
+                        <div className="innerComment">
+                            <p>{comment.comment}</p>
+                          </div>
+                        </div>
+                        <br/>
+                        <div className="sub-text">{moment(comment.date).fromNow()}</div>
+                        <div className="float-right">
+                          {editComment}
+                        </div>
                       </Col>
-                    </Row>
-                    <Row>
-                      <Col md="12">
-                        { comment.comment }
-                      </Col>
-                    </Row>
-                    <Row>
-                      {editComment}
+                      <hr/>
                     </Row>
                   </Container>
                 </CardBody>

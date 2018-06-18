@@ -30,7 +30,8 @@ class OpsList extends React.Component {
             <Col md="12">
               {this.props.opportunities.map(op => {
                 return <Ops volunteerForOpp={this.props.volunteerForOpp} 
-                opportunity={op} user={this.props.user} userId={this.props.userId} key={op._id}/>
+                opportunity={op} isLoggedIn={this.props.isLoggedIn} userId={this.props.userId} user={this.props.user} 
+                key={op._id} watchOpp={this.props.watchOpp}/>
               })}
             </Col>
 
