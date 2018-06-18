@@ -25,10 +25,12 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+//http://volunteerrocks.herokuapp.com
+
 passport.use(new GoogleStrategy({
   clientID: "623460598606-jt79n40o89bp0mppi4aosv313vkq7and.apps.googleusercontent.com",
   clientSecret: "KuEwLAXDBNRDqsRHpKj7sjLz",
-  callbackURL: "/auth/google/callback"
+  callbackURL: "http://volunteerrocks.herokuapp.com/auth/google/callback"
   },
   function (accessToken, refreshToken, profile, done) {
     let name = profile.displayName;
