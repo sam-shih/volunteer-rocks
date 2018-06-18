@@ -20,13 +20,17 @@ class ChatBoxModal extends React.Component {
     this.handleMessageInput = this.handleMessageInput.bind(this);
     this.handleRoomInput = this.handleRoomInput.bind(this);
 
-    socket.on('chat message', (msg) => {
-      var oneMessage = [msg];
+    socket.on('chat message', (msg, name) => {
+      var oneMessage = [name': 'msg];
       console.log(msg);
       this.setState({
         chat: this.state.chat.concat(oneMessage)
       });
     });
+  }
+
+  componentDidMount() {
+    socket.emit('logInRoom', this.state.currentRoom);
   }
 
   toggle() {
@@ -58,7 +62,7 @@ class ChatBoxModal extends React.Component {
 
   sendMessage(e) {
     e.preventDefault();
-      socket.emit('chat message', this.state.message, this.state.currentRoom);
+      socket.emit('chat message', this.state.message, this.state.currentRoom, this.props.name);
       this.setState({
         message: ''
       });
@@ -74,6 +78,7 @@ class ChatBoxModal extends React.Component {
           <Col sm={5}>
             <Input autoComplete="off" name="room" value={this.state.roomInput} onChange={this.handleRoomInput}/>
             <button onClick={this.joinRoom}>Join Room</button>
+            <h2>{this.state.currentRoom}</h2>
           </Col>
           <ul id="messages">{this.state.chat.map((msg) => {
             return <li>{msg}</li>
@@ -89,7 +94,6 @@ class ChatBoxModal extends React.Component {
   }
 
 }
-
 
 
 export default ChatBoxModal;
