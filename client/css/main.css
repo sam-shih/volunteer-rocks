@@ -16,12 +16,51 @@ h6 {
   height: 25px
 }
 
+img.lightbox {
+  background-size: auto 100%;
+  height: 140px;
+  width: 140px;
+  /* border: 3px solid white; */
+  /* box-shadow: 0px 0px 8px rgba(0,0,0,.3); */
+  /* margin: 94px 20px 20px 20px; */
+}
+
 .tip {
   width: 0px;
   height: 0px;
   position: absolute;
   background: transparent;
   border: 10px solid #ccc;
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
+}
+
+.upload-btn {
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
 }
 
 .tip-right {
@@ -36,7 +75,6 @@ h6 {
   position: relative;
   height: auto;
   border-radius: 3px;
-  border: 2px solid #ccc;
 }
 
 .innerComment{

@@ -2,7 +2,7 @@ const saveToDb = require("../../database/saveToDb");
 const retrieveDb = require("../../database/retrieveFromDb");
 
 exports.createOrganization = (req, res) =>{
-  saveToDb.insertOrganization(req.body.form)
+  saveToDb.insertOrganization(req.body.image ,req.body.form)
     .then(savedOrganization=>{
       res.status(201).send(savedOrganization);
     })
