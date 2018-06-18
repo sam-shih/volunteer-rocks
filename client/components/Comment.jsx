@@ -21,6 +21,18 @@ class Comment extends React.Component {
     this.handleEditComment = this.handleEditComment.bind(this);
   }
 
+  componentDidMount(){
+    axios.put('/api/comments', {
+      opportunityId: this.props.oppId
+    }).then(response => {
+      this.setState({
+        comments: response.data,
+      });
+    }).catch(err => {
+      console.error(err);
+    })
+  }
+
   toggle() {
     axios.put('/api/comments', {
       opportunityId: this.props.oppId
@@ -95,7 +107,7 @@ class Comment extends React.Component {
     if (this.props.isLoggedIn === false) {
       return (
         <div>
-          <Button outline color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>View Comments</Button>
+          <Button outline color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>{`${this.state.comments.length} Comments`}</Button>
           <Collapse isOpen={this.state.collapse}>
             <Card>
               <CardBody>

@@ -48,10 +48,11 @@ const newVolunteer = function (volunteer, done) {
   });
 };
 
-exports.insertOrganization = function ({name, street, city, state, zipcode, phone}) {
+exports.insertOrganization = function (logo, {name, street, city, state, zipcode, phone}) {
   const address = {street, city, state, zipcode}
   return new Promise((resolve, reject)=>{
     let newOrganization = new Organization({
+      logo,
       name,
       address,
       phone,

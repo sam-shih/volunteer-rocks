@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
+import $ from 'jquery';
 import Filter from './Filter.jsx';
 import OpsList from './OpsList.jsx';
 import Main from './Main.jsx';
@@ -175,8 +175,27 @@ class App extends Component {
     })
   }
 
-  createOrganization(form) {
-    axios.post('/api/organizations', {form})
+  createOrganization(image, form) {
+    let formData = new FormData();
+    formData.append("image", image)
+    $.ajax({
+      type:'POST',
+      url: 'https://api.imgur.com/3/image',
+      data: formData,
+      crossDomain: true,
+      processData: false,
+      contentType: false,
+      headers: {
+        Authorization: 'Client-ID ' + "276a9fab62145b0",
+        Accept: 'application/json'
+      },
+      mimeType: 'multipart/form-data',
+    }).then(response=>{
+      response = JSON.parse(response)
+      axios.post('/api/organizations', {
+        form,
+        image: response.data.link
+      })
       .then((response) => {
         alert('New Organization Saved');
         this.getOrganizations();
@@ -184,6 +203,10 @@ class App extends Component {
       .catch((err) => {
         throw (err);
       });
+    })
+    .catch(error=>{
+      console.log(error)
+    })
   }
 
   getOrganizations(){

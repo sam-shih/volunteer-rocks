@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {Form, Input,FormGroup, Label, NavLink, Button,
+import {Form, Col ,FormGroup, Label, NavLink, Button,
   Modal, ModalHeader, ModalBody} from 'reactstrap';
+import OrganizationsEntry from './OrganizationsEntry.jsx';
 
 class OrganizationsJoin extends Component{
   constructor(props){
@@ -45,16 +46,15 @@ class OrganizationsJoin extends Component{
             <Form onSubmit={this.handleSubmit}>
               <FormGroup row>
                 <Label for="orgs">{this.state.selected === '' ? false : `You have selected ${this.state.selected}`}</Label>
-                <Input type="select" name="select" id="orgs"
-                value={this.state.selected} multiple
-                onChange={this.handleSelect}
-                >
-                  {
-                    this.props.orgs.map(org=>
-                      <option id={org._id}>{org.name}</option>
-                    )
-                  }
-                </Input>
+                <div className="container">
+                  <Col xs="12">
+                    {
+                      this.props.orgs.map(org=>
+                        <OrganizationsEntry org={org} key={org._id}/>
+                      )
+                    }
+                  </Col>
+                </div>
                 <Button style={{'marginTop': '10px'}}onClick={this.handleSubmit.bind(this)}>Submit</Button>
               </FormGroup>
             </Form>

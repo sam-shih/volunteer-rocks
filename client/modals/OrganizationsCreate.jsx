@@ -7,6 +7,7 @@ class OrganizationsCreate extends React.Component {
     super(props);
     this.state = {
       modal: false,
+      image: null,
       form: {
         name: '',
         street: '',
@@ -34,8 +35,15 @@ class OrganizationsCreate extends React.Component {
     this.setState({ form: form });
   }
 
+  fileSelectedHandler(event){
+    let file = event.target.files[0]
+    this.setState(state=>{
+      state.image = file
+    })
+  }
+
   handleSubmit(){
-    this.props.createOrganization(this.state.form)
+    this.props.createOrganization(this.state.image, this.state.form)
   }
 
   render() {
@@ -46,6 +54,13 @@ class OrganizationsCreate extends React.Component {
           <ModalHeader toggle={this.toggle}>Create a new organization</ModalHeader>
           <ModalBody>
             <Form onSubmit={this.handleSubmit}>
+              <FormGroup row>
+              <div className="upload-btn-wrapper">
+                <button className="upload-btn"><span class="glyphicon glyphicon-upload"></span>Logo</button>
+                <input onChange={this.fileSelectedHandler.bind(this)} type="file"
+                name="myfile"/>
+              </div>
+              </FormGroup>
               <FormGroup row>
                 <Label for="name" sm={2}>Organization</Label>
                 <Col sm={10}>
