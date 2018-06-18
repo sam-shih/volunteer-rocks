@@ -64,6 +64,8 @@ class CreateOpModal extends React.Component {
   submitForm(form) {
     if (form.title === '') {
       alert('Please add a title for this opportunity!')
+    } else if (this.state.currentOrg === 'Please choose an organization...'){
+      alert('Please select an organization. If you do not have one yet, please create one in order to proceed.')
     } else {
       console.log(form, 'newOp creation form')
       axios.post('api/opportunities', {
@@ -127,7 +129,7 @@ class CreateOpModal extends React.Component {
                 <Col sm={10}>
                   <AddressAutoComplete
                     updateAddress={this.updateAddress}
-                  ></AddressAutoComplete>
+                  >{this.state.form.address}</AddressAutoComplete>
                 </Col>
               </FormGroup>
               <FormGroup row>
