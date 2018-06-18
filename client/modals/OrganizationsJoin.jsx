@@ -32,10 +32,6 @@ class OrganizationsJoin extends Component{
     })
   }
 
-  handleSubmit(){
-    this.props.joinOrganization(this.state.orgId, this.state.selected)
-  }
-
   render(){
     return(
       <React.Fragment>
@@ -47,15 +43,17 @@ class OrganizationsJoin extends Component{
               <FormGroup row>
                 <Label for="orgs">{this.state.selected === '' ? false : `You have selected ${this.state.selected}`}</Label>
                 <div className="container">
-                  <Col xs="12">
+                  <div className="row">
                     {
                       this.props.orgs.map(org=>
-                        <OrganizationsEntry org={org} key={org._id}/>
+                        <div className="col-xs-3">
+                        <OrganizationsEntry joinOrganization={this.props.joinOrganization} 
+                        org={org} key={org._id}/>
+                        </div>
                       )
                     }
-                  </Col>
+                  </div>
                 </div>
-                <Button style={{'marginTop': '10px'}}onClick={this.handleSubmit.bind(this)}>Submit</Button>
               </FormGroup>
             </Form>
           </ModalBody>
