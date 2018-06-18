@@ -8,7 +8,6 @@ const VolunteerModel = require('../database/models.js').Volunteers;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const exampleDB = require('../database/exampleOpGenarator.js');
 const addVolunteerToOpp = require('../database/addVolunteerToOpp').checkIfEnrolled;
-
 const saveToDb = require('../database/saveToDb.js');
 const checkdb = require('../database/checkdbs.js');
 

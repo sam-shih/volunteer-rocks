@@ -12,7 +12,7 @@ class ChatBoxModal extends React.Component {
       chat: [],
       message: '',
       roomInput: '',
-      currentRoom: '',
+      currentRoom: ''
     }
     this.toggle = this.toggle.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
@@ -34,10 +34,8 @@ class ChatBoxModal extends React.Component {
       modal: !this.state.modal
     });
   }
-
   joinRoom(e) {
     e.preventDefault();
-    // socket.emit('room', this.state.roomInput);
     this.setState({
       currentRoom: this.state.roomInput,
       roomInput: ''

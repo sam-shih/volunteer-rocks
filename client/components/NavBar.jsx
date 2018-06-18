@@ -13,6 +13,7 @@ import {
 import ChatBoxModal from '../modals/ChatBoxModal.jsx';
 
 
+
 class NavBar extends React.Component {
   constructor(props) {
     super(props);

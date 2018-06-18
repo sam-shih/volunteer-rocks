@@ -7,7 +7,6 @@ var server = app.listen(port, function() {
 });
 const socketIO = require('socket.io')(server);
 
-
 socketIO.on('connection', function(socket) {
   console.log('socket connected everyone!');
   socket.on('chat message', function(msg, room){
