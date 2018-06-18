@@ -29,3 +29,17 @@ exports.main = (req, res) => {
     res.status(200).send(req.session)
   }
 }
+
+exports.updateRating = (req, res)=>{
+  retrieveFromDb.insertRatingToOpportunity(req.body)
+  .then(updated=>{
+    retrieveFromDb.updateOpportunityAverageRating(req.body)
+    .then((updated)=>{
+      res.status(200).send(updated);
+    })
+    .catch((error)=>{
+      res.status(404).send(error);
+    })
+  })
+
+}

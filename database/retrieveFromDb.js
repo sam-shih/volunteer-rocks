@@ -108,6 +108,37 @@ exports.findCommentByIdAndUpdate = function(commentId, editComment) {
   })
 }
 
+exports.insertRatingToOpportunity = ({oppId, rating}) =>{
+  return new Promise((resolve, reject)=>{
+    Opportunities.findByIdAndUpdate(oppId, {
+      $push:{ratings: rating},
+    })
+    .exec()
+    .then((updatedOpp)=>{
+      resolve(updatedOpp);
+    })
+    .catch(error=>{
+      reject(error);
+    })
+  })
+}
+
+exports.updateOpportunityAverageRating = ({oppId}) =>{
+  console.log(rating, oppId)
+  return new Promise((resolve, reject)=>{
+    Opportunities.findByIdAndUpdate(oppId, {
+      averageRating:{$avg: $ratings}
+    })
+    .exec()
+    .then((updatedOpp)=>{
+      resolve(updatedOpp);
+    })
+    .catch(error=>{
+      reject(error);
+    })
+  })
+}
+
 module.exports.getVolunteers = getVolunteers;
 module.exports.getOrganizations = getOrganizations;
 module.exports.getOpportunities = getOpportunities;

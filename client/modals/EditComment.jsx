@@ -35,10 +35,10 @@ class EditComment extends React.Component {
   render() {
     return (
       <div>
-        <ButtonGroup>
-          <Button color="primary" onClick={this.toggle}>Edit</Button>
-          <Button color="danger" onClick={(e) => this.props.handleDeleteComment(e, this.props.commentObj)}>Delete</Button>
-         </ButtonGroup>
+        <div>
+          <Button className="btn btn-sm" color="primary" onClick={this.toggle}>Edit</Button>
+          <Button className="btn btn-sm" color="danger" onClick={(e) => this.props.handleDeleteComment(e, this.props.commentObj)}>Delete</Button>
+        </div>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Edit Comment</ModalHeader>
           <ModalBody>

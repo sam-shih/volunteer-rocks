@@ -61,7 +61,8 @@ var opportunitiesSchema = mongoose.Schema({
   end_date: Date,
   phone: String,
   email: String,
-  rating: [],
+  ratings: [],
+  averageRating: Number,
   location: {
     lng: Number,
     lat: Number

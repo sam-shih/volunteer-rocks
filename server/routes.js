@@ -33,6 +33,9 @@ router.route('/api/opportunities')
   .put(oppCtrl.fetchByZip)
   .get(oppCtrl.fetchAll)
 
+router.route('/api/opportunities/ratings')
+  .put(oppCtrl.updateRating)
+
 router.route('/api/organizations')
   .post(orgCtrl.createOrganization)
   .get(orgCtrl.fetchOrganizations)

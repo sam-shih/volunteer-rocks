@@ -79,7 +79,6 @@ const newOpportunity = function (opportunity) {
           zipcode = gmapi.address_components[i].short_name;
         }
       }
-      console.log(opportunity.createdBy)
       let aNewOpportunity = new Opportunity({
         title: opportunity.title,
         organization: opportunity.organization,
@@ -92,6 +91,7 @@ const newOpportunity = function (opportunity) {
         end_date: opportunity.end_date,
         phone: opportunity.phone,
         email: opportunity.email,
+        averageRating: 0,
         location: {
           lng: gmapi.geometry.location.lng,
           lat: gmapi.geometry.location.lat
@@ -102,7 +102,6 @@ const newOpportunity = function (opportunity) {
         if (err) {
           console.log(err);
         }
-        console.log("Success in saving newOpportunity")
       });
     })
     .catch((err) => {
