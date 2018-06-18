@@ -2,24 +2,31 @@ import React from 'react';
 import $ from 'jquery';
 import { Button, Modal, ModalHeader, ModalBody, NavLink, Input, Form, FormGroup, Label, Col } from 'reactstrap';
 import io from 'socket.io-client';
-const socket = io.connect('http://localhost:3000');
-console.log('hey',socket);
+let socket = io.connect('http://localhost:3000');
 
 class ChatBoxModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       modal: false,
-      messages: [],
-      room: 'general'
+      chat: [],
+      message: '',
+      roomInput: '',
+      currentRoom: '',
     }
     this.toggle = this.toggle.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
     this.joinRoom = this.joinRoom.bind(this);
-  }
+    this.handleMessageInput = this.handleMessageInput.bind(this);
+    this.handleRoomInput = this.handleRoomInput.bind(this);
 
-  componentWillUnmount() {
-    socket.off('something');
+    socket.on('chat message', (msg) => {
+      var oneMessage = [msg];
+      console.log(msg);
+      this.setState({
+        chat: this.state.chat.concat(oneMessage)
+      });
+    });
   }
 
   toggle() {
@@ -28,43 +35,38 @@ class ChatBoxModal extends React.Component {
     });
   }
 
-  joinRoom() {
-    var rooms = $('#room').val();
+  joinRoom(e) {
+    e.preventDefault();
+    // socket.emit('room', this.state.roomInput);
     this.setState({
-      room: rooms
+      currentRoom: this.state.roomInput,
+      roomInput: ''
     });
-    $('#room').val('');
+  }
+
+  handleRoomInput(e) {
+    e.preventDefault();
+    this.setState({
+      roomInput: e.target.value
+    });
+  }
+
+  handleMessageInput(e) {
+    e.preventDefault();
+    this.setState({
+      message: e.target.value
+    });
   }
 
   sendMessage(e) {
-    var setRoom = `/${this.state.room}`;
-
-      // var socket;
-      // if(setRoom !== general) {
-      //   socket = io(`/${setRoom}`);
-      //   socket.emit('chat message', $('#m').val());
-      //     $('#m').val('');
-      //   socket.on('chat message', function(msg){
-      //     $('#messages').append($('<li>').text(msg));
-      //   });
-      // } else {
-          // socket = io();
-          e.preventDefault();
-          socket.emit('chat message', $('#m').val());
-          $('#m').val('');
-          socket.on('chat message', (msg) => {
-            var oneMessage = [msg];
-            console.log(msg);
-            this.setState({
-              messages: this.state.messages.concat(oneMessage)
-            });
-          });
-      // }
+    e.preventDefault();
+      socket.emit('chat message', this.state.message, this.state.currentRoom);
+      this.setState({
+        message: ''
+      });
   }
 
   render() {
-    console.log('settingRoom', `/${this.state.room}`);
-    console.log('messages', this.state.messages);
     return (
       <React.Fragment>
         <NavLink href="#" onClick={this.toggle}>ChatBox</NavLink>
@@ -72,14 +74,14 @@ class ChatBoxModal extends React.Component {
           <ModalHeader toggle={this.toggle}>ChatBox</ModalHeader>
           <ModalBody>
           <Col sm={5}>
-            <Input id="room" type="text" autoComplete="off" />
+            <Input autoComplete="off" name="room" value={this.state.roomInput} onChange={this.handleRoomInput}/>
             <button onClick={this.joinRoom}>Join Room</button>
           </Col>
-          <ul id="messages">{this.state.messages.map((msg) => {
+          <ul id="messages">{this.state.chat.map((msg) => {
             return <li>{msg}</li>
           })}</ul>
           <Col sm={10}>
-            <Input id="m" type="text" autoComplete="off"/>
+            <Input value={this.state.message} autoComplete="off" name="message" onChange={this.handleMessageInput}/>
             <button onClick={this.sendMessage}>Send</button>
           </Col>
           </ModalBody>
