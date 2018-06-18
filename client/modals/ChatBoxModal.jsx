@@ -2,7 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 import { Button, Modal, ModalHeader, ModalBody, NavLink, Input, Form, FormGroup, Label, Col } from 'reactstrap';
 import io from 'socket.io-client';
-let socket = io.connect('http://volunteerrocks.herokuapp.com:3000');
+let socket = io.connect('https://volunteerrocks.herokuapp.com:3000');
 
 class ChatBoxModal extends React.Component {
   constructor(props) {
